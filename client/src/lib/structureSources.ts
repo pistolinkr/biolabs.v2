@@ -53,6 +53,19 @@ async function fetchAlphaFoldResolved(accession: string): Promise<ResolvedStruct
  * - UniProt: PDB if cross-refs exist and policy allows; otherwise AlphaFold DB (latest cifUrl from API).
  */
 export async function resolveStructure(selection: ProteinSelection): Promise<ResolvedStructure> {
+  if (selection.source === "file") {
+    const url = selection.structureObjectUrl ?? selection.remoteStructureUrl;
+    if (!url) throw new Error("Structure URL missing (local blob or remote mmCIF)");
+    const name = selection.fileName?.toLowerCase() ?? "";
+    const format: "mmcif" | "pdb" = name.endsWith(".pdb") || name.endsWith(".ent") ? "pdb" : "mmcif";
+    const provenance = selection.fileName ? `File · ${selection.fileName}` : "Remote / blob structure";
+    return {
+      url,
+      format,
+      provenance,
+    };
+  }
+
   if (selection.source === "rcsb") {
     const id = selection.id.trim().toUpperCase();
     if (!id) throw new Error("Missing PDB id");

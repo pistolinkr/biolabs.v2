@@ -45,7 +45,7 @@ export default function Landing() {
             <h1 className="text-lg font-medium tracking-tight">BIOLABS</h1>
           </div>
           <button
-            onClick={() => setLocation('/workspace')}
+            onClick={() => setLocation('/pv')}
             className="btn-compact flex items-center gap-2"
           >
             Launch
@@ -68,12 +68,24 @@ export default function Landing() {
           </div>
 
           <button
-            onClick={() => setLocation('/workspace')}
+            onClick={() => setLocation('/pv')}
             className="inline-flex items-center gap-2 px-6 py-3 border border-accent text-accent hover:bg-accent hover:text-background transition-colors"
           >
-            Enter Workspace
+            Enter PV workbench
             <ArrowRight size={16} />
           </button>
+
+          <p className="text-xs text-muted-foreground">
+            <button
+              type="button"
+              onClick={() => setLocation('/pv/api-tech')}
+              className="border-b border-transparent text-accent hover:border-accent"
+            >
+              API / 인프라 레퍼런스
+            </button>
+            {" — "}
+            BFF, NIM 경로, 환경 변수, <code className="text-[10px]">/api/ai/health</code> 라이브 요약
+          </p>
 
           <div className="pt-8 border-t border-border">
             <p className="text-xs text-muted-foreground uppercase tracking-wider mb-8">

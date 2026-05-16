@@ -11,12 +11,17 @@ export interface ProteinSearchHit {
 
 /** User-selected entry passed to the workspace / viewer. */
 export interface ProteinSelection {
-  source: ProteinSearchSource;
+  source: ProteinSearchSource | "file";
   id: string;
   label: string;
   pdbIds?: string[];
   /** UniProt: force experimental PDB vs AlphaFold prediction (auto when omitted). */
   preferredStructure?: "experimental" | "alphafold";
+  /** Local PDB/mmCIF: object URL for NGL (revoked when selection changes). */
+  structureObjectUrl?: string;
+  /** Remote mmCIF URL (e.g. signed inference artifact). May fail in the browser if CORS blocks NGL. */
+  remoteStructureUrl?: string;
+  fileName?: string;
 }
 
 const UNIPROT_PREFIX = "/api/uniprot";
@@ -162,6 +167,10 @@ export async function searchRcsb(query: string): Promise<ProteinSearchHit[]> {
       subtitle:
         typeof row.score === "number" ? `score ${row.score.toFixed(4)}` : undefined,
     }));
+}
+
+export function proteinSelectionKey(s: ProteinSelection): string {
+  return `${s.source}:${s.id}:${s.structureObjectUrl ?? ""}:${s.remoteStructureUrl ?? ""}:${s.fileName ?? ""}`;
 }
 
 export function proteinHitToSelection(

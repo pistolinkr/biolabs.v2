@@ -17,7 +17,7 @@ export default function Settings() {
       <header className="border-b border-border">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center gap-4">
           <button
-            onClick={() => setLocation('/workspace')}
+            onClick={() => setLocation('/pv')}
             className="p-2 hover:bg-secondary transition-colors"
           >
             <ArrowLeft size={16} />

@@ -1,0 +1,9 @@
+{
+  "structures": [
+    {
+      "id": "s0",
+      "structure": "data_boltz\n_atom_site.group_PDB ATOM 1 N N . 1\n_atom_site.id 1\n_atom_site.type_symbol N\n_atom_site.label_atom_id N\n_atom_site.label_seq_id 1\n#EOF",
+      "score": 0.91
+    }
+  ]
+}

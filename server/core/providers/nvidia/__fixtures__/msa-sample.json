@@ -1,0 +1,11 @@
+{
+  "query_id": "demo-q",
+  "alignments": {
+    "uniref90": {
+      "a3m": {
+        "alignment": ">query\nMKTVRQERLKSIVR\n>hit_1\nMKTVRQERLKSIVR",
+        "format": "a3m"
+      }
+    }
+  }
+}

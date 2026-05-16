@@ -1,0 +1,12 @@
+{
+  "outputs": [
+    {
+      "structures_with_scores": [
+        {
+          "structure": "data_demo\n_atom_site.group_PDB ATOM 1 N N . 1\n_atom_site.id 1\n_atom_site.type_symbol N\n#EOF",
+          "complex_plddt_score": 87.2
+        }
+      ]
+    }
+  ]
+}

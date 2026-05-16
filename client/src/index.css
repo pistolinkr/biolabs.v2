@@ -129,7 +129,15 @@
   
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', 'Geist', 'IBM Plex Sans', system-ui, sans-serif;
+    font-family: "Inter", "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 13px;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  code,
+  kbd,
+  .font-mono {
+    font-family: "Geist Mono", "IBM Plex Mono", ui-monospace, monospace;
   }
   
   button:not(:disabled),
@@ -161,7 +169,8 @@
 @layer components {
   /* Biolabs: Docking panel system */
   .workstation {
-    @apply flex h-screen w-screen bg-background text-foreground;
+    /* h-full + min-h-0: fill flex parent; avoid h-screen stacking under header (page scroll). */
+    @apply flex h-full min-h-0 w-full overflow-hidden bg-background text-foreground;
   }
   
   .panel {
@@ -180,7 +189,7 @@
   }
   
   .panel-center {
-    @apply flex-1 flex flex-col overflow-hidden;
+    @apply flex-1 flex flex-col overflow-hidden overscroll-y-none;
   }
   
   .panel-bottom {

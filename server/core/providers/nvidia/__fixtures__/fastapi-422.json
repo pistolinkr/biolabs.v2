@@ -1,0 +1,5 @@
+{
+  "detail": [
+    { "loc": ["body", "sequence"], "msg": "field required", "type": "value_error.missing" }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "query_id": "pick-order",
+  "alignments": {
+    "colabfold": {
+      "a3m": {
+        "alignment": ">query\nFROM_COLABFOLD\n",
+        "format": "a3m"
+      }
+    },
+    "uniref30_mock": {
+      "a3m": {
+        "alignment": ">query\nFROM_UNIREF\n",
+        "format": "a3m"
+      }
+    }
+  }
+}
