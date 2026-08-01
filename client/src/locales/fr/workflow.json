@@ -1,13 +1,37 @@
 {
   "stages": {
-    "input": { "label": "Entrée", "short": "In" },
-    "ai_pipeline": { "label": "Pipeline IA", "short": "AI" },
-    "folding": { "label": "Repliement", "short": "Fold" },
-    "analysis": { "label": "Analyse", "short": "Anly" },
-    "reasoning": { "label": "Raisonnement", "short": "Rsn" },
-    "visualization": { "label": "Visualisation", "short": "Viz" },
-    "simulation": { "label": "Simulation", "short": "Sim" },
-    "engineering": { "label": "Ingénierie", "short": "Eng" }
+    "input": {
+      "label": "Entrée",
+      "short": "In"
+    },
+    "ai_pipeline": {
+      "label": "Pipeline IA",
+      "short": "AI"
+    },
+    "folding": {
+      "label": "Repliement",
+      "short": "Fold"
+    },
+    "analysis": {
+      "label": "Analyse",
+      "short": "Anly"
+    },
+    "reasoning": {
+      "label": "Raisonnement",
+      "short": "Rsn"
+    },
+    "visualization": {
+      "label": "Visualisation",
+      "short": "Viz"
+    },
+    "simulation": {
+      "label": "Simulation",
+      "short": "Sim"
+    },
+    "engineering": {
+      "label": "Ingénierie",
+      "short": "Eng"
+    }
   },
   "banner": {
     "noProtein": "Chargez une structure pour démarrer le pipeline de workflow.",

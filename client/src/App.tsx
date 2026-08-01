@@ -7,12 +7,14 @@ import LocaleSuggestionBanner from "./components/LocaleSuggestionBanner";
 import { LocaleProvider, useLocale } from "./contexts/LocaleContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import {
+  BINARY_PATH,
   HELIX_PATH,
   LEGACY_GASTER_PATH,
   LEGACY_WORKSPACE_PATH,
   PHAELEON_PATH,
 } from "./lib/routes";
 import Landing from "./pages/Landing";
+import Binary from "./pages/binary/Binary";
 import Helix from "./pages/helix/Helix";
 import Phaeleon from "./pages/phaeleon/Phaeleon";
 import Settings from "./pages/Settings";
@@ -22,6 +24,7 @@ function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Landing} />
+      <Route path={BINARY_PATH} component={Binary} />
       <Route path={HELIX_PATH} component={Helix} />
       <Route path={PHAELEON_PATH} component={Phaeleon} />
       <Route path={LEGACY_GASTER_PATH}>

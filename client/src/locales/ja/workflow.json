@@ -1,13 +1,37 @@
 {
   "stages": {
-    "input": { "label": "入力", "short": "In" },
-    "ai_pipeline": { "label": "AI パイプライン", "short": "AI" },
-    "folding": { "label": "フォールディング", "short": "Fold" },
-    "analysis": { "label": "分析", "short": "Anly" },
-    "reasoning": { "label": "推論", "short": "Rsn" },
-    "visualization": { "label": "可視化", "short": "Viz" },
-    "simulation": { "label": "シミュレーション", "short": "Sim" },
-    "engineering": { "label": "エンジニアリング", "short": "Eng" }
+    "input": {
+      "label": "入力",
+      "short": "In"
+    },
+    "ai_pipeline": {
+      "label": "AI パイプライン",
+      "short": "AI"
+    },
+    "folding": {
+      "label": "フォールディング",
+      "short": "Fold"
+    },
+    "analysis": {
+      "label": "分析",
+      "short": "Anly"
+    },
+    "reasoning": {
+      "label": "推論",
+      "short": "Rsn"
+    },
+    "visualization": {
+      "label": "可視化",
+      "short": "Viz"
+    },
+    "simulation": {
+      "label": "シミュレーション",
+      "short": "Sim"
+    },
+    "engineering": {
+      "label": "エンジニアリング",
+      "short": "Eng"
+    }
   },
   "banner": {
     "noProtein": "ワークフローパイプラインを開始するには構造を読み込んでください。",

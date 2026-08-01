@@ -15,8 +15,16 @@
     "measure": "Meas",
     "quality": "Med",
     "qualityHigh": "High",
-    "measureModes": { "distance": "Dist", "angle": "Ang", "dihedral": "Dih" },
-    "qualityLevels": { "low": "Baja", "medium": "Media", "high": "Alta" },
+    "measureModes": {
+      "distance": "Dist",
+      "angle": "Ang",
+      "dihedral": "Dih"
+    },
+    "qualityLevels": {
+      "low": "Baja",
+      "medium": "Media",
+      "high": "Alta"
+    },
     "palette": "⌘K · Palette",
     "contacts": "Ctx",
     "overlay": "Ovl",

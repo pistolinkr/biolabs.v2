@@ -8,5 +8,12 @@
   "AI_UNKNOWN": "KI-Anfrage fehlgeschlagen.",
   "requestFailed": "KI-Anfrage fehlgeschlagen.",
   "couldNotAnalyze": "Diese Residue konnte nicht analysiert werden.",
-  "couldNotExplain": "Diese Auswahl konnte nicht erklärt werden."
+  "couldNotExplain": "Diese Auswahl konnte nicht erklärt werden.",
+  "AI_NOT_CONFIGURED": "AI is not configured. Add OPENROUTER_API_KEY to .env or a key in Settings → AI.",
+  "AI_DAILY_QUOTA_EXCEEDED": "Daily AI limit reached for {{region}} ({{used}}/{{limit}}). Resets at {{resetsAt}} (UTC).",
+  "AI_MODEL_UNAVAILABLE": "Selected model is unavailable.",
+  "AI_NETWORK_ERROR": "Could not reach the AI provider. Check network and retry.",
+  "AI_ALL_PROVIDERS_FAILED": "All configured providers failed.",
+  "AI_REQUEST_INVALID": "Invalid AI request.",
+  "AI_EMPTY_RESPONSE": "Provider returned an empty response."
 }

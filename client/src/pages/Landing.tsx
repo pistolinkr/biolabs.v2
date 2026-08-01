@@ -1,165 +1,260 @@
-import { APP_VERSION_LABEL } from "@shared/version";
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { ArrowRight, Microscope, Zap, Layers, Cpu } from 'lucide-react';
-import { useLocation } from 'wouter';
-import PhaeleonLogo from '@/components/phaeleon/PhaeleonLogo';
-import { HELIX_PATH, PHAELEON_PATH } from '@/lib/routes';
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { ArrowUp, Layers, Microscope, Zap, Cpu } from "lucide-react";
+import { useLocation } from "wouter";
+import BiolabsCipherMark from "@/components/BiolabsCipherMark";
+import CommandPalette from "@/components/CommandPalette";
+import { setBinaryPendingPrompt } from "@/lib/ai/binaryPendingPrompt";
+import { BINARY_PATH, HELIX_PATH, PHAELEON_PATH } from "@/lib/routes";
+import { cn } from "@/lib/utils";
+
+const PAGE_X = "px-[18px] sm:px-7 md:px-[42px]";
+const CONTENT_MAX = "mx-auto w-full max-w-5xl";
 
 /**
- * Biolabs landing — platform hub with tool entry points.
+ * Biolabs landing — navbar + hero AI input + tools + large features.
  */
 export default function Landing() {
-  const { t } = useTranslation('landing');
-  const { t: tc } = useTranslation('common');
+  const { t } = useTranslation("landing");
   const [, setLocation] = useLocation();
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+  const [draft, setDraft] = useState("");
+  const [navOpen, setNavOpen] = useState(false);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setCommandPaletteOpen(true);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
+  const openBinary = (prompt?: string) => {
+    const text = prompt?.trim();
+    if (text) setBinaryPendingPrompt(text);
+    setLocation(BINARY_PATH);
+  };
+
+  const onAskSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    openBinary(draft);
+    setDraft("");
+  };
 
   const features = [
-    { icon: Microscope, key: 'visualization' as const },
-    { icon: Zap, key: 'simulation' as const },
-    { icon: Layers, key: 'layers' as const },
-    { icon: Cpu, key: 'hud' as const },
+    { icon: Microscope, key: "visualization" as const },
+    { icon: Zap, key: "simulation" as const },
+    { icon: Layers, key: "layers" as const },
+    { icon: Cpu, key: "hud" as const },
   ];
 
-  const openHelix = () => setLocation(HELIX_PATH);
-  const openPhaeleon = () => setLocation(PHAELEON_PATH);
+  const navTools = [
+    { key: "helix" as const, path: HELIX_PATH },
+    { key: "phaeleon" as const, path: PHAELEON_PATH },
+  ];
+
+  /** Shared nav type — brand + links use identical mono scale. */
+  const navTypeClass = "font-mono text-xs uppercase tracking-[0.12em]";
+  const navLinkClass = cn(
+    navTypeClass,
+    "text-muted-foreground transition-colors hover:text-foreground focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-accent",
+  );
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-y-auto overflow-x-hidden overscroll-y-contain bg-background text-foreground">
-      <header className="border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 py-6 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 border border-accent flex items-center justify-center">
-              <Microscope size={16} className="text-accent" />
-            </div>
-            <h1 className="text-lg font-medium tracking-tight">{tc('appName')}</h1>
-          </div>
+      <nav className="sticky top-0 z-20 shrink-0 border-b border-border bg-background">
+        <div
+          className={cn(
+            CONTENT_MAX,
+            "grid h-14 grid-cols-[1fr_auto_1fr] items-center gap-3",
+            PAGE_X,
+          )}
+        >
           <button
-            onClick={openHelix}
-            className="btn-compact flex items-center gap-2"
+            type="button"
+            onClick={() => setLocation("/")}
+            className={cn(
+              navTypeClass,
+              "justify-self-start text-foreground transition-colors hover:opacity-90 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-accent",
+            )}
+            aria-label="BIOLABS"
           >
-            {t('tools.helix.action')}
-            <ArrowRight size={12} />
+            Biolabs
           </button>
-        </div>
-      </header>
-
-      <section className="flex-1 flex flex-col items-center justify-center px-4 py-24">
-        <div className="max-w-3xl w-full text-center space-y-8">
-          <div className="space-y-4">
-            <h2 className="text-5xl font-bold tracking-tight">
-              {t('hero.title')}
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              {t('hero.subtitle')}
-            </p>
-          </div>
-
-          <div className="text-left space-y-3">
-            <p className="text-xs text-muted-foreground uppercase tracking-wider">
-              {t('tools.title')}
-            </p>
-            <div className="grid gap-3 md:grid-cols-2">
+          <button
+            type="button"
+            onClick={() => openBinary()}
+            className="justify-self-center focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            aria-label={t("tools.binary.name")}
+          >
+            <BiolabsCipherMark className={navTypeClass} />
+          </button>
+          <div className="flex items-center justify-self-end gap-5">
+            {navTools.map((item) => (
               <button
+                key={item.key}
                 type="button"
-                onClick={openHelix}
-                className="group w-full border border-border bg-card p-4 text-left transition-colors hover:border-accent"
+                onClick={() => setLocation(item.path)}
+                className={navLinkClass}
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Microscope size={18} className="text-accent" />
-                      <h3 className="text-sm font-medium text-foreground">{t('tools.helix.name')}</h3>
-                      <span className="border border-accent px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-accent">
-                        LIVE
-                      </span>
-                    </div>
-                    <p className="font-mono text-[10px] uppercase tracking-wider text-accent">
-                      {t('tools.helix.tagline')}
-                    </p>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
-                      {t('tools.helix.description')}
-                    </p>
-                  </div>
-                  <ArrowRight
-                    size={16}
-                    className="mt-1 shrink-0 text-muted-foreground transition-colors group-hover:text-accent"
-                  />
-                </div>
+                {t(`tools.${item.key}.name`)}
               </button>
-
-              <button
-                type="button"
-                onClick={openPhaeleon}
-                className="group w-full border border-border bg-card p-4 text-left transition-colors hover:border-accent"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <PhaeleonLogo size={22} />
-                      <h3 className="text-sm font-medium text-foreground">{t('tools.phaeleon.name')}</h3>
-                    </div>
-                    <p className="font-mono text-[10px] uppercase tracking-wider text-accent">
-                      {t('tools.phaeleon.tagline')}
-                    </p>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
-                      {t('tools.phaeleon.description')}
-                    </p>
-                  </div>
-                  <ArrowRight
-                    size={16}
-                    className="mt-1 shrink-0 text-muted-foreground transition-colors group-hover:text-accent"
-                  />
-                </div>
-              </button>
-            </div>
-          </div>
-
-          <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <button
-              onClick={openHelix}
-              className="inline-flex items-center gap-2 px-6 py-3 border border-accent text-accent hover:bg-accent hover:text-background transition-colors"
-            >
-              {t('hero.enterHelix')}
-              <ArrowRight size={16} />
-            </button>
+            ))}
             <button
               type="button"
-              onClick={openPhaeleon}
-              className="inline-flex items-center gap-2 px-6 py-3 border border-border bg-card text-foreground transition-colors hover:border-accent hover:text-accent"
+              onClick={() => setNavOpen((v) => !v)}
+              className={cn(navLinkClass, "tracking-widest")}
+              aria-expanded={navOpen}
+              aria-label={t("nav.more")}
             >
-              <PhaeleonLogo size={22} />
-              {t('tools.phaeleon.action')}
-              <ArrowRight size={16} />
+              ···
             </button>
           </div>
-
-          <div className="pt-8 border-t border-border">
-            <p className="text-xs text-muted-foreground uppercase tracking-wider mb-8">
-              {t('capabilities')}
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {features.map((feature) => {
-                const Icon = feature.icon;
-                return (
-                  <div key={feature.key} className="border border-border p-4 text-left">
-                    <Icon size={20} className="text-accent mb-3" />
-                    <h3 className="text-sm font-medium mb-1">{t(`features.${feature.key}.title`)}</h3>
-                    <p className="text-xs text-muted-foreground">{t(`features.${feature.key}.description`)}</p>
-                  </div>
-                );
-              })}
+        </div>
+        {navOpen ? (
+          <div className="border-t border-border bg-card">
+            <div className={cn(CONTENT_MAX, "flex flex-wrap justify-end gap-3 py-3", PAGE_X)}>
+              <button
+                type="button"
+                onClick={() => {
+                  setNavOpen(false);
+                  openBinary();
+                }}
+                className={cn(navTypeClass, "text-accent transition-colors hover:opacity-90 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-accent")}
+              >
+                {t("tools.binary.name")}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setNavOpen(false);
+                  setCommandPaletteOpen(true);
+                }}
+                className={navLinkClass}
+              >
+                ⌘K
+              </button>
             </div>
           </div>
-        </div>
-      </section>
+        ) : null}
+      </nav>
 
-      <footer className="border-t border-border">
-        <div className="max-w-7xl mx-auto px-4 py-6 text-xs text-muted-foreground flex justify-between">
-          <span>{APP_VERSION_LABEL}</span>
-          <span>{t('footer.tagline')}</span>
-        </div>
-      </footer>
+      <main className={cn(CONTENT_MAX, "flex flex-1 flex-col", PAGE_X)}>
+        {/*
+          Hero parent for title + ask form.
+          Children centered on the section's Y-axis via grid place-content.
+        */}
+        <section
+          className="grid min-h-[calc(100dvh-3.5rem)] shrink-0 place-content-center py-[18px] text-center sm:py-7"
+          aria-labelledby="landing-hero-title"
+        >
+          <div className="flex w-full max-w-3xl flex-col items-center gap-6 sm:gap-7">
+            <h1
+              id="landing-hero-title"
+              className="max-w-3xl text-[32px] font-semibold leading-[1.1] tracking-[-0.02em] text-foreground sm:text-5xl md:text-[56px]"
+            >
+              {t("hero.title")}
+            </h1>
+            <p className="max-w-xl font-mono text-[12px] leading-relaxed text-muted-foreground sm:text-[13px]">
+              {t("hero.subtitle")}
+            </p>
+            <form
+              onSubmit={onAskSubmit}
+              className="flex w-full max-w-xl items-center gap-2 rounded-full border border-border bg-card px-[18px] py-2.5 transition-colors focus-within:border-accent"
+            >
+              <input
+                type="text"
+                value={draft}
+                onChange={(e) => setDraft(e.target.value)}
+                placeholder={t("askPlaceholder")}
+                className="min-w-0 flex-1 bg-transparent px-1 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+                aria-label={t("askPlaceholder")}
+              />
+              <button
+                type="submit"
+                className={cn(
+                  "flex size-9 shrink-0 items-center justify-center rounded-full transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-accent",
+                  draft.trim()
+                    ? "bg-foreground text-background hover:opacity-90"
+                    : "bg-muted text-muted-foreground",
+                )}
+                aria-label={t("askAi")}
+              >
+                <ArrowUp size={16} />
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <section className="shrink-0 py-[42px]" aria-labelledby="landing-tools-heading">
+          <h2
+            id="landing-tools-heading"
+            className="mb-7 border-b border-border pb-2 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground"
+          >
+            {t("tools.title")}
+          </h2>
+          <ul className="flex flex-col gap-6">
+            {navTools.map((item) => (
+              <li key={item.key}>
+                <button
+                  type="button"
+                  onClick={() => setLocation(item.path)}
+                  className="group w-full border border-transparent bg-transparent p-[18px] text-left transition-[border-color,background-color,box-shadow] duration-150 hover:border-border hover:bg-card hover:shadow-[0_1px_0_0_var(--border)] focus-visible:border-accent focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                >
+                  <div className="mb-2 flex flex-wrap items-baseline gap-3">
+                    <span className="text-2xl font-semibold tracking-tight text-foreground transition-colors group-hover:text-accent sm:text-3xl">
+                      {t(`tools.${item.key}.name`)}
+                    </span>
+                    <span className="font-mono text-[10px] uppercase tracking-wider text-accent">
+                      {t(`tools.${item.key}.tagline`)}
+                    </span>
+                  </div>
+                  <p className="max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+                    {t(`tools.${item.key}.description`)}
+                  </p>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="shrink-0 pb-[42px] pt-0" aria-labelledby="landing-features-heading">
+          <h2
+            id="landing-features-heading"
+            className="mb-7 border-b border-border pb-2 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground"
+          >
+            {t("featuresTitle")}
+          </h2>
+          <div className="flex flex-col gap-6">
+            {features.map((feature) => {
+              const Icon = feature.icon;
+              return (
+                <article
+                  key={feature.key}
+                  className="rounded-[25px] border border-transparent bg-transparent px-[18px] py-7 sm:px-7 sm:py-[28px]"
+                >
+                  <Icon size={22} className="mb-5 text-accent" strokeWidth={1.5} />
+                  <h3 className="mb-3 text-xl font-semibold tracking-tight sm:text-2xl">
+                    {t(`features.${feature.key}.title`)}
+                  </h3>
+                  <p className="max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+                    {t(`features.${feature.key}.description`)}
+                  </p>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      </main>
+
+      <CommandPalette
+        scope="landing"
+        isOpen={commandPaletteOpen}
+        onClose={() => setCommandPaletteOpen(false)}
+      />
     </div>
   );
 }

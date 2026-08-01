@@ -25,9 +25,8 @@ import { useAssistantOptional } from "@/contexts/AssistantContext";
 import { usePhaeleonOptional } from "@/contexts/PhaeleonContext";
 import { useViewerOptional } from "@/contexts/ViewerContext";
 import { LAYOUT_PRESET_EVENT, LAYOUT_RESET_EVENT } from "@/contexts/WorkstationLayoutContext";
-import { commandsForWorkstation, type CommandCategory } from "@/lib/commands/registry";
-import type { WorkstationId } from "@/lib/settings/workstationTypes";
-import { HELIX_PATH, PHAELEON_PATH } from "@/lib/routes";
+import { commandsForWorkstation, type CommandCategory, type CommandPaletteScope } from "@/lib/commands/registry";
+import { BINARY_PATH, HELIX_PATH, PHAELEON_PATH } from "@/lib/routes";
 import { i18n } from "@/i18n";
 import { buildCommandSearchBlob, rankCommandsByQuery } from "@/lib/commandSearch";
 import type { LayoutPresetId } from "@/lib/workstationLayoutStorage";
@@ -63,7 +62,8 @@ interface AiPanelState {
 }
 
 interface CommandPaletteProps {
-  workstation: WorkstationId;
+  /** Tool workstation or landing hub — drives which commands are listed. */
+  scope: CommandPaletteScope;
   isOpen: boolean;
   onClose: () => void;
   onSettingsOpen?: () => void;
@@ -79,6 +79,9 @@ function iconForCommand(cmdId: string, category: CommandCategory): React.ReactNo
     if (cmdId.includes("swap")) return <ArrowLeftRight size={14} />;
     return <Pill size={14} />;
   }
+  if (cmdId === "nav.binary") return <Sparkles size={14} />;
+  if (cmdId === "nav.helix") return <Microscope size={14} />;
+  if (cmdId === "nav.phaeleon") return <Pill size={14} />;
   if (cmdId.startsWith("nav.")) return <Home size={14} />;
   if (cmdId.startsWith("assistant.") || cmdId.includes("ai")) return <Sparkles size={14} />;
   if (cmdId.startsWith("layout.")) return <LayoutGrid size={14} />;
@@ -93,7 +96,7 @@ function iconForCommand(cmdId: string, category: CommandCategory): React.ReactNo
 }
 
 export default function CommandPalette({
-  workstation,
+  scope,
   isOpen,
   onClose,
   onSettingsOpen,
@@ -162,26 +165,27 @@ export default function CommandPalette({
     (cmdId: string) => {
       if (cmdId.startsWith("nav.")) {
         if (cmdId === "nav.home") setLocation("/");
+        else if (cmdId === "nav.binary") setLocation(BINARY_PATH);
         else if (cmdId === "nav.helix") setLocation(HELIX_PATH);
         else if (cmdId === "nav.phaeleon") setLocation(PHAELEON_PATH);
         return;
       }
-      if (cmdId === "assistant.chat.open" && workstation !== "phaeleon") {
+      if (cmdId === "assistant.chat.open" && scope !== "phaeleon") {
         assistant?.setChatOpen(true);
         return;
       }
-      if (cmdId.startsWith("phaeleon.") || (workstation === "phaeleon" && cmdId.startsWith("assistant."))) {
+      if (cmdId.startsWith("phaeleon.") || (scope === "phaeleon" && cmdId.startsWith("assistant."))) {
         runPhaeleon(cmdId);
         return;
       }
       runHelix(cmdId);
     },
-    [assistant, runHelix, runPhaeleon, setLocation, workstation],
+    [assistant, runHelix, runPhaeleon, setLocation, scope],
   );
 
   const commands: Command[] = useMemo(
     () =>
-      commandsForWorkstation(workstation).map((def) => ({
+      commandsForWorkstation(scope).map((def) => ({
         id: def.id,
         cmdId: def.cmdId,
         icon: iconForCommand(def.cmdId, def.category),
@@ -190,7 +194,7 @@ export default function CommandPalette({
         category: t(`categories.${def.category}`),
         searchBlob: buildCommandSearchBlob(i18n, def.cmdId, def.category),
       })),
-    [t, workstation, i18n.language],
+    [t, scope, i18n.language],
   );
 
   const filteredCommands = useMemo(
@@ -365,7 +369,7 @@ export default function CommandPalette({
               <input
                 ref={inputRef}
                 type="text"
-                placeholder={t(`palette.placeholder.${workstation}`)}
+                placeholder={t(`palette.placeholder.${scope}`)}
                 value={query}
                 onChange={(e) => {
                   setQuery(e.target.value);
@@ -413,20 +417,22 @@ export default function CommandPalette({
                 <span>
                   {len} / {commands.length}
                 </span>
-                <button
-                  type="button"
-                  disabled={askDisabled}
-                  onClick={() => void handleAskAi()}
-                  title={askDisabled ? t("palette.askAiDisabledHint") : t("palette.askAiHint")}
-                  className="inline-flex items-center gap-1 border border-border bg-secondary px-2 py-1 text-[9px] uppercase tracking-wide text-foreground hover:border-accent disabled:cursor-not-allowed disabled:opacity-40"
-                >
-                  {assistant?.isSending ? (
-                    <Loader2 className="size-3 animate-spin" />
-                  ) : (
-                    <Sparkles className="size-3" />
-                  )}
-                  {t("palette.askAi")}
-                </button>
+                {assistant ? (
+                  <button
+                    type="button"
+                    disabled={askDisabled}
+                    onClick={() => void handleAskAi()}
+                    title={askDisabled ? t("palette.askAiDisabledHint") : t("palette.askAiHint")}
+                    className="inline-flex items-center gap-1 border border-border bg-secondary px-2 py-1 text-[9px] uppercase tracking-wide text-foreground hover:border-accent disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    {assistant.isSending ? (
+                      <Loader2 className="size-3 animate-spin" />
+                    ) : (
+                      <Sparkles className="size-3" />
+                    )}
+                    {t("palette.askAi")}
+                  </button>
+                ) : null}
               </div>
             </div>
           </>

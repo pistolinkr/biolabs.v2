@@ -1,13 +1,37 @@
 {
   "stages": {
-    "input": { "label": "Entrada", "short": "In" },
-    "ai_pipeline": { "label": "Pipeline de IA", "short": "AI" },
-    "folding": { "label": "Plegamiento", "short": "Fold" },
-    "analysis": { "label": "Análisis", "short": "Anly" },
-    "reasoning": { "label": "Razonamiento", "short": "Rsn" },
-    "visualization": { "label": "Visualización", "short": "Viz" },
-    "simulation": { "label": "Simulación", "short": "Sim" },
-    "engineering": { "label": "Ingeniería", "short": "Eng" }
+    "input": {
+      "label": "Entrada",
+      "short": "In"
+    },
+    "ai_pipeline": {
+      "label": "Pipeline de IA",
+      "short": "AI"
+    },
+    "folding": {
+      "label": "Plegamiento",
+      "short": "Fold"
+    },
+    "analysis": {
+      "label": "Análisis",
+      "short": "Anly"
+    },
+    "reasoning": {
+      "label": "Razonamiento",
+      "short": "Rsn"
+    },
+    "visualization": {
+      "label": "Visualización",
+      "short": "Viz"
+    },
+    "simulation": {
+      "label": "Simulación",
+      "short": "Sim"
+    },
+    "engineering": {
+      "label": "Ingeniería",
+      "short": "Eng"
+    }
   },
   "banner": {
     "noProtein": "Cargue una estructura para iniciar el pipeline del flujo de trabajo.",

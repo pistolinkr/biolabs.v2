@@ -12,6 +12,7 @@
   "palette": {
     "cmd": "CMD",
     "placeholder": {
+      "landing": "Abrir BOA5 · Helix · Phaeleon…",
       "helix": "Aislar cadena B · superficie · enfoque de diseño…",
       "phaeleon": "Analizar warfarin aspirin · intercambiar medicamentos · abrir IA…"
     },
@@ -32,16 +33,53 @@
     "aiFailed": "No se pudo obtener una respuesta de IA."
   },
   "items": {
-    "nav.phaeleon": { "title": "Abrir Phaeleon", "description": "Estación de trabajo para análisis de interacciones medicamentosas" },
-    "phaeleon.analyze": { "title": "Analizar interacción medicamentosa", "description": "Ejecutar evaluación DDI basada en reglas para Medicamento A + B" },
-    "phaeleon.clear.session": { "title": "Borrar sesión Phaeleon", "description": "Restablecer medicamentos, búsqueda y análisis" },
-    "phaeleon.swap.drugs": { "title": "Intercambiar A/B", "description": "Intercambiar las dos medicaciones asignadas" },
-    "phaeleon.slot.drug1": { "title": "Focalizar slot Medic. A", "description": "Asignar el siguiente resultado de búsqueda a Medic. A" },
-    "phaeleon.slot.drug2": { "title": "Focalizar slot Medic. B", "description": "Asignar el siguiente resultado de búsqueda a Medic. B" },
-    "phaeleon.search.focus": { "title": "Focalizar búsqueda", "description": "Ir al campo de búsqueda FDA / local" },
-    "phaeleon.fuzzy.toggle": { "title": "Alternar búsqueda difusa FDA", "description": "Activar/desactivar consultas OpenFDA tolerantes a errores tipográficos" },
-    "phaeleon.settings.open": { "title": "Abrir configuración Phaeleon", "description": "Preferencias de espacio de trabajo, IA y apariencia" },
-    "phaeleon.ai.chat": { "title": "Abrir asistente IA", "description": "Chatear sobre el par de medicamentos y el informe actual" },
-    "assistant.chat.open": { "title": "Abrir asistente IA", "description": "Abrir panel de chat del asistente de investigación" }
+    "nav.phaeleon": {
+      "title": "Abrir Phaeleon",
+      "description": "Estación de trabajo para análisis de interacciones medicamentosas"
+    },
+    "phaeleon.analyze": {
+      "title": "Analizar interacción medicamentosa",
+      "description": "Ejecutar evaluación DDI basada en reglas para Medicamento A + B"
+    },
+    "phaeleon.clear.session": {
+      "title": "Borrar sesión Phaeleon",
+      "description": "Restablecer medicamentos, búsqueda y análisis"
+    },
+    "phaeleon.swap.drugs": {
+      "title": "Intercambiar A/B",
+      "description": "Intercambiar las dos medicaciones asignadas"
+    },
+    "phaeleon.slot.drug1": {
+      "title": "Focalizar slot Medic. A",
+      "description": "Asignar el siguiente resultado de búsqueda a Medic. A"
+    },
+    "phaeleon.slot.drug2": {
+      "title": "Focalizar slot Medic. B",
+      "description": "Asignar el siguiente resultado de búsqueda a Medic. B"
+    },
+    "phaeleon.search.focus": {
+      "title": "Focalizar búsqueda",
+      "description": "Ir al campo de búsqueda FDA / local"
+    },
+    "phaeleon.fuzzy.toggle": {
+      "title": "Alternar búsqueda difusa FDA",
+      "description": "Activar/desactivar consultas OpenFDA tolerantes a errores tipográficos"
+    },
+    "phaeleon.settings.open": {
+      "title": "Abrir configuración Phaeleon",
+      "description": "Preferencias de espacio de trabajo, IA y apariencia"
+    },
+    "phaeleon.ai.chat": {
+      "title": "Abrir asistente IA",
+      "description": "Chatear sobre el par de medicamentos y el informe actual"
+    },
+    "assistant.chat.open": {
+      "title": "Abrir asistente IA",
+      "description": "Abrir panel de chat del asistente de investigación"
+    },
+    "nav.binary": {
+      "title": "Abrir BOA5",
+      "description": "Chat de IA de bioingeniería"
+    }
   }
 }

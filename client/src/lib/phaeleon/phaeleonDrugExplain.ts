@@ -34,7 +34,7 @@ export async function explainDrugWithAi(params: {
       {
         role: "system",
         content:
-          "You are Binary, the Biolabs Phaeleon drug interaction assistant. Explain single drugs clearly and accurately using the profile data when available.",
+          "You are BOA5, the Biolabs Phaeleon drug interaction assistant. Explain single drugs clearly and accurately using the profile data when available.",
       },
       { role: "user", content: userPrompt },
     ],

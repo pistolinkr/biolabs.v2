@@ -24,7 +24,7 @@
     "noProtein": "无蛋白质",
     "emptyState": "询问已加载的结构、所选残基、聚合物接触或一般生物学问题。每个回答都会自动使用完整的平台上下文。",
     "you": "您",
-    "aiName": "Binary",
+    "aiName": "BOA5",
     "thinking": "思考中…",
     "placeholder": "询问此结构…"
   },
@@ -35,5 +35,10 @@
     "explainUnavailable": "解释功能不可用",
     "connectionOk": "AI 连接正常",
     "connectionFailed": "连接不可用"
+  },
+  "binary": {
+    "greeting": "How Can I Help You?",
+    "placeholder": "Message...",
+    "send": "Send message"
   }
 }

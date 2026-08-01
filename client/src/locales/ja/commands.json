@@ -12,6 +12,7 @@
   "palette": {
     "cmd": "CMD",
     "placeholder": {
+      "landing": "BOA5 · Helix · Phaeleon を開く…",
       "helix": "チェーン B を隔離 · 表面 · レイアウトフォーカス…",
       "phaeleon": "warfarin aspirin を解析 · 薬剤を入れ替え · AI を開く…"
     },
@@ -32,16 +33,53 @@
     "aiFailed": "AI の応答を取得できませんでした。"
   },
   "items": {
-    "nav.phaeleon": { "title": "Phaeleon を開く", "description": "薬物相互作用解析ワークステーションを開く" },
-    "phaeleon.analyze": { "title": "薬物相互作用を解析", "description": "薬剤 A + B のルールベース DDI 評価を実行" },
-    "phaeleon.clear.session": { "title": "Phaeleon セッションをクリア", "description": "薬剤、検索、解析をリセット" },
-    "phaeleon.swap.drugs": { "title": "薬剤 A/B を入れ替え", "description": "割り当てられた 2 つの薬剤を交換" },
-    "phaeleon.slot.drug1": { "title": "薬剤 A スロットにフォーカス", "description": "次の検索結果を薬剤 A に割り当て" },
-    "phaeleon.slot.drug2": { "title": "薬剤 B スロットにフォーカス", "description": "次の検索結果を薬剤 B に割り当て" },
-    "phaeleon.search.focus": { "title": "薬剤検索にフォーカス", "description": "FDA / ローカル検索フィールドに移動" },
-    "phaeleon.fuzzy.toggle": { "title": "FDA ファジー検索を切替", "description": "タイプミス耐性の OpenFDA クエリをオン/オフ" },
-    "phaeleon.settings.open": { "title": "Phaeleon 設定を開く", "description": "ワークスペース、AI、表示の設定" },
-    "phaeleon.ai.chat": { "title": "AI アシスタントを開く", "description": "現在の薬剤ペアとレポートについてチャット" },
-    "assistant.chat.open": { "title": "AI アシスタントを開く", "description": "リサーチアシスタントのチャットパネルを開く" }
+    "nav.phaeleon": {
+      "title": "Phaeleon を開く",
+      "description": "薬物相互作用解析ワークステーションを開く"
+    },
+    "phaeleon.analyze": {
+      "title": "薬物相互作用を解析",
+      "description": "薬剤 A + B のルールベース DDI 評価を実行"
+    },
+    "phaeleon.clear.session": {
+      "title": "Phaeleon セッションをクリア",
+      "description": "薬剤、検索、解析をリセット"
+    },
+    "phaeleon.swap.drugs": {
+      "title": "薬剤 A/B を入れ替え",
+      "description": "割り当てられた 2 つの薬剤を交換"
+    },
+    "phaeleon.slot.drug1": {
+      "title": "薬剤 A スロットにフォーカス",
+      "description": "次の検索結果を薬剤 A に割り当て"
+    },
+    "phaeleon.slot.drug2": {
+      "title": "薬剤 B スロットにフォーカス",
+      "description": "次の検索結果を薬剤 B に割り当て"
+    },
+    "phaeleon.search.focus": {
+      "title": "薬剤検索にフォーカス",
+      "description": "FDA / ローカル検索フィールドに移動"
+    },
+    "phaeleon.fuzzy.toggle": {
+      "title": "FDA ファジー検索を切替",
+      "description": "タイプミス耐性の OpenFDA クエリをオン/オフ"
+    },
+    "phaeleon.settings.open": {
+      "title": "Phaeleon 設定を開く",
+      "description": "ワークスペース、AI、表示の設定"
+    },
+    "phaeleon.ai.chat": {
+      "title": "AI アシスタントを開く",
+      "description": "現在の薬剤ペアとレポートについてチャット"
+    },
+    "assistant.chat.open": {
+      "title": "AI アシスタントを開く",
+      "description": "リサーチアシスタントのチャットパネルを開く"
+    },
+    "nav.binary": {
+      "title": "BOA5 を開く",
+      "description": "バイオエンジニアリング AI チャット"
+    }
   }
 }

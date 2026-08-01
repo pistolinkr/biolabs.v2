@@ -12,6 +12,7 @@
   "palette": {
     "cmd": "CMD",
     "placeholder": {
+      "landing": "打开 BOA5 · Helix · Phaeleon…",
       "helix": "隔离链 B · 表面 · 布局焦点…",
       "phaeleon": "分析 warfarin aspirin · 交换药物 · 打开 AI…"
     },
@@ -32,16 +33,53 @@
     "aiFailed": "无法获取 AI 响应。"
   },
   "items": {
-    "nav.phaeleon": { "title": "打开 Phaeleon", "description": "药物相互作用分析工作站" },
-    "phaeleon.analyze": { "title": "分析药物相互作用", "description": "对药物 A + B 运行基于规则的 DDI 评估" },
-    "phaeleon.clear.session": { "title": "清除 Phaeleon 会话", "description": "重置药物、搜索与分析" },
-    "phaeleon.swap.drugs": { "title": "交换药物 A/B", "description": "交换两个已分配药物" },
-    "phaeleon.slot.drug1": { "title": "聚焦药物 A 槽位", "description": "将下一个搜索结果分配给药物 A" },
-    "phaeleon.slot.drug2": { "title": "聚焦药物 B 槽位", "description": "将下一个搜索结果分配给药物 B" },
-    "phaeleon.search.focus": { "title": "聚焦药物搜索", "description": "跳转到 FDA / 本地药物搜索字段" },
-    "phaeleon.fuzzy.toggle": { "title": "切换 FDA 模糊搜索", "description": "启用或禁用对拼写错误容错的 OpenFDA 查询" },
-    "phaeleon.settings.open": { "title": "打开 Phaeleon 设置", "description": "工作区、AI 与外观偏好" },
-    "phaeleon.ai.chat": { "title": "打开 AI 助手", "description": "针对当前药物对与报告进行聊天" },
-    "assistant.chat.open": { "title": "打开 AI 助手", "description": "打开研究助手聊天面板" }
+    "nav.phaeleon": {
+      "title": "打开 Phaeleon",
+      "description": "药物相互作用分析工作站"
+    },
+    "phaeleon.analyze": {
+      "title": "分析药物相互作用",
+      "description": "对药物 A + B 运行基于规则的 DDI 评估"
+    },
+    "phaeleon.clear.session": {
+      "title": "清除 Phaeleon 会话",
+      "description": "重置药物、搜索与分析"
+    },
+    "phaeleon.swap.drugs": {
+      "title": "交换药物 A/B",
+      "description": "交换两个已分配药物"
+    },
+    "phaeleon.slot.drug1": {
+      "title": "聚焦药物 A 槽位",
+      "description": "将下一个搜索结果分配给药物 A"
+    },
+    "phaeleon.slot.drug2": {
+      "title": "聚焦药物 B 槽位",
+      "description": "将下一个搜索结果分配给药物 B"
+    },
+    "phaeleon.search.focus": {
+      "title": "聚焦药物搜索",
+      "description": "跳转到 FDA / 本地药物搜索字段"
+    },
+    "phaeleon.fuzzy.toggle": {
+      "title": "切换 FDA 模糊搜索",
+      "description": "启用或禁用对拼写错误容错的 OpenFDA 查询"
+    },
+    "phaeleon.settings.open": {
+      "title": "打开 Phaeleon 设置",
+      "description": "工作区、AI 与外观偏好"
+    },
+    "phaeleon.ai.chat": {
+      "title": "打开 AI 助手",
+      "description": "针对当前药物对与报告进行聊天"
+    },
+    "assistant.chat.open": {
+      "title": "打开 AI 助手",
+      "description": "打开研究助手聊天面板"
+    },
+    "nav.binary": {
+      "title": "打开 BOA5",
+      "description": "生物工程 AI 聊天主页"
+    }
   }
 }

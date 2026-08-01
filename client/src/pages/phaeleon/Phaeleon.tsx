@@ -212,7 +212,7 @@ function PhaeleonChrome() {
 
       <SettingsPanel workstation="phaeleon" isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
       <CommandPalette
-        workstation="phaeleon"
+        scope="phaeleon"
         isOpen={commandPaletteOpen}
         onClose={() => setCommandPaletteOpen(false)}
         onSettingsOpen={() => setSettingsOpen(true)}

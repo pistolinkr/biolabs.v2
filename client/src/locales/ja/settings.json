@@ -54,7 +54,7 @@
     "resetLayout": "プリセットにリセット",
     "customLayout": "カスタムレイアウト — プリセットと異なる寸法",
     "presets": {
-      "binary": "Binary",
+      "binary": "BOA5",
       "binaryHint": "Fast judgment. AI on demand.",
       "consult": "Consult",
       "consultHint": "Read the report and ask AI side by side.",

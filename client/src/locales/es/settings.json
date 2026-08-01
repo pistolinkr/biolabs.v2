@@ -54,7 +54,7 @@
     "resetLayout": "Restablecer al preset",
     "customLayout": "Diseño personalizado — dimensiones distintas a los presets.",
     "presets": {
-      "binary": "Binary",
+      "binary": "BOA5",
       "binaryHint": "Fast judgment. AI on demand.",
       "consult": "Consult",
       "consultHint": "Read the report and ask AI side by side.",

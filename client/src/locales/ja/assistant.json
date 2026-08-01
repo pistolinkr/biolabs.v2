@@ -24,7 +24,7 @@
     "noProtein": "タンパク質なし",
     "emptyState": "読み込まれた構造、選択した残基、ポリマー接触、または一般的な生物学について質問してください。すべての回答は、プラットフォームの完全なコンテキストを自動的に使用します。",
     "you": "あなた",
-    "aiName": "Binary",
+    "aiName": "BOA5",
     "thinking": "考え中…",
     "placeholder": "この構造について質問…"
   },
@@ -35,5 +35,10 @@
     "explainUnavailable": "説明が利用できません",
     "connectionOk": "AI 接続 OK",
     "connectionFailed": "接続が利用できません"
+  },
+  "binary": {
+    "greeting": "How Can I Help You?",
+    "placeholder": "Message...",
+    "send": "Send message"
   }
 }

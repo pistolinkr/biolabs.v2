@@ -10,6 +10,7 @@ import React, {
 } from "react";
 import { toast } from "sonner";
 import { i18n } from "@/i18n";
+import { useLocale } from "@/contexts/LocaleContext";
 import { useViewer } from "@/contexts/ViewerContext";
 import { useWorkflow } from "@/contexts/WorkflowContext";
 import { proteinSelectionKey } from "@/lib/proteinApis";
@@ -176,6 +177,7 @@ function nextId(): string {
 export function AssistantProvider({ children }: { children: ReactNode }) {
   const viewer = useViewer();
   const workflow = useWorkflow();
+  const { resolvedLocale } = useLocale();
 
   const [messages, setMessages] = useState<AssistantUiMessage[]>([]);
   const [status, setStatus] = useState<AiStatusResponse | null>(null);
@@ -242,13 +244,25 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
         queueDepth: workflow.queueDepth,
         workflowSourceSummary: workflow.workflowSourceSummary,
       },
-      extensions: mergedExtensions,
+      // Always attach UI locale so responseLanguage "auto" follows the app language
+      // (Helix has no Phaeleon-style bridge; without this, English prompts force English answers).
+      extensions: {
+        ...mergedExtensions,
+        ui_locale: mergedExtensions.ui_locale ?? resolvedLocale,
+      },
       contextOptions: {
         includeFullSequences: aiSettings.includeFullSequences,
         compactContext: aiSettings.compactContext,
       },
     });
-  }, [viewer, workflow, mergedExtensions, aiSettings.includeFullSequences, aiSettings.compactContext]);
+  }, [
+    viewer,
+    workflow,
+    mergedExtensions,
+    resolvedLocale,
+    aiSettings.includeFullSequences,
+    aiSettings.compactContext,
+  ]);
 
   const registerContextExtension = useCallback((slice: ContextExtensionSlice) => {
     setExtensions((prev) => [...prev, slice]);

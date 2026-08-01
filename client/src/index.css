@@ -354,7 +354,17 @@ html.light .workstation-shell {
   .font-mono {
     font-family: "Geist Mono", "IBM Plex Mono", ui-monospace, monospace;
   }
-  
+
+  /* Engraved boot mood: dotted field + fade mask (structure, not glassmorphism). */
+  .landing-dotmap {
+    pointer-events: none;
+    opacity: 0.45;
+    background-image: radial-gradient(var(--border) 1.1px, transparent 1.1px);
+    background-size: 14px 14px;
+    -webkit-mask-image: radial-gradient(ellipse 900px 380px at 50% 18%, black 28%, transparent 72%);
+    mask-image: radial-gradient(ellipse 900px 380px at 50% 18%, black 28%, transparent 72%);
+  }
+
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
   [type="button"]:not(:disabled),

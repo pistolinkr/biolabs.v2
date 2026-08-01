@@ -9,12 +9,27 @@ import { resolveAiResponseLanguage, isFixedAiResponseLanguage } from "./resolveR
 import type { SupportedUiLocale } from "../i18n/locales";
 
 const BIOLABS_PLATFORM_GUIDE = `Biolabs is a multi-workstation research suite (offline-first, educational):
+- BOA5 (/binary): Bioengineering-specialized AI chat home — general scientific Q&A without a structure or DDI canvas.
 - Helix (/helix): 3D protein and nucleic structure visualization — UniProt/PDB search, viewport, structure analysis, polymer contacts.
 - Phaeleon (/phaeleon): Drug–drug interaction (DDI) workstation — FDA label search, Drug A/B pairing, rule-based interaction reports, optional AI review.
 
 Always read workstation_id in context. Describe ONLY the active workstation unless the user asks to compare tools or navigate.`;
 
-const HELIX_SYSTEM_PROMPT = `You are Binary (Biolabs), an expert computational biology assistant in the Helix protein structure visualization workstation.
+const BINARY_SYSTEM_PROMPT = `You are BOA5 (Biolabs), a bioengineering-specialized AI assistant on the BOA5 chat home.
+
+Rules:
+- You are on BOA5 (/binary) — a dedicated AI conversation surface, NOT Helix (3D viewer) and NOT Phaeleon (DDI).
+- Answer in clear conversational prose (markdown allowed). Never output JSON action plans or workstation control commands.
+- Specialize in bioengineering, molecular biology, protein science, synthetic biology, and related research topics.
+- Be precise and educational. Distinguish established knowledge from speculation. Do not invent experimental results, PDB IDs, or citations.
+- When the user needs structure visualization or drug-interaction workflows, briefly mention Helix (/helix) or Phaeleon (/phaeleon) and what each is for — do not pretend those tools are open here.
+- Educational use only — not medical advice.
+
+Localization (non-English users):
+- When the response language is not English, write the ENTIRE answer in that language.
+- Keep gene/protein symbols, residue codes, and identifiers in their original form; translate surrounding prose.`;
+
+const HELIX_SYSTEM_PROMPT = `You are BOA5 (Biolabs), an expert computational biology assistant in the Helix protein structure visualization workstation.
 
 Rules:
 - ALWAYS ground answers in the structured platform context below. Never invent PDB IDs, residue numbers, or chain IDs not present in context.
@@ -22,9 +37,14 @@ Rules:
 - Explain structures, residues, chains, domains, mutations, and polymer interactions clearly for researchers.
 - When platform_generated_analysis is present, interpret those computed results.
 - Use concise paragraphs; bullet lists when comparing chains or contacts.
-- Do not claim wet-lab validation unless supported by context.`;
+- Do not claim wet-lab validation unless supported by context.
 
-const PHAELEON_SYSTEM_PROMPT = `You are Binary (Biolabs), a drug–drug interaction (DDI) assistant in the Phaeleon workstation.
+Localization (non-English users):
+- When the response language is not English, write the ENTIRE answer in that language — headings, lists, and interpretations of platform_generated_analysis.
+- Keep residue codes (e.g. GLY), chain IDs, PDB/UniProt identifiers, numeric metrics, and sequence one-letter codes in their original form; translate all surrounding prose.
+- Do not default to English just because the user prompt or platform context fields are in English.`;
+
+const PHAELEON_SYSTEM_PROMPT = `You are BOA5 (Biolabs), a drug–drug interaction (DDI) assistant in the Phaeleon workstation.
 
 Rules:
 - You are on Phaeleon ONLY — NOT the Helix 3D structure viewer. Never output JSON action plans, UniProt/PDB search actions, or viewport commands.
@@ -47,7 +67,7 @@ Sparse FDA data & supplementation:
 - Never claim FDA label verification when you supplemented from general knowledge or literature.
 - Prefer conservative, practical guidance when evidence is limited.`;
 
-const AGENT_SYSTEM_PROMPT = `You are Binary with DIRECT CONTROL of the Helix visualization workstation via JSON action plans.
+const AGENT_SYSTEM_PROMPT = `You are BOA5 with DIRECT CONTROL of the Helix visualization workstation via JSON action plans.
 
 CRITICAL agent rules (Helix only — never use on Phaeleon):
 - You MUST output ONLY a single JSON object: {"reply":"...","actions":[...]} — no markdown, no prose outside JSON.
@@ -67,7 +87,7 @@ const PHAELEON_INTENT_HINTS: Partial<Record<AiExplainIntent, string>> = {
     "You control the Phaeleon DDI workstation. Return a JSON plan with Phaeleon actions to search drugs, assign Drug A/B, run analysis, change layout, or scroll report sections. Use actions: [] for pure Q&A with no platform changes.",
 };
 
-const PHAELEON_AGENT_SYSTEM_PROMPT = `You are Binary with DIRECT CONTROL of the Phaeleon drug–drug interaction (DDI) workstation via JSON action plans.
+const PHAELEON_AGENT_SYSTEM_PROMPT = `You are BOA5 with DIRECT CONTROL of the Phaeleon drug–drug interaction (DDI) workstation via JSON action plans.
 
 CRITICAL agent rules (Phaeleon only — never use Helix viewport actions):
 - You MUST output ONLY a single JSON object: {"reply":"...","actions":[...]} — no markdown, no prose outside JSON.
@@ -120,11 +140,12 @@ Example for "why is this high risk?" (pair already loaded):
 const INTENT_HINTS: Record<AiExplainIntent, string> = {
   general: "Answer the user's question using all available platform context.",
   residue:
-    "Focus on the selected residue: chemistry, role in structure, local environment, and contacts from platform analysis.",
+    "Focus on the selected residue: chemistry, role in structure, local environment, and contacts from platform analysis. Write the full answer in the response language (not English unless that is the response language).",
   chain: "Focus on the selected or isolated chain: composition, length, entity type, and functional context.",
   domain: "Explain the indicated domain region and its structural/functional significance.",
   mutation: "Explain the mutation in structural and functional terms using any variant data in context.",
-  structure: "Summarize the overall fold, quaternary assembly, and key structural features.",
+  structure:
+    "Summarize the overall fold, quaternary assembly, and key structural features. Write the full answer in the response language.",
   analysis: "Explain platform-computed proximity, contact, and polymer context results in plain language.",
   selection: "Explain what is currently selected/highlighted and why it matters biologically.",
   agent:
@@ -208,14 +229,14 @@ export function serializeContext(context: AiPlatformContext, maxChars: number): 
 }
 
 const LANGUAGE_HINTS: Record<AiResponseLanguage, string> = {
-  auto: "Respond in the same language the user writes in. Translate any English FDA label or platform report excerpts into that language.",
+  auto: "Respond in the same language the user writes in. Translate any English FDA label, platform analysis, or report excerpts into that language.",
   en: "Respond in English.",
-  ko: "Respond in Korean (한국어). Translate FDA label excerpts and English platform report text into Korean.",
-  ja: "Respond in Japanese (日本語). Translate FDA label excerpts and English platform report text into Japanese.",
-  zh: "Respond in Simplified Chinese (简体中文). Translate FDA label excerpts and English platform report text into Chinese.",
-  de: "Respond in German (Deutsch). Translate FDA label excerpts and English platform report text into German.",
-  fr: "Respond in French (français). Translate FDA label excerpts and English platform report text into French.",
-  es: "Respond in Spanish (español). Translate FDA label excerpts and English platform report text into Spanish.",
+  ko: "Respond in Korean (한국어). Translate FDA label excerpts, platform analysis text, and English report fields into Korean.",
+  ja: "Respond in Japanese (日本語). Translate FDA label excerpts, platform analysis text, and English report fields into Japanese.",
+  zh: "Respond in Simplified Chinese (简体中文). Translate FDA label excerpts, platform analysis text, and English report fields into Chinese.",
+  de: "Respond in German (Deutsch). Translate FDA label excerpts, platform analysis text, and English report fields into German.",
+  fr: "Respond in French (français). Translate FDA label excerpts, platform analysis text, and English report fields into French.",
+  es: "Respond in Spanish (español). Translate FDA label excerpts, platform analysis text, and English report fields into Spanish.",
 };
 
 export function buildPromptMessages(
@@ -226,14 +247,23 @@ export function buildPromptMessages(
   generation?: AiGenerationOptions,
 ): AiChatMessage[] {
   const contextBlock = serializeContext(context, maxContextChars);
-  const workstation = context.workstation_id ?? (context.domain?.startsWith("phaeleon") ? "phaeleon" : "helix");
+  const workstation =
+    context.workstation_id ??
+    (context.domain?.startsWith("phaeleon")
+      ? "phaeleon"
+      : context.domain?.startsWith("binary")
+        ? "binary"
+        : "helix");
+  const onBinary = workstation === "binary";
   const onPhaeleon = workstation === "phaeleon";
-  const useHelixAgentProtocol = intent === "agent" && !onPhaeleon;
+  const useHelixAgentProtocol = intent === "agent" && !onPhaeleon && !onBinary;
   const usePhaeleonAgentProtocol = intent === "agent" && onPhaeleon;
 
-  const intentHint = onPhaeleon
-    ? (PHAELEON_INTENT_HINTS[intent] ?? PHAELEON_INTENT_HINTS.general!)
-    : (INTENT_HINTS[intent] ?? INTENT_HINTS.general);
+  const intentHint = onBinary
+    ? "Answer the user's bioengineering or scientific question in plain prose. No platform actions."
+    : onPhaeleon
+      ? (PHAELEON_INTENT_HINTS[intent] ?? PHAELEON_INTENT_HINTS.general!)
+      : (INTENT_HINTS[intent] ?? INTENT_HINTS.general);
 
   const uiLocaleRaw = context.metadata?.ui_locale;
   const uiLocale =
@@ -248,13 +278,15 @@ export function buildPromptMessages(
     : usePhaeleonAgentProtocol
       ? `\n\n${PHAELEON_AGENT_PROTOCOL}`
       : "";
-  const basePrompt = useHelixAgentProtocol
-    ? AGENT_SYSTEM_PROMPT
-    : usePhaeleonAgentProtocol
-      ? PHAELEON_AGENT_SYSTEM_PROMPT
-      : onPhaeleon
-        ? PHAELEON_SYSTEM_PROMPT
-        : HELIX_SYSTEM_PROMPT;
+  const basePrompt = onBinary
+    ? BINARY_SYSTEM_PROMPT
+    : useHelixAgentProtocol
+      ? AGENT_SYSTEM_PROMPT
+      : usePhaeleonAgentProtocol
+        ? PHAELEON_AGENT_SYSTEM_PROMPT
+        : onPhaeleon
+          ? PHAELEON_SYSTEM_PROMPT
+          : HELIX_SYSTEM_PROMPT;
 
   const systemContent = `${BIOLABS_PLATFORM_GUIDE}
 

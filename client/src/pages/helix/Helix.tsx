@@ -91,7 +91,7 @@ function HelixChrome() {
         />
       </div>
       <CommandPalette
-        workstation="helix"
+        scope="helix"
         isOpen={commandPaletteOpen}
         onClose={() => setCommandPaletteOpen(false)}
         onSettingsOpen={() => setSettingsOpen(true)}

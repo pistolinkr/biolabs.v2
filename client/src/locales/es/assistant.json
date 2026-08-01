@@ -24,7 +24,7 @@
     "noProtein": "sin proteína",
     "emptyState": "Pregunte sobre la estructura cargada, el residuo seleccionado, los contactos de polímero o biología general. Cada respuesta utiliza automáticamente el contexto completo de la plataforma.",
     "you": "Usted",
-    "aiName": "Binary",
+    "aiName": "BOA5",
     "thinking": "Pensando…",
     "placeholder": "Pregunte sobre esta estructura…"
   },
@@ -35,5 +35,10 @@
     "explainUnavailable": "Explicación no disponible",
     "connectionOk": "Conexión de IA OK",
     "connectionFailed": "Conexión no disponible"
+  },
+  "binary": {
+    "greeting": "How Can I Help You?",
+    "placeholder": "Message...",
+    "send": "Send message"
   }
 }

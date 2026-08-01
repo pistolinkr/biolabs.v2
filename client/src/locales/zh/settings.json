@@ -54,7 +54,7 @@
     "resetLayout": "重置为预设",
     "customLayout": "自定义布局 — 与任何预设尺寸不同。",
     "presets": {
-      "binary": "Binary",
+      "binary": "BOA5",
       "binaryHint": "Fast judgment. AI on demand.",
       "consult": "Consult",
       "consultHint": "Read the report and ask AI side by side.",

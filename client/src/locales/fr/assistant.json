@@ -24,7 +24,7 @@
     "noProtein": "aucune protéine",
     "emptyState": "Posez des questions sur la structure chargée, le résidu sélectionné, les contacts polymères ou la biologie générale. Chaque réponse utilise automatiquement le contexte complet de la plateforme.",
     "you": "Vous",
-    "aiName": "Binary",
+    "aiName": "BOA5",
     "thinking": "Réflexion en cours…",
     "placeholder": "Posez une question sur cette structure…"
   },
@@ -35,5 +35,10 @@
     "explainUnavailable": "Explication indisponible",
     "connectionOk": "Connexion IA OK",
     "connectionFailed": "Connexion indisponible"
+  },
+  "binary": {
+    "greeting": "How Can I Help You?",
+    "placeholder": "Message...",
+    "send": "Send message"
   }
 }

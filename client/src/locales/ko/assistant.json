@@ -42,7 +42,7 @@
     "noProtein": "단백질 없음",
     "emptyState": "로드된 구조, 선택된 잔기, 고분자 접촉 또는 일반 생물학에 대해 질문하세요. \"코끼리 헤모글로빈 찾아서 카툰으로 렌더하고 회전시켜 분석해줘\"처럼 플랫폼 동작도 요청할 수 있습니다.",
     "you": "나",
-    "aiName": "Binary",
+    "aiName": "BOA5",
     "thinking": "생각 중…",
     "placeholder": "이 구조에 대해 질문하세요…",
     "executingActions": "플랫폼 동작 실행 중…"
@@ -99,5 +99,10 @@
     "explainUnavailable": "설명 사용 불가",
     "connectionOk": "AI 연결 정상",
     "connectionFailed": "연결 사용 불가"
+  },
+  "binary": {
+    "greeting": "무엇을 도와드릴까요?",
+    "placeholder": "메시지...",
+    "send": "메시지 보내기"
   }
 }

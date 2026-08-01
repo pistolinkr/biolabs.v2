@@ -24,7 +24,7 @@
     "noProtein": "kein Protein",
     "emptyState": "Fragen Sie zur geladenen Struktur, ausgewählten Residue, Polymerkontakten oder allgemeiner Biologie. Jede Antwort nutzt automatisch den vollständigen Plattformkontext.",
     "you": "Sie",
-    "aiName": "Binary",
+    "aiName": "BOA5",
     "thinking": "Denke nach…",
     "placeholder": "Fragen zu dieser Struktur stellen…"
   },
@@ -35,5 +35,10 @@
     "explainUnavailable": "Erklärung nicht verfügbar",
     "connectionOk": "KI-Verbindung OK",
     "connectionFailed": "Verbindung nicht verfügbar"
+  },
+  "binary": {
+    "greeting": "How Can I Help You?",
+    "placeholder": "Message...",
+    "send": "Send message"
   }
 }

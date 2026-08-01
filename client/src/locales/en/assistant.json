@@ -42,7 +42,7 @@
     "noProtein": "no protein",
     "emptyState": "Ask about the loaded structure, selected residue, polymer contacts, or general biology. You can also request platform actions — e.g. \"find elephant hemoglobin, render cartoon, spin, and analyze\".",
     "you": "You",
-    "aiName": "Binary",
+    "aiName": "BOA5",
     "thinking": "Thinking…",
     "placeholder": "Ask about this structure…",
     "executingActions": "Running platform actions…"
@@ -99,5 +99,10 @@
     "explainUnavailable": "Explain unavailable",
     "connectionOk": "AI connection OK",
     "connectionFailed": "Connection unavailable"
+  },
+  "binary": {
+    "greeting": "How Can I Help You?",
+    "placeholder": "Message...",
+    "send": "Send message"
   }
 }
