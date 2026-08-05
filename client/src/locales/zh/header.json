@@ -1,6 +1,17 @@
 {
-  "command": "命令...",
-  "commandPalette": "命令面板",
+  "command": "BOA5",
+  "commandPalette": "命令 (⌘K)",
+  "ask": {
+    "title": "询问 BOA5",
+    "collapsedPlaceholder": "询问 BOA5…",
+    "expandedPlaceholder": "询问或控制当前结构…",
+    "expandedPlaceholderWithMentions": "询问已标注的残基…",
+    "send": "发送",
+    "mentionAdd": "提及 {{label}}",
+    "mentionRemove": "移除 {{label}}",
+    "mentionCount": "{{count}} 个标签",
+    "replyDismiss": "关闭回复"
+  },
   "saveWorkspace": "保存工作区 (⌘S)",
   "exportMenu": "导出",
   "settings": "设置",

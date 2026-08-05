@@ -12,6 +12,16 @@ import { usePhaeleon } from "@/contexts/PhaeleonContext";
 import { usePhaeleonAnalysisReport } from "@/hooks/usePhaeleonAnalysisReport";
 import { cn } from "@/lib/utils";
 
+/** Floating tool bar centers on this node (Phaeleon). */
+export const PHAELEON_ANALYSIS_BAR_ANCHOR = "phaeleon-analysis";
+
+function analysisPanelProps(className?: string) {
+  return {
+    "data-tool-bottom-bar-anchor": PHAELEON_ANALYSIS_BAR_ANCHOR,
+    className: cn(phaeleonPanel.shell, "h-full min-h-0 min-w-0 flex-1", className),
+  } as const;
+}
+
 export default function PhaeleonAnalysisPanel({ embedded = false }: { embedded?: boolean }) {
   const { t } = useTranslation("phaeleon");
   const { setInspectorSlot } = usePhaeleon();
@@ -48,7 +58,7 @@ export default function PhaeleonAnalysisPanel({ embedded = false }: { embedded?:
 
   if (reportPending && !report) {
     return (
-      <main className={cn(phaeleonPanel.shell, "h-full min-h-0 min-w-0 flex-1")}>
+      <main {...analysisPanelProps()}>
         {!embedded ? (
           <PhaeleonPanelHeader kicker={t("panels.analysis.kicker")} title={headerTitle} trailing={headerTrailing} />
         ) : null}
@@ -59,7 +69,7 @@ export default function PhaeleonAnalysisPanel({ embedded = false }: { embedded?:
 
   if (analysisTranslationFailed && needsLocalizedReport) {
     return (
-      <main className={cn(phaeleonPanel.shell, "h-full min-h-0 min-w-0 flex-1")}>
+      <main {...analysisPanelProps()}>
         <PhaeleonPanelHeader kicker={t("panels.analysis.kicker")} title={headerTitle} trailing={headerTrailing} />
         <div className="min-h-0 flex-1 p-4">
           <AnalysisFailedState mode="translation" />
@@ -69,7 +79,7 @@ export default function PhaeleonAnalysisPanel({ embedded = false }: { embedded?:
   }
 
   return (
-    <main className={cn(phaeleonPanel.shell, "h-full min-h-0 min-w-0 flex-1")}>
+    <main {...analysisPanelProps()}>
       {!embedded ? (
         <PhaeleonPanelHeader
           kicker={t("panels.analysis.kicker")}

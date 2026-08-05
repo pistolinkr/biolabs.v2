@@ -1,23 +1,40 @@
 {
+  "askAi": "AI에게 물어보기",
   "hero": {
-    "title": "차세대 생물 시뮬레이션",
-    "subtitle": "구조 분석·예측·시각화를 위한 계산 생물학 플랫폼 — 전문 도구를 실행하세요.",
-    "enterHelix": "Helix 열기"
+    "title": "Boa5로 바이오·의료 소스를 연구하세요",
+    "titleActive": "Say, hello"
   },
   "tools": {
     "title": "도구",
     "helix": {
       "name": "Helix",
       "tagline": "단백질 예측 시각화",
-      "description": "AlphaFold, RCSB PDB, UniProt 연동 3D 구조 뷰어.",
-      "action": "Helix 실행"
+      "description": "AlphaFold, RCSB PDB, UniProt 연동 3D 구조 뷰어."
     },
     "phaeleon": {
       "name": "Phaeleon",
       "tagline": "약물 상호작용 분석",
-      "description": "FDA OpenFDA 약물 검색 및 규칙 기반 상호작용 평가 — DDI 체커 포팅, 클라우드 AI 불필요.",
-      "action": "Phaeleon 실행",
-      "status": "베타"
+      "description": "FDA OpenFDA 약물 검색 및 규칙 기반 상호작용 평가 — DDI 체커 포팅, 클라우드 AI 불필요."
+    },
+    "strata": {
+      "name": "Strata",
+      "tagline": "Multi-structure layer system",
+      "description": "Stack multiple structures, opacity, blend, visibility timeline"
+    },
+    "dockyard": {
+      "name": "Dockyard",
+      "tagline": "Receptor–ligand pose workspace",
+      "description": "Define binding site, load poses, score table (local Vina stub / CSV import)"
+    },
+    "pulse": {
+      "name": "Pulse",
+      "tagline": "Live viewport telemetry",
+      "description": "FPS, atom count, selection stats, session log, CSV export"
+    },
+    "binary": {
+      "name": "BOA5",
+      "tagline": "바이오엔지니어링 AI 어시스턴트",
+      "description": "바이오엔지니어링 전용 AI 채팅 — 이 브라우저에 로컬로 대화가 저장됩니다."
     }
   },
   "capabilities": "핵심 기능",
@@ -40,7 +57,27 @@
     }
   },
   "footer": {
-    "version": "biolabs v2.3",
+    "version": "biolabs v2.4",
     "tagline": "Working with the supervision of G.Gear Vanguard Service."
+  },
+  "chrome": {
+    "bootSequence": "▲ PLATFORM BOOT SEQUENCE",
+    "sysOnline": "[SYS:ONLINE] •••"
+  },
+  "diag": {
+    "configLabel": "[CONFIG.SYS]",
+    "registryFile": "TOOLREGISTRY.DAT",
+    "systemCheck": "> SYSTEM CHECK..........",
+    "ok": "OK",
+    "toolsLoaded": "> TOOLS LOADED..........{{count}}/{{total}}",
+    "storageMode": "> STORAGE MODE......LOCAL",
+    "renderEngine": "> RENDER ENGINE.........",
+    "platformInit": "> PLATFORM INIT.........",
+    "versionLine": "> VERSION..............{{version}}"
+  },
+  "askPlaceholder": "예: BRCA1 · Aspirin · 단백질 구조…",
+  "featuresTitle": "특징",
+  "nav": {
+    "more": "더보기"
   }
 }

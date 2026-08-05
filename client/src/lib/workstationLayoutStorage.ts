@@ -1,10 +1,11 @@
 /** Workstation layout preset + density preferences (localStorage). */
 
-export const DOCK_LAYOUT_STORAGE_KEY = "biolabs.dockview.layout.v1";
-export const LAYOUT_PRESET_STORAGE_KEY = "biolabs.workstation.layoutPreset.v1";
+/** v2: research assistant dock panel removed from Helix. */
+export const DOCK_LAYOUT_STORAGE_KEY = "biolabs.dockview.layout.v2";
+export const LAYOUT_PRESET_STORAGE_KEY = "biolabs.workstation.layoutPreset.v2";
 export const DENSITY_STORAGE_KEY = "biolabs.workstation.density.v1";
 
-export type LayoutPresetId = "classic" | "focus" | "analysis" | "assistant" | "compact";
+export type LayoutPresetId = "classic" | "focus" | "analysis" | "compact";
 
 export type WorkstationDensity = "comfortable" | "compact";
 
@@ -12,7 +13,6 @@ export const LAYOUT_PRESET_IDS: LayoutPresetId[] = [
   "classic",
   "focus",
   "analysis",
-  "assistant",
   "compact",
 ];
 

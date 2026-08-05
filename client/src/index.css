@@ -174,6 +174,272 @@ html.light {
   border-radius: var(--assistant-radius) !important;
 }
 
+/* Landing hero title — directional blur crossfade (idle bottom ↔ active top) */
+.landing-hero-title {
+  --hero-title-duration: 420ms;
+  --hero-title-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.landing-hero-title__layer {
+  position: relative;
+  grid-area: 1 / 1;
+  text-align: center;
+  color: var(--foreground);
+  transition:
+    opacity var(--hero-title-duration) var(--hero-title-ease),
+    transform var(--hero-title-duration) var(--hero-title-ease);
+  will-change: opacity, transform;
+}
+
+.landing-hero-title__sharp,
+.landing-hero-title__soft {
+  display: block;
+  transition:
+    opacity var(--hero-title-duration) var(--hero-title-ease),
+    filter var(--hero-title-duration) var(--hero-title-ease),
+    -webkit-mask-image var(--hero-title-duration) var(--hero-title-ease),
+    mask-image var(--hero-title-duration) var(--hero-title-ease);
+}
+
+.landing-hero-title__soft {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+  filter: blur(14px);
+  opacity: 0;
+}
+
+/* Fully readable */
+.landing-hero-title__layer.is-shown {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.landing-hero-title__layer.is-shown .landing-hero-title__sharp {
+  opacity: 1;
+  filter: blur(0);
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.landing-hero-title__layer.is-shown .landing-hero-title__soft {
+  opacity: 0;
+  filter: blur(0);
+}
+
+/* Idle title exits: bottom edge high blur, drifts up */
+.landing-hero-title__layer.is-exit-bottom {
+  opacity: 0;
+  transform: translateY(-0.45em);
+  pointer-events: none;
+}
+
+.landing-hero-title__layer.is-exit-bottom .landing-hero-title__sharp {
+  opacity: 0.55;
+  filter: blur(1px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 28%, transparent 78%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 28%, transparent 78%);
+}
+
+.landing-hero-title__layer.is-exit-bottom .landing-hero-title__soft {
+  opacity: 1;
+  filter: blur(18px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 8%, #000 48%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 8%, #000 48%, #000 100%);
+}
+
+/* Active title waits / exits: top edge high blur, drifts down */
+.landing-hero-title__layer.is-enter-top {
+  opacity: 0;
+  transform: translateY(0.45em);
+  pointer-events: none;
+}
+
+.landing-hero-title__layer.is-enter-top .landing-hero-title__sharp {
+  opacity: 0.55;
+  filter: blur(1px);
+  -webkit-mask-image: linear-gradient(to top, #000 0%, #000 28%, transparent 78%);
+  mask-image: linear-gradient(to top, #000 0%, #000 28%, transparent 78%);
+}
+
+.landing-hero-title__layer.is-enter-top .landing-hero-title__soft {
+  opacity: 1;
+  filter: blur(18px);
+  -webkit-mask-image: linear-gradient(to top, transparent 8%, #000 48%, #000 100%);
+  mask-image: linear-gradient(to top, transparent 8%, #000 48%, #000 100%);
+}
+
+/* BOA5 auto-hide navbar — collapses height + slides bar up */
+.biolabs-nav-shell--autohide {
+  height: 3.5rem;
+  transition: height 380ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.biolabs-nav-shell--autohide.is-hidden {
+  height: 0;
+}
+
+.biolabs-nav-bar--autohide {
+  transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.biolabs-nav-bar--autohide.is-hidden {
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .biolabs-nav-shell--autohide,
+  .biolabs-nav-bar--autohide {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Landing → BOA5: continuous ask morph only — no page blur/fade */
+.boa5-route-transition {
+  --boa5-morph-duration: 720ms;
+  --boa5-morph-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+/* Subtle BOA5 page-in — light blur settle, not a route wipe */
+@keyframes boa5-page-in {
+  from {
+    opacity: 0.78;
+    filter: blur(2.5px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.boa5-page-in {
+  animation: boa5-page-in 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Chat bubbles — soft rise + blur settle */
+@keyframes boa5-msg-in {
+  from {
+    opacity: 0;
+    filter: blur(2.5px);
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+.boa5-msg-in {
+  animation: boa5-msg-in 340ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.boa5-setup-in {
+  animation: boa5-msg-in 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 120ms;
+}
+
+/* BOA5 AI dashboard — restrained ambient field behind the central composer. */
+.boa5-dashboard-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--border) 20%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--border) 16%, transparent) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at 50% 48%, black 0%, transparent 72%);
+  opacity: 0.22;
+}
+
+.boa5-dashboard-glow {
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--accent) 34%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 12%, transparent) 44%,
+    transparent 74%
+  );
+  filter: blur(24px);
+  opacity: 0.72;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boa5-page-in,
+  .boa5-msg-in,
+  .boa5-setup-in {
+    animation: none;
+  }
+}
+
+.boa5-ask-morph-title {
+  transition: opacity calc(var(--boa5-morph-duration) * 0.55) var(--boa5-morph-ease);
+}
+
+.boa5-ask-morph-title.is-docked {
+  opacity: 0;
+}
+
+/*
+ * Ask dock → BinaryHome composer seat.
+ * Docked: top = viewport bottom − pb-5/sm:pb-7, then translateY(-100%)
+ * so the pill’s bottom edge matches BinaryHome’s `pb-5` / `sm:pb-7` (height-safe).
+ */
+.boa5-ask-morph-pill {
+  top: 42%;
+  transform: translateY(0);
+  transition:
+    top var(--boa5-morph-duration) var(--boa5-morph-ease),
+    transform var(--boa5-morph-duration) var(--boa5-morph-ease);
+}
+
+.boa5-ask-morph-pill.is-docked {
+  top: calc(100% - 1.25rem); /* pb-5 */
+  transform: translateY(-100%);
+}
+
+.boa5-ask-morph-pill__inner {
+  max-width: 36rem; /* max-w-xl — landing hero */
+  transition: max-width var(--boa5-morph-duration) var(--boa5-morph-ease);
+}
+
+.boa5-ask-morph-pill.is-docked .boa5-ask-morph-pill__inner {
+  max-width: 48rem; /* max-w-3xl — BinaryHome thread composer */
+}
+
+@media (min-width: 640px) {
+  .boa5-ask-morph-pill.is-docked {
+    top: calc(100% - 1.75rem); /* sm:pb-7 */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boa5-ask-morph-title,
+  .boa5-ask-morph-pill,
+  .boa5-ask-morph-pill__inner {
+    transition-duration: 0.01ms !important;
+  }
+
+  .landing-hero-title__layer,
+  .landing-hero-title__sharp,
+  .landing-hero-title__soft {
+    transition-duration: 0.01ms !important;
+  }
+
+  .landing-hero-title__layer.is-exit-bottom .landing-hero-title__soft,
+  .landing-hero-title__layer.is-enter-top .landing-hero-title__soft {
+    opacity: 0;
+    filter: none;
+  }
+
+  .landing-hero-title__layer.is-exit-bottom .landing-hero-title__sharp,
+  .landing-hero-title__layer.is-enter-top .landing-hero-title__sharp {
+    filter: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
 .phaeleon-report-section-highlight {
   animation: phaeleon-section-pulse 2.2s ease-out;
 }
@@ -354,7 +620,17 @@ html.light .workstation-shell {
   .font-mono {
     font-family: "Geist Mono", "IBM Plex Mono", ui-monospace, monospace;
   }
-  
+
+  /* Engraved boot mood: dotted field + fade mask (structure, not glassmorphism). */
+  .landing-dotmap {
+    pointer-events: none;
+    opacity: 0.45;
+    background-image: radial-gradient(var(--border) 1.1px, transparent 1.1px);
+    background-size: 14px 14px;
+    -webkit-mask-image: radial-gradient(ellipse 900px 380px at 50% 18%, black 28%, transparent 72%);
+    mask-image: radial-gradient(ellipse 900px 380px at 50% 18%, black 28%, transparent 72%);
+  }
+
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
   [type="button"]:not(:disabled),

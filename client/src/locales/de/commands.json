@@ -10,38 +10,76 @@
     "assistant": "Assistent"
   },
   "palette": {
-    "cmd": "CMD",
+    "cmd": "BOA5",
     "placeholder": {
-      "helix": "Kette B isolieren · Oberfläche · Layout‑Fokus…",
+      "landing": "BOA5 · Helix · Phaeleon öffnen…",
+      "helix": "BOA5 fragen oder Befehl suchen…",
       "phaeleon": "Warfarin Aspirin analysieren · Arzneimittel tauschen · KI öffnen…"
     },
     "noMatch": "Keine passenden Befehle",
     "navigate": "↑↓ navigieren · Enter ausführen",
     "requiresWorkspace": "Befehlspalette: Viewer‑Befehle erfordern eine geöffnete Helix‑Sitzung.",
     "requiresPhaeleon": "Befehlspalette: Diese Aktion erfordert die Phaeleon‑Arbeitsstation.",
-    "askAi": "KI fragen",
-    "askAiHint": "Den obigen Text an den Research‑Assistenten senden",
+    "askAi": "BOA5 fragen",
+    "askAiHint": "Text an BOA5 senden",
     "askAiDisabledHint": "Geben Sie eine Frage ein und konfigurieren Sie KI in den Einstellungen",
-    "aiTitle": "KI‑Antwort",
+    "aiTitle": "BOA5",
     "aiYouAsked": "Sie fragten",
     "aiThinking": "Denke…",
-    "aiBack": "Befehle",
-    "aiEscHint": "Esc · zurück zu Befehlen",
+    "aiBack": "BOA5",
+    "aiEscHint": "Esc · zurück zu BOA5",
     "aiClose": "Schließen",
     "aiNotConfigured": "KI ist nicht konfiguriert. Fügen Sie Provider‑Keys zur Server‑.env hinzu und starten Sie neu.",
     "aiFailed": "Keine KI‑Antwort erhalten."
   },
   "items": {
-    "nav.phaeleon": { "title": "Phaeleon öffnen", "description": "Arbeitsstation zur Analyse von Arzneimittelwechselwirkungen öffnen" },
-    "phaeleon.analyze": { "title": "Arzneimittelinteraktion analysieren", "description": "Regelbasiertes DDI‑Assessment für Arzneimittel A + B ausführen" },
-    "phaeleon.clear.session": { "title": "Phaeleon Sitzung löschen", "description": "Arzneimittel, Suche und Analyse zurücksetzen" },
-    "phaeleon.swap.drugs": { "title": "Arzneimittel A/B tauschen", "description": "Die beiden zugewiesenen Arzneimittel tauschen" },
-    "phaeleon.slot.drug1": { "title": "Drug‑A‑Slot fokussieren", "description": "Nächstes Suchergebnis Drug A zuweisen" },
-    "phaeleon.slot.drug2": { "title": "Drug‑B‑Slot fokussieren", "description": "Nächstes Suchergebnis Drug B zuweisen" },
-    "phaeleon.search.focus": { "title": "Arzneimittelsuche fokussieren", "description": "Zum FDA / lokalen Suchfeld springen" },
-    "phaeleon.fuzzy.toggle": { "title": "Unscharfe FDA‑Suche umschalten", "description": "Rechtschreib‑tolerante OpenFDA‑Abfragen ein/aus" },
-    "phaeleon.settings.open": { "title": "Phaeleon‑Einstellungen öffnen", "description": "Arbeitsbereich, KI und Anzeigeeinstellungen" },
-    "phaeleon.ai.chat": { "title": "KI‑Assistent öffnen", "description": "Über das aktuelle Arzneimittelpaar und den Bericht chatten" },
-    "assistant.chat.open": { "title": "KI‑Assistent öffnen", "description": "Research‑Assistent Chat‑Panel öffnen" }
+    "nav.phaeleon": {
+      "title": "Phaeleon öffnen",
+      "description": "Arbeitsstation zur Analyse von Arzneimittelwechselwirkungen öffnen"
+    },
+    "phaeleon.analyze": {
+      "title": "Arzneimittelinteraktion analysieren",
+      "description": "Regelbasiertes DDI‑Assessment für Arzneimittel A + B ausführen"
+    },
+    "phaeleon.clear.session": {
+      "title": "Phaeleon Sitzung löschen",
+      "description": "Arzneimittel, Suche und Analyse zurücksetzen"
+    },
+    "phaeleon.swap.drugs": {
+      "title": "Arzneimittel A/B tauschen",
+      "description": "Die beiden zugewiesenen Arzneimittel tauschen"
+    },
+    "phaeleon.slot.drug1": {
+      "title": "Drug‑A‑Slot fokussieren",
+      "description": "Nächstes Suchergebnis Drug A zuweisen"
+    },
+    "phaeleon.slot.drug2": {
+      "title": "Drug‑B‑Slot fokussieren",
+      "description": "Nächstes Suchergebnis Drug B zuweisen"
+    },
+    "phaeleon.search.focus": {
+      "title": "Arzneimittelsuche fokussieren",
+      "description": "Zum FDA / lokalen Suchfeld springen"
+    },
+    "phaeleon.fuzzy.toggle": {
+      "title": "Unscharfe FDA‑Suche umschalten",
+      "description": "Rechtschreib‑tolerante OpenFDA‑Abfragen ein/aus"
+    },
+    "phaeleon.settings.open": {
+      "title": "Phaeleon‑Einstellungen öffnen",
+      "description": "Arbeitsbereich, KI und Anzeigeeinstellungen"
+    },
+    "phaeleon.ai.chat": {
+      "title": "KI‑Assistent öffnen",
+      "description": "Über das aktuelle Arzneimittelpaar und den Bericht chatten"
+    },
+    "assistant.chat.open": {
+      "title": "KI‑Assistent öffnen",
+      "description": "Research‑Assistent Chat‑Panel öffnen"
+    },
+    "nav.binary": {
+      "title": "BOA5 öffnen",
+      "description": "Bioengineering-KI-Chat"
+    }
   }
 }

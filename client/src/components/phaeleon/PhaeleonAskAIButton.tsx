@@ -28,7 +28,7 @@ export default function PhaeleonAskAIButton({ className }: PhaeleonAskAIButtonPr
       onClick={openAssistant}
       title={status?.configured ? t("assistant.openTitle") : t("assistant.notConfiguredTitle")}
       className={cn(
-        "inline-flex items-center gap-2 border border-border bg-secondary px-3 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
+        "inline-flex items-center gap-2 rounded-full border border-border bg-secondary px-3 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
         !status?.configured && "opacity-60",
         className,
       )}

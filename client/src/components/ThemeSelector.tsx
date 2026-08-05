@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
+import WorkstationSelect from "@/components/WorkstationSelect";
 import { useTheme } from "@/contexts/ThemeContext";
-import { cn } from "@/lib/utils";
 
 interface ThemeSelectorProps {
   className?: string;
@@ -12,18 +12,16 @@ export default function ThemeSelector({ className }: ThemeSelectorProps) {
   const { systemTheme, setTheme } = useTheme();
 
   return (
-    <select
+    <WorkstationSelect
       value={systemTheme ?? "system"}
-      onChange={(e) => setTheme(e.target.value)}
+      onValueChange={setTheme}
       aria-label={t("theme.system")}
-      className={cn(
-        "min-w-[120px] border border-border bg-input px-2 py-1 font-mono text-[10px] text-foreground focus:border-accent focus:outline-none",
-        className,
-      )}
-    >
-      <option value="system">{t("theme.system")}</option>
-      <option value="dark">{t("theme.dark")}</option>
-      <option value="light">{t("theme.light")}</option>
-    </select>
+      className={className}
+      options={[
+        { value: "system", label: t("theme.system") },
+        { value: "dark", label: t("theme.dark") },
+        { value: "light", label: t("theme.light") },
+      ]}
+    />
   );
 }

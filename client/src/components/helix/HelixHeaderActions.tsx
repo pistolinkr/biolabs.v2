@@ -8,7 +8,7 @@ import { buildWorkspaceSnapshot, persistWorkspaceSnapshot } from "@/lib/workspac
 import { cn } from "@/lib/utils";
 
 const iconBtn =
-  "border border-transparent p-2 text-muted-foreground transition-colors hover:border-border hover:bg-secondary hover:text-foreground";
+  "rounded-full border border-transparent p-2 text-muted-foreground transition-colors hover:border-border hover:bg-secondary hover:text-foreground";
 
 export function useHelixWorkspaceShortcuts(onCommandPaletteOpen: () => void) {
   const { t } = useTranslation("header");
@@ -66,7 +66,6 @@ export default function HelixHeaderActions({ onSave }: { onSave: () => void }) {
           <Download size={14} />
         </button>
       </HeaderExportMenu>
-      <div className="mx-1 h-6 w-px bg-border" />
     </>
   );
 }

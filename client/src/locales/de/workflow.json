@@ -1,13 +1,37 @@
 {
   "stages": {
-    "input": { "label": "Eingabe", "short": "In" },
-    "ai_pipeline": { "label": "KI-Pipeline", "short": "AI" },
-    "folding": { "label": "Faltung", "short": "Fold" },
-    "analysis": { "label": "Analyse", "short": "Anly" },
-    "reasoning": { "label": "Schlussfolgerung", "short": "Rsn" },
-    "visualization": { "label": "Visualisierung", "short": "Viz" },
-    "simulation": { "label": "Simulation", "short": "Sim" },
-    "engineering": { "label": "Engineering", "short": "Eng" }
+    "input": {
+      "label": "Eingabe",
+      "short": "In"
+    },
+    "ai_pipeline": {
+      "label": "KI-Pipeline",
+      "short": "AI"
+    },
+    "folding": {
+      "label": "Faltung",
+      "short": "Fold"
+    },
+    "analysis": {
+      "label": "Analyse",
+      "short": "Anly"
+    },
+    "reasoning": {
+      "label": "Schlussfolgerung",
+      "short": "Rsn"
+    },
+    "visualization": {
+      "label": "Visualisierung",
+      "short": "Viz"
+    },
+    "simulation": {
+      "label": "Simulation",
+      "short": "Sim"
+    },
+    "engineering": {
+      "label": "Engineering",
+      "short": "Eng"
+    }
   },
   "banner": {
     "noProtein": "Laden Sie eine Struktur, um die Workflow-Pipeline zu starten.",

@@ -53,5 +53,21 @@
     "title": "Etwas ist schiefgelaufen",
     "description": "In dieser Ansicht ist ein unerwarteter Fehler aufgetreten.",
     "retry": "Erneut versuchen"
+  },
+  "aiSetup": {
+    "ariaLabel": "AI setup",
+    "kicker": "AI setup",
+    "title": "Set up AI to use Boa5",
+    "message": "Choose source and model.",
+    "sourceLabel": "Source",
+    "modelLabel": "Model",
+    "byokTitle": "API key",
+    "byokHint": "",
+    "platformTitle": "Platform",
+    "platformHint": "",
+    "otherModel": "Other",
+    "confirm": "Done",
+    "platformSelected": "Platform AI selected",
+    "platformSelectedHint": "Boa5 will use the free platform assistant when the server has keys configured."
   }
 }

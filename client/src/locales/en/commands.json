@@ -10,77 +10,232 @@
     "assistant": "Assistant"
   },
   "palette": {
-    "cmd": "CMD",
+    "cmd": "BOA5",
     "placeholder": {
-      "helix": "Isolate chain B · surface · layout focus…",
-      "phaeleon": "Analyze warfarin aspirin · swap drugs · open AI…"
+      "landing": "Open BOA5 · Helix · Phaeleon…",
+      "helix": "Ask BOA5 or search commands…",
+      "phaeleon": "Ask BOA5 · analyze drugs · search commands…"
     },
     "noMatch": "No matching commands",
     "navigate": "↑↓ navigate · enter run",
     "requiresWorkspace": "Command palette: viewer commands require an open Helix session.",
     "requiresPhaeleon": "Command palette: this action requires the Phaeleon workstation.",
-    "askAi": "Ask AI",
-    "askAiHint": "Send the text above to the research assistant",
+    "askAi": "Ask BOA5",
+    "askAiHint": "Send the text above to BOA5",
     "askAiDisabledHint": "Type a question and configure AI in settings",
-    "aiTitle": "AI answer",
+    "aiTitle": "BOA5",
     "aiYouAsked": "You asked",
     "aiThinking": "Thinking…",
-    "aiBack": "Commands",
-    "aiEscHint": "Esc · back to commands",
+    "aiBack": "BOA5",
+    "aiEscHint": "Esc · back to BOA5",
     "aiClose": "Close",
     "aiNotConfigured": "AI is not configured. Add provider keys to server .env and restart.",
     "aiFailed": "Could not get an AI response."
   },
   "items": {
-    "repr.cartoon": { "title": "Representation: cartoon", "description": "Ribbons / cartoon / main chain trace" },
-    "repr.rope": { "title": "Representation: ribbon (rope)", "description": "Thin ribbon trace" },
-    "repr.surface": { "title": "Representation: surface", "description": "Solvent-accessible surface" },
-    "repr.ballstick": { "title": "Representation: ball & stick", "description": "Atom/bonds" },
-    "repr.spacefill": { "title": "Representation: spheres", "description": "Spacefill / van der Waals" },
-    "repr.ribbon": { "title": "Representation: ribbon (alias)", "description": "Same as rope trace" },
-    "repr.wireframe": { "title": "Representation: wireframe (alias)", "description": "Line / wireframe" },
-    "color.chainid": { "title": "Color by chain", "description": "Chain ID colors" },
-    "color.residueindex": { "title": "Color by residue index", "description": "Sequence position ramp" },
-    "color.hydrophobicity": { "title": "Color by hydrophobicity", "description": "Magnitude scale" },
-    "color.bfactor": { "title": "Color by confidence / B-factor", "description": "Experimental B or pLDDT proxy" },
-    "color.bfactor.gray": { "title": "Color: confidence grey ramp", "description": "B-factor / pLDDT on muted scale" },
-    "color.electrostatic": { "title": "Color: electrostatic", "description": "Electrostatic potential colormap" },
-    "isolate.A": { "title": "Isolate chain A", "description": "Restrict to chain A" },
-    "isolate.B": { "title": "Isolate chain B", "description": "Restrict to chain B" },
-    "isolate.clear": { "title": "Clear isolate", "description": "Show full structure" },
-    "view.fit.selection": { "title": "Fit to selection / isolate", "description": "Frame isolated chain or picked residue" },
-    "view.fit.structure": { "title": "Fit full structure", "description": "Auto-view entire structure" },
-    "view.center": { "title": "Center view", "description": "Auto view (alias)" },
-    "view.preset.readable": { "title": "Readable preset", "description": "Cartoon, chain colors, clear isolate" },
-    "view.quality.toggle": { "title": "Toggle renderer quality", "description": "Medium ↔ high NGL quality preset" },
-    "view.fullscreen.toggle": { "title": "Toggle fullscreen", "description": "Viewport panel" },
-    "overlay.confidence.toggle": { "title": "Toggle confidence coloring", "description": "Grayscale B-factor / restore prior scheme" },
-    "view.spin.toggle": { "title": "Toggle spin", "description": "Stage autorotation" },
-    "analysis.interactions": { "title": "Calculate interactions (stub)", "description": "Interface graph / contacts worker" },
-    "layout.classic": { "title": "Layout: Classic", "description": "Data · Viewport · Inspector with Assistant below" },
-    "layout.focus": { "title": "Layout: Focus", "description": "Maximize viewport, slim side panels" },
-    "layout.analysis": { "title": "Layout: Analysis", "description": "Wide Inspector with Assistant tab" },
-    "layout.assistant": { "title": "Layout: Assistant-first", "description": "Large Assistant region on the right" },
-    "layout.compact": { "title": "Layout: Compact", "description": "Narrow side panels for small screens" },
-    "layout.reset": { "title": "Reset layout", "description": "Re-apply the active layout preset" },
-    "export.cif": { "title": "Export coordinates", "description": "Download mmCIF / PDB via resolved URL" },
-    "screenshot": { "title": "Screenshot viewport", "description": "PNG from WebGL canvas" },
-    "nav.home": { "title": "Open landing hub", "description": "Return to Biolabs tool registry" },
-    "nav.helix": { "title": "Open Helix", "description": "Protein structure visualization workstation" },
-    "nav.phaeleon": { "title": "Open Phaeleon", "description": "Drug interaction analysis workstation" },
-    "phaeleon.analyze": { "title": "Analyze drug interaction", "description": "Run rule-based DDI assessment for Drug A + B" },
-    "phaeleon.clear.session": { "title": "Clear Phaeleon session", "description": "Reset drugs, search, and analysis" },
-    "phaeleon.swap.drugs": { "title": "Swap Drug A and B", "description": "Exchange the two assigned drugs" },
-    "phaeleon.slot.drug1": { "title": "Focus Drug A slot", "description": "Assign next search result to Drug A" },
-    "phaeleon.slot.drug2": { "title": "Focus Drug B slot", "description": "Assign next search result to Drug B" },
-    "phaeleon.search.focus": { "title": "Focus drug search", "description": "Jump to FDA / local drug search field" },
-    "phaeleon.fuzzy.toggle": { "title": "Toggle fuzzy FDA search", "description": "Enable or disable typo-tolerant OpenFDA queries" },
-    "phaeleon.layout.binary": { "title": "Binary layout", "description": "Fast judgment. AI on demand." },
-    "phaeleon.layout.consult": { "title": "Consult layout", "description": "Read the report and ask AI side by side." },
-    "phaeleon.layout.classic": { "title": "Classic layout", "description": "3-panel view with AI docked under inspector." },
-    "phaeleon.layout.reset": { "title": "Reset layout preset", "description": "Re-apply the active workstation preset" },
-    "phaeleon.settings.open": { "title": "Open Phaeleon settings", "description": "Workspace, AI, and appearance preferences" },
-    "phaeleon.ai.chat": { "title": "Open AI assistant", "description": "Chat about the current drug pair and report" },
-    "assistant.chat.open": { "title": "Open AI assistant", "description": "Open the research assistant chat panel" }
+    "repr.cartoon": {
+      "title": "Representation: cartoon",
+      "description": "Ribbons / cartoon / main chain trace"
+    },
+    "repr.rope": {
+      "title": "Representation: ribbon (rope)",
+      "description": "Thin ribbon trace"
+    },
+    "repr.surface": {
+      "title": "Representation: surface",
+      "description": "Solvent-accessible surface"
+    },
+    "repr.ballstick": {
+      "title": "Representation: ball & stick",
+      "description": "Atom/bonds"
+    },
+    "repr.spacefill": {
+      "title": "Representation: spheres",
+      "description": "Spacefill / van der Waals"
+    },
+    "repr.ribbon": {
+      "title": "Representation: ribbon (alias)",
+      "description": "Same as rope trace"
+    },
+    "repr.wireframe": {
+      "title": "Representation: wireframe (alias)",
+      "description": "Line / wireframe"
+    },
+    "color.chainid": {
+      "title": "Color by chain",
+      "description": "Chain ID colors"
+    },
+    "color.residueindex": {
+      "title": "Color by residue index",
+      "description": "Sequence position ramp"
+    },
+    "color.hydrophobicity": {
+      "title": "Color by hydrophobicity",
+      "description": "Magnitude scale"
+    },
+    "color.bfactor": {
+      "title": "Color by confidence / B-factor",
+      "description": "Experimental B or pLDDT proxy"
+    },
+    "color.bfactor.gray": {
+      "title": "Color: confidence grey ramp",
+      "description": "B-factor / pLDDT on muted scale"
+    },
+    "color.electrostatic": {
+      "title": "Color: electrostatic",
+      "description": "Electrostatic potential colormap"
+    },
+    "isolate.A": {
+      "title": "Isolate chain A",
+      "description": "Restrict to chain A"
+    },
+    "isolate.B": {
+      "title": "Isolate chain B",
+      "description": "Restrict to chain B"
+    },
+    "isolate.clear": {
+      "title": "Clear isolate",
+      "description": "Show full structure"
+    },
+    "view.fit.selection": {
+      "title": "Fit to selection / isolate",
+      "description": "Frame isolated chain or picked residue"
+    },
+    "view.fit.structure": {
+      "title": "Fit full structure",
+      "description": "Auto-view entire structure"
+    },
+    "view.center": {
+      "title": "Center view",
+      "description": "Auto view (alias)"
+    },
+    "view.preset.readable": {
+      "title": "Readable preset",
+      "description": "Cartoon, chain colors, clear isolate"
+    },
+    "view.quality.toggle": {
+      "title": "Toggle renderer quality",
+      "description": "Medium ↔ high NGL quality preset"
+    },
+    "view.fullscreen.toggle": {
+      "title": "Toggle fullscreen",
+      "description": "Viewport panel"
+    },
+    "overlay.confidence.toggle": {
+      "title": "Toggle confidence coloring",
+      "description": "Grayscale B-factor / restore prior scheme"
+    },
+    "view.spin.toggle": {
+      "title": "Toggle spin",
+      "description": "Stage autorotation"
+    },
+    "analysis.interactions": {
+      "title": "Calculate interactions (stub)",
+      "description": "Interface graph / contacts worker"
+    },
+    "layout.classic": {
+      "title": "Layout: Classic",
+      "description": "Data · Viewport · Inspector with Assistant below"
+    },
+    "layout.focus": {
+      "title": "Layout: Focus",
+      "description": "Maximize viewport, slim side panels"
+    },
+    "layout.analysis": {
+      "title": "Layout: Analysis",
+      "description": "Wide Inspector with Assistant tab"
+    },
+    "layout.assistant": {
+      "title": "Layout: Assistant-first",
+      "description": "Large Assistant region on the right"
+    },
+    "layout.compact": {
+      "title": "Layout: Compact",
+      "description": "Narrow side panels for small screens"
+    },
+    "layout.reset": {
+      "title": "Reset layout",
+      "description": "Re-apply the active layout preset"
+    },
+    "export.cif": {
+      "title": "Export coordinates",
+      "description": "Download mmCIF / PDB via resolved URL"
+    },
+    "screenshot": {
+      "title": "Screenshot viewport",
+      "description": "PNG from WebGL canvas"
+    },
+    "nav.home": {
+      "title": "Open landing hub",
+      "description": "Return to Biolabs tool registry"
+    },
+    "nav.binary": {
+      "title": "Open BOA5",
+      "description": "Bioengineering AI chat home"
+    },
+    "nav.helix": {
+      "title": "Open Helix",
+      "description": "Protein structure visualization workstation"
+    },
+    "nav.phaeleon": {
+      "title": "Open Phaeleon",
+      "description": "Drug interaction analysis workstation"
+    },
+    "phaeleon.analyze": {
+      "title": "Analyze drug interaction",
+      "description": "Run rule-based DDI assessment for Drug A + B"
+    },
+    "phaeleon.clear.session": {
+      "title": "Clear Phaeleon session",
+      "description": "Reset drugs, search, and analysis"
+    },
+    "phaeleon.swap.drugs": {
+      "title": "Swap Drug A and B",
+      "description": "Exchange the two assigned drugs"
+    },
+    "phaeleon.slot.drug1": {
+      "title": "Focus Drug A slot",
+      "description": "Assign next search result to Drug A"
+    },
+    "phaeleon.slot.drug2": {
+      "title": "Focus Drug B slot",
+      "description": "Assign next search result to Drug B"
+    },
+    "phaeleon.search.focus": {
+      "title": "Focus drug search",
+      "description": "Jump to FDA / local drug search field"
+    },
+    "phaeleon.fuzzy.toggle": {
+      "title": "Toggle fuzzy FDA search",
+      "description": "Enable or disable typo-tolerant OpenFDA queries"
+    },
+    "phaeleon.layout.binary": {
+      "title": "BOA5 layout",
+      "description": "Fast judgment. AI on demand."
+    },
+    "phaeleon.layout.consult": {
+      "title": "Consult layout",
+      "description": "Read the report and ask AI side by side."
+    },
+    "phaeleon.layout.classic": {
+      "title": "Classic layout",
+      "description": "3-panel view with AI docked under inspector."
+    },
+    "phaeleon.layout.reset": {
+      "title": "Reset layout preset",
+      "description": "Re-apply the active workstation preset"
+    },
+    "phaeleon.settings.open": {
+      "title": "Open Phaeleon settings",
+      "description": "Workspace, AI, and appearance preferences"
+    },
+    "phaeleon.ai.chat": {
+      "title": "Open AI assistant",
+      "description": "Chat about the current drug pair and report"
+    },
+    "assistant.chat.open": {
+      "title": "Open AI assistant",
+      "description": "Open the research assistant chat panel"
+    }
   }
 }

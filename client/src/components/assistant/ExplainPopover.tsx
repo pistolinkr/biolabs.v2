@@ -4,6 +4,7 @@ import { Loader2, X } from "lucide-react";
 import { Streamdown } from "streamdown";
 import FloatingPanelResizeHandles from "@/components/assistant/FloatingPanelResizeHandles";
 import { useAssistant } from "@/contexts/AssistantContext";
+import { useViewerOptional } from "@/contexts/ViewerContext";
 import { useFloatingPanelLayout } from "@/hooks/useFloatingPanelLayout";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +14,7 @@ const DEFAULT_H = 360;
 export default function ExplainPopover() {
   const { t } = useTranslation("assistant");
   const { explainPopover, closeExplainPopover, setChatOpen } = useAssistant();
+  const viewer = useViewerOptional();
   const containerRef = useRef<HTMLDivElement>(null);
   const positionedRef = useRef(false);
 
@@ -32,14 +34,29 @@ export default function ExplainPopover() {
 
   useLayoutEffect(() => {
     if (positionedRef.current || !explainPopover?.open) return;
-    const rect = containerRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    setPosition({
-      left: Math.max(8, rect.width - DEFAULT_W - 16),
-      top: Math.max(8, rect.height - DEFAULT_H - 16),
-    });
+    const overlay = containerRef.current?.getBoundingClientRect();
+    if (!overlay) return;
+
+    const anchor = viewer?.viewportPickAnchor;
+    const shell = viewer?.viewportShellRef?.current?.getBoundingClientRect();
+    if (anchor && shell) {
+      const left = Math.min(
+        Math.max(8, shell.left + anchor.x + 12),
+        Math.max(8, overlay.width - DEFAULT_W - 8),
+      );
+      const top = Math.min(
+        Math.max(8, shell.top + anchor.y + 12),
+        Math.max(8, overlay.height - DEFAULT_H - 8),
+      );
+      setPosition({ left, top });
+    } else {
+      setPosition({
+        left: Math.max(8, overlay.width - DEFAULT_W - 16),
+        top: Math.max(8, overlay.height - DEFAULT_H - 16),
+      });
+    }
     positionedRef.current = true;
-  }, [explainPopover?.open, setPosition]);
+  }, [explainPopover?.open, setPosition, viewer?.viewportPickAnchor, viewer?.viewportShellRef]);
 
   useEffect(() => {
     if (!explainPopover?.open) positionedRef.current = false;
@@ -50,7 +67,7 @@ export default function ExplainPopover() {
   const { title, content, loading } = explainPopover;
 
   return (
-    <div ref={containerRef} className="pointer-events-none fixed inset-0 z-[60]">
+    <div ref={containerRef} data-slot="explain-popover" className="pointer-events-none fixed inset-0 z-[60]">
       <div
         className={cn(
           "pointer-events-auto absolute relative flex flex-col overflow-hidden border border-border bg-card shadow-lg",

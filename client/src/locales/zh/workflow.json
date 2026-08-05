@@ -1,13 +1,37 @@
 {
   "stages": {
-    "input": { "label": "输入", "short": "In" },
-    "ai_pipeline": { "label": "AI 流水线", "short": "AI" },
-    "folding": { "label": "折叠", "short": "Fold" },
-    "analysis": { "label": "分析", "short": "Anly" },
-    "reasoning": { "label": "推理", "short": "Rsn" },
-    "visualization": { "label": "可视化", "short": "Viz" },
-    "simulation": { "label": "模拟", "short": "Sim" },
-    "engineering": { "label": "工程", "short": "Eng" }
+    "input": {
+      "label": "输入",
+      "short": "In"
+    },
+    "ai_pipeline": {
+      "label": "AI 流水线",
+      "short": "AI"
+    },
+    "folding": {
+      "label": "折叠",
+      "short": "Fold"
+    },
+    "analysis": {
+      "label": "分析",
+      "short": "Anly"
+    },
+    "reasoning": {
+      "label": "推理",
+      "short": "Rsn"
+    },
+    "visualization": {
+      "label": "可视化",
+      "short": "Viz"
+    },
+    "simulation": {
+      "label": "模拟",
+      "short": "Sim"
+    },
+    "engineering": {
+      "label": "工程",
+      "short": "Eng"
+    }
   },
   "banner": {
     "noProtein": "加载结构以开始工作流流水线。",

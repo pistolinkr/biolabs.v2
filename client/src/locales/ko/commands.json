@@ -10,77 +10,232 @@
     "assistant": "어시스턴트"
   },
   "palette": {
-    "cmd": "CMD",
+    "cmd": "BOA5",
     "placeholder": {
-      "helix": "체인 B 분리 · surface · layout focus…",
-      "phaeleon": "warfarin aspirin 분석 · 약물 교환 · AI 열기…"
+      "landing": "BOA5 · Helix · Phaeleon 열기…",
+      "helix": "BOA5에게 질문하거나 명령 검색…",
+      "phaeleon": "BOA5에게 질문 · 약물 분석 · 명령 검색…"
     },
     "noMatch": "일치하는 명령 없음",
     "navigate": "↑↓ 이동 · Enter 실행",
     "requiresWorkspace": "명령 팔레트: 뷰어 명령에는 Helix 세션이 필요합니다.",
     "requiresPhaeleon": "명령 팔레트: 이 동작은 Phaeleon 워크스테이션에서만 사용할 수 있습니다.",
-    "askAi": "AI에게 질문",
-    "askAiHint": "입력한 내용을 연구 어시스턴트에 전송",
+    "askAi": "BOA5에게 질문",
+    "askAiHint": "입력한 내용을 BOA5에 전송",
     "askAiDisabledHint": "질문을 입력하고 설정에서 AI를 구성하세요",
-    "aiTitle": "AI 답변",
+    "aiTitle": "BOA5",
     "aiYouAsked": "질문",
     "aiThinking": "생각 중…",
-    "aiBack": "명령 목록",
-    "aiEscHint": "Esc · 명령 목록으로",
+    "aiBack": "BOA5",
+    "aiEscHint": "Esc · BOA5로",
     "aiClose": "닫기",
     "aiNotConfigured": "AI가 구성되지 않았습니다. 서버 .env에 API 키를 추가한 뒤 재시작하세요.",
     "aiFailed": "AI 응답을 받지 못했습니다."
   },
   "items": {
-    "repr.cartoon": { "title": "표현: cartoon", "description": "리본 / cartoon / 메인 체인 트레이스" },
-    "repr.rope": { "title": "표현: ribbon (rope)", "description": "얇은 리본 트레이스" },
-    "repr.surface": { "title": "표현: surface", "description": "용매 접근 가능 표면" },
-    "repr.ballstick": { "title": "표현: ball & stick", "description": "원자/결합" },
-    "repr.spacefill": { "title": "표현: spheres", "description": "Spacefill / van der Waals" },
-    "repr.ribbon": { "title": "표현: ribbon (별칭)", "description": "rope 트레이스와 동일" },
-    "repr.wireframe": { "title": "표현: wireframe (별칭)", "description": "선 / wireframe" },
-    "color.chainid": { "title": "체인별 색상", "description": "체인 ID 색상" },
-    "color.residueindex": { "title": "잔기 인덱스별 색상", "description": "서열 위치 그라데이션" },
-    "color.hydrophobicity": { "title": "소수성별 색상", "description": "크기 척도" },
-    "color.bfactor": { "title": "신뢰도 / B-factor별 색상", "description": "실험 B 또는 pLDDT 프록시" },
-    "color.bfactor.gray": { "title": "색상: 신뢰도 회색 그라데이션", "description": "B-factor / pLDDT 음소거 척도" },
-    "color.electrostatic": { "title": "색상: electrostatic", "description": "정전기 전위 컬러맵" },
-    "isolate.A": { "title": "체인 A 분리", "description": "체인 A로 제한" },
-    "isolate.B": { "title": "체인 B 분리", "description": "체인 B로 제한" },
-    "isolate.clear": { "title": "분리 해제", "description": "전체 구조 표시" },
-    "view.fit.selection": { "title": "선택 / 분리에 맞춤", "description": "분리된 체인 또는 선택 잔기에 맞춤" },
-    "view.fit.structure": { "title": "전체 구조에 맞춤", "description": "전체 구조 자동 보기" },
-    "view.center": { "title": "보기 중앙 정렬", "description": "자동 보기 (별칭)" },
-    "view.preset.readable": { "title": "가독성 프리셋", "description": "Cartoon, 체인 색상, 분리 해제" },
-    "view.quality.toggle": { "title": "렌더러 품질 전환", "description": "Medium ↔ high NGL 품질 프리셋" },
-    "view.fullscreen.toggle": { "title": "전체 화면 전환", "description": "뷰포트 패널" },
-    "overlay.confidence.toggle": { "title": "신뢰도 색상 전환", "description": "B-factor 회색조 / 이전 스킴 복원" },
-    "view.spin.toggle": { "title": "회전 전환", "description": "스테이지 자동 회전" },
-    "analysis.interactions": { "title": "상호작용 계산 (스텁)", "description": "인터페이스 그래프 / 접촉 워커" },
-    "layout.classic": { "title": "레이아웃: Classic", "description": "데이터 · 뷰포트 · 인스펙터, 어시스턴트 하단" },
-    "layout.focus": { "title": "레이아웃: Focus", "description": "뷰포트 최대화, 양옆 패널 슬림" },
-    "layout.analysis": { "title": "레이아웃: Analysis", "description": "넓은 인스펙터 + 어시스턴트 탭" },
-    "layout.assistant": { "title": "레이아웃: Assistant-first", "description": "우측에 큰 어시스턴트 영역" },
-    "layout.compact": { "title": "레이아웃: Compact", "description": "작은 화면용 좁은 양옆 패널" },
-    "layout.reset": { "title": "레이아웃 초기화", "description": "현재 레이아웃 프리셋 다시 적용" },
-    "export.cif": { "title": "좌표 내보내기", "description": "해결된 URL로 mmCIF / PDB 다운로드" },
-    "screenshot": { "title": "뷰포트 스크린샷", "description": "WebGL 캔버스에서 PNG" },
-    "nav.home": { "title": "랜딩 허브 열기", "description": "Biolabs 도구 레지스트리로 돌아가기" },
-    "nav.helix": { "title": "Helix 열기", "description": "단백질 구조 시각화 워크스테이션" },
-    "nav.phaeleon": { "title": "Phaeleon 열기", "description": "약물 상호작용 분석 워크스테이션" },
-    "phaeleon.analyze": { "title": "약물 상호작용 분석", "description": "Drug A + B 규칙 기반 DDI 평가 실행" },
-    "phaeleon.clear.session": { "title": "Phaeleon 세션 초기화", "description": "약물, 검색, 분석 결과 리셋" },
-    "phaeleon.swap.drugs": { "title": "Drug A/B 교환", "description": "지정된 두 약물 위치 바꾸기" },
-    "phaeleon.slot.drug1": { "title": "Drug A 슬롯 선택", "description": "다음 검색 결과를 Drug A에 지정" },
-    "phaeleon.slot.drug2": { "title": "Drug B 슬롯 선택", "description": "다음 검색 결과를 Drug B에 지정" },
-    "phaeleon.search.focus": { "title": "약물 검색 포커스", "description": "FDA / 로컬 약물 검색 입력으로 이동" },
-    "phaeleon.fuzzy.toggle": { "title": "FDA 퍼지 검색 전환", "description": "오타 허용 OpenFDA 쿼리 on/off" },
-    "phaeleon.layout.binary": { "title": "Binary 레이아웃", "description": "Fast judgment. AI on demand." },
-    "phaeleon.layout.consult": { "title": "Consult 레이아웃", "description": "Read the report and ask AI side by side." },
-    "phaeleon.layout.classic": { "title": "Classic 레이아웃", "description": "3-panel view with AI docked under inspector." },
-    "phaeleon.layout.reset": { "title": "레이아웃 프리셋 초기화", "description": "활성 워크스테이션 프리셋 재적용" },
-    "phaeleon.settings.open": { "title": "Phaeleon 설정 열기", "description": "워크스페이스, AI, 외관 설정" },
-    "phaeleon.ai.chat": { "title": "AI 어시스턴트 열기", "description": "현재 약물 쌍 및 리포트에 대해 채팅" },
-    "assistant.chat.open": { "title": "AI 어시스턴트 열기", "description": "연구 어시스턴트 채팅 패널 열기" }
+    "repr.cartoon": {
+      "title": "표현: cartoon",
+      "description": "리본 / cartoon / 메인 체인 트레이스"
+    },
+    "repr.rope": {
+      "title": "표현: ribbon (rope)",
+      "description": "얇은 리본 트레이스"
+    },
+    "repr.surface": {
+      "title": "표현: surface",
+      "description": "용매 접근 가능 표면"
+    },
+    "repr.ballstick": {
+      "title": "표현: ball & stick",
+      "description": "원자/결합"
+    },
+    "repr.spacefill": {
+      "title": "표현: spheres",
+      "description": "Spacefill / van der Waals"
+    },
+    "repr.ribbon": {
+      "title": "표현: ribbon (별칭)",
+      "description": "rope 트레이스와 동일"
+    },
+    "repr.wireframe": {
+      "title": "표현: wireframe (별칭)",
+      "description": "선 / wireframe"
+    },
+    "color.chainid": {
+      "title": "체인별 색상",
+      "description": "체인 ID 색상"
+    },
+    "color.residueindex": {
+      "title": "잔기 인덱스별 색상",
+      "description": "서열 위치 그라데이션"
+    },
+    "color.hydrophobicity": {
+      "title": "소수성별 색상",
+      "description": "크기 척도"
+    },
+    "color.bfactor": {
+      "title": "신뢰도 / B-factor별 색상",
+      "description": "실험 B 또는 pLDDT 프록시"
+    },
+    "color.bfactor.gray": {
+      "title": "색상: 신뢰도 회색 그라데이션",
+      "description": "B-factor / pLDDT 음소거 척도"
+    },
+    "color.electrostatic": {
+      "title": "색상: electrostatic",
+      "description": "정전기 전위 컬러맵"
+    },
+    "isolate.A": {
+      "title": "체인 A 분리",
+      "description": "체인 A로 제한"
+    },
+    "isolate.B": {
+      "title": "체인 B 분리",
+      "description": "체인 B로 제한"
+    },
+    "isolate.clear": {
+      "title": "분리 해제",
+      "description": "전체 구조 표시"
+    },
+    "view.fit.selection": {
+      "title": "선택 / 분리에 맞춤",
+      "description": "분리된 체인 또는 선택 잔기에 맞춤"
+    },
+    "view.fit.structure": {
+      "title": "전체 구조에 맞춤",
+      "description": "전체 구조 자동 보기"
+    },
+    "view.center": {
+      "title": "보기 중앙 정렬",
+      "description": "자동 보기 (별칭)"
+    },
+    "view.preset.readable": {
+      "title": "가독성 프리셋",
+      "description": "Cartoon, 체인 색상, 분리 해제"
+    },
+    "view.quality.toggle": {
+      "title": "렌더러 품질 전환",
+      "description": "Medium ↔ high NGL 품질 프리셋"
+    },
+    "view.fullscreen.toggle": {
+      "title": "전체 화면 전환",
+      "description": "뷰포트 패널"
+    },
+    "overlay.confidence.toggle": {
+      "title": "신뢰도 색상 전환",
+      "description": "B-factor 회색조 / 이전 스킴 복원"
+    },
+    "view.spin.toggle": {
+      "title": "회전 전환",
+      "description": "스테이지 자동 회전"
+    },
+    "analysis.interactions": {
+      "title": "상호작용 계산 (스텁)",
+      "description": "인터페이스 그래프 / 접촉 워커"
+    },
+    "layout.classic": {
+      "title": "레이아웃: Classic",
+      "description": "데이터 · 뷰포트 · 인스펙터, 어시스턴트 하단"
+    },
+    "layout.focus": {
+      "title": "레이아웃: Focus",
+      "description": "뷰포트 최대화, 양옆 패널 슬림"
+    },
+    "layout.analysis": {
+      "title": "레이아웃: Analysis",
+      "description": "넓은 인스펙터 + 어시스턴트 탭"
+    },
+    "layout.assistant": {
+      "title": "레이아웃: Assistant-first",
+      "description": "우측에 큰 어시스턴트 영역"
+    },
+    "layout.compact": {
+      "title": "레이아웃: Compact",
+      "description": "작은 화면용 좁은 양옆 패널"
+    },
+    "layout.reset": {
+      "title": "레이아웃 초기화",
+      "description": "현재 레이아웃 프리셋 다시 적용"
+    },
+    "export.cif": {
+      "title": "좌표 내보내기",
+      "description": "해결된 URL로 mmCIF / PDB 다운로드"
+    },
+    "screenshot": {
+      "title": "뷰포트 스크린샷",
+      "description": "WebGL 캔버스에서 PNG"
+    },
+    "nav.home": {
+      "title": "랜딩 허브 열기",
+      "description": "Biolabs 도구 레지스트리로 돌아가기"
+    },
+    "nav.binary": {
+      "title": "BOA5 열기",
+      "description": "바이오엔지니어링 AI 채팅 홈"
+    },
+    "nav.helix": {
+      "title": "Helix 열기",
+      "description": "단백질 구조 시각화 워크스테이션"
+    },
+    "nav.phaeleon": {
+      "title": "Phaeleon 열기",
+      "description": "약물 상호작용 분석 워크스테이션"
+    },
+    "phaeleon.analyze": {
+      "title": "약물 상호작용 분석",
+      "description": "Drug A + B 규칙 기반 DDI 평가 실행"
+    },
+    "phaeleon.clear.session": {
+      "title": "Phaeleon 세션 초기화",
+      "description": "약물, 검색, 분석 결과 리셋"
+    },
+    "phaeleon.swap.drugs": {
+      "title": "Drug A/B 교환",
+      "description": "지정된 두 약물 위치 바꾸기"
+    },
+    "phaeleon.slot.drug1": {
+      "title": "Drug A 슬롯 선택",
+      "description": "다음 검색 결과를 Drug A에 지정"
+    },
+    "phaeleon.slot.drug2": {
+      "title": "Drug B 슬롯 선택",
+      "description": "다음 검색 결과를 Drug B에 지정"
+    },
+    "phaeleon.search.focus": {
+      "title": "약물 검색 포커스",
+      "description": "FDA / 로컬 약물 검색 입력으로 이동"
+    },
+    "phaeleon.fuzzy.toggle": {
+      "title": "FDA 퍼지 검색 전환",
+      "description": "오타 허용 OpenFDA 쿼리 on/off"
+    },
+    "phaeleon.layout.binary": {
+      "title": "BOA5 레이아웃",
+      "description": "Fast judgment. AI on demand."
+    },
+    "phaeleon.layout.consult": {
+      "title": "Consult 레이아웃",
+      "description": "Read the report and ask AI side by side."
+    },
+    "phaeleon.layout.classic": {
+      "title": "Classic 레이아웃",
+      "description": "3-panel view with AI docked under inspector."
+    },
+    "phaeleon.layout.reset": {
+      "title": "레이아웃 프리셋 초기화",
+      "description": "활성 워크스테이션 프리셋 재적용"
+    },
+    "phaeleon.settings.open": {
+      "title": "Phaeleon 설정 열기",
+      "description": "워크스페이스, AI, 외관 설정"
+    },
+    "phaeleon.ai.chat": {
+      "title": "AI 어시스턴트 열기",
+      "description": "현재 약물 쌍 및 리포트에 대해 채팅"
+    },
+    "assistant.chat.open": {
+      "title": "AI 어시스턴트 열기",
+      "description": "연구 어시스턴트 채팅 패널 열기"
+    }
   }
 }

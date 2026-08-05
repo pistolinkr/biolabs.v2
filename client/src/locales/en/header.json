@@ -1,6 +1,17 @@
 {
-  "command": "Command...",
-  "commandPalette": "Command palette",
+  "command": "BOA5",
+  "commandPalette": "Commands (⌘K)",
+  "ask": {
+    "title": "Ask BOA5",
+    "collapsedPlaceholder": "Ask BOA5…",
+    "expandedPlaceholder": "Ask or control this structure…",
+    "expandedPlaceholderWithMentions": "Ask about the labeled residues…",
+    "send": "Send",
+    "mentionAdd": "Mention {{label}}",
+    "mentionRemove": "Remove {{label}}",
+    "mentionCount": "{{count}} labels",
+    "replyDismiss": "Dismiss reply"
+  },
   "saveWorkspace": "Save workspace (⌘S)",
   "exportMenu": "Export",
   "settings": "Settings",

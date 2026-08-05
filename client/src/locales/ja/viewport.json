@@ -15,8 +15,16 @@
     "measure": "Meas",
     "quality": "Med",
     "qualityHigh": "High",
-    "measureModes": { "distance": "距離", "angle": "角", "dihedral": "二面" },
-    "qualityLevels": { "low": "低", "medium": "中", "high": "高" },
+    "measureModes": {
+      "distance": "距離",
+      "angle": "角",
+      "dihedral": "二面"
+    },
+    "qualityLevels": {
+      "low": "低",
+      "medium": "中",
+      "high": "高"
+    },
     "palette": "⌘K · Palette",
     "contacts": "Ctx",
     "overlay": "Ovl",

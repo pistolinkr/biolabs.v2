@@ -1,7 +1,6 @@
 import { DockviewDefaultTab, DockviewReact } from "dockview";
 import type { DockviewApi, DockviewReadyEvent, IDockviewPanelProps } from "dockview";
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef } from "react";
-import AIChatPanel from "@/components/assistant/AIChatPanel";
 import LeftWorkstationPanel from "@/components/workbench/LeftWorkstationPanel";
 import RightWorkstationPanel from "@/components/workbench/RightWorkstationPanel";
 import { useLocale } from "@/contexts/LocaleContext";
@@ -10,7 +9,6 @@ import { useWorkstationLayout } from "@/contexts/WorkstationLayoutContext";
 import { cn } from "@/lib/utils";
 import { DOCK_LAYOUT_STORAGE_KEY } from "@/lib/workstationLayoutStorage";
 import {
-  PANEL_ASSISTANT,
   PANEL_CENTER,
   PANEL_LEFT,
   PANEL_RIGHT,
@@ -52,14 +50,6 @@ function DockPanelRight(_props: IDockviewPanelProps) {
   );
 }
 
-function DockPanelAssistant(_props: IDockviewPanelProps) {
-  return (
-    <div className="workbench-surface flex h-full min-h-0 flex-col overflow-hidden">
-      <AIChatPanel />
-    </div>
-  );
-}
-
 function tryRestoreLayout(api: DockviewApi): boolean {
   try {
     const raw = localStorage.getItem(DOCK_LAYOUT_STORAGE_KEY);
@@ -81,7 +71,6 @@ const dockComponents = {
   [PANEL_LEFT]: DockPanelLeft,
   [PANEL_CENTER]: DockPanelCenter,
   [PANEL_RIGHT]: DockPanelRight,
-  [PANEL_ASSISTANT]: DockPanelAssistant,
 } as const;
 
 export interface WorkstationDockLayoutProps {

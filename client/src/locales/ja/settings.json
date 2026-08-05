@@ -6,7 +6,7 @@
   },
   "tabs": {
     "general": "一般",
-    "ai": "AI アシスタント",
+    "ai": "Boa5",
     "workspace": "ワークスペース",
     "about": "概要"
   },
@@ -17,7 +17,9 @@
     "scientificHud": "サイエンティフィック HUD",
     "scientificHudHint": "ビューポート上の座標表示オーバーレイ。",
     "viewportNote": "ビューポートのレンダーオプション (AO、シャドウ) は Display ワークベンチタブで制御します。",
-    "phaeleonNote": "Phaeleon は固定の3列レイアウト (入力 · 解析 · インスペクタ) を使用します。パネル幅と解析動作は Workspace タブで設定します。"
+    "phaeleonNote": "Phaeleon は固定の3列レイアウト (入力 · 解析 · インスペクタ) を使用します。パネル幅と解析動作は Workspace タブで設定します。",
+    "navbarFixed": "ナビ固定",
+    "navbarFixedHint": "上部ナビを常に表示します。BOA5の自動非表示とLandingのスクロール非表示をオフにします。"
   },
   "workspace": {
     "layout": "ワークステーションレイアウト",
@@ -54,7 +56,7 @@
     "resetLayout": "プリセットにリセット",
     "customLayout": "カスタムレイアウト — プリセットと異なる寸法",
     "presets": {
-      "binary": "Binary",
+      "binary": "BOA5",
       "binaryHint": "Fast judgment. AI on demand.",
       "consult": "Consult",
       "consultHint": "Read the report and ask AI side by side.",
@@ -108,7 +110,7 @@
     "available": "利用可能: {{list}}",
     "none": "なし",
     "outputLimits": "最大トークン {{tokens}} · コンテキスト {{chars}} 文字",
-    "notConfigured": "アシスタントを使用するには上部に少なくとも1つのプロバイダAPIキーを追加してください。",
+    "notConfigured": "Choose platform AI (if available) or add a provider API key above.",
     "refreshStatus": "状態を更新",
     "testConnection": "接続をテスト",
     "providerHealth": "プロバイダーの健全性",
@@ -151,9 +153,16 @@
     "phaeleonContextNote": "Phaeleon は現在の薬剤ペアとルールベースの相互作用レポートを自動的に AI コンテキストに挿入します。上でプロバイダと応答言語を設定してください。",
     "providers": {
       "auto": "自動（フォールバック順）",
-      "gemini": "Gemini",
+      "gemini": "Google AI",
       "openrouter": "OpenRouter",
-      "huggingface": "Hugging Face"
-    }
+      "huggingface": "Hugging Face",
+      "openai": "OpenAI",
+      "anthropic": "Anthropic"
+    },
+    "source": "AI source",
+    "sourceHint": "Platform AI uses Biolabs-hosted keys. Your API keys stay in this browser and call providers directly.",
+    "sourcePlatform": "Free platform AI",
+    "sourceByok": "Your API keys",
+    "platformNotConfigured": "Platform AI needs server keys in .env (GEMINI_API_KEY or OPENROUTER_API_KEY). Restart pnpm dev, then Refresh status. Static hosts without Node cannot serve /api/ai."
   }
 }

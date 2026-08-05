@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useAssistant } from "@/contexts/AssistantContext";
 import { usePhaeleon } from "@/contexts/PhaeleonContext";
+import { appendBoa5SharedMessages } from "@/lib/ai/binaryChatThreads";
 import {
   loadPhaeleonChatHistory,
   savePhaeleonChatHistory,
@@ -45,6 +46,8 @@ export default function PhaeleonSessionHistoryBridge() {
   useEffect(() => {
     if (skipSaveRef.current || !drug1 || !drug2) return;
     savePhaeleonChatHistory(drug1.name, drug2.name, messages);
+    // Mirror into the shared BOA5 thread so Binary / Helix can continue the same chat.
+    appendBoa5SharedMessages(messages);
   }, [messages, drug1, drug2]);
 
   useEffect(() => {

@@ -8,5 +8,12 @@
   "AI_UNKNOWN": "AI リクエストに失敗しました。",
   "requestFailed": "AI リクエストに失敗しました。",
   "couldNotAnalyze": "この残基を分析できませんでした。",
-  "couldNotExplain": "この選択を説明できませんでした。"
+  "couldNotExplain": "この選択を説明できませんでした。",
+  "AI_NOT_CONFIGURED": "AI is not configured. Add OPENROUTER_API_KEY to .env or a key in Settings → AI.",
+  "AI_DAILY_QUOTA_EXCEEDED": "Daily AI limit reached for {{region}} ({{used}}/{{limit}}). Resets at {{resetsAt}} (UTC).",
+  "AI_MODEL_UNAVAILABLE": "Selected model is unavailable.",
+  "AI_NETWORK_ERROR": "Could not reach the AI provider. Check network and retry.",
+  "AI_ALL_PROVIDERS_FAILED": "All configured providers failed.",
+  "AI_REQUEST_INVALID": "Invalid AI request.",
+  "AI_EMPTY_RESPONSE": "Provider returned an empty response."
 }

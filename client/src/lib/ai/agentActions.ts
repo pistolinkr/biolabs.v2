@@ -309,6 +309,32 @@ export function boostAgentPlan(userText: string, plan: AiAgentPlan): AiAgentPlan
   return { reply, actions: inferred };
 }
 
+/**
+ * Helix BOA5 ask bar — answer questions without mutating the loaded viewport.
+ * Isolate / reload / repr swaps from the model often blank the canvas (esp. nucleic).
+ */
+const ASK_SAFE_ACTION_TYPES = new Set<AiAction["type"]>([
+  "focus_residue",
+  "explain_residue",
+  "analyze_structure",
+  "fit_view",
+  "reset_view",
+]);
+
+const ASK_SAFE_COMMANDS = new Set([
+  "view.center",
+  "view.fit.structure",
+  "view.fit.selection",
+  "view.reset",
+]);
+
+export function filterAskSafeAgentActions(actions: AgentPlanAction[]): AiAction[] {
+  return actions.filter(isHelixAiAction).filter((action) => {
+    if (action.type === "command") return ASK_SAFE_COMMANDS.has(action.cmdId);
+    return ASK_SAFE_ACTION_TYPES.has(action.type);
+  });
+}
+
 export function waitForStructureLoaded(
   getViewer: () => AgentViewerSnapshot,
   proteinKey: string,

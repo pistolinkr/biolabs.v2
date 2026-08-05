@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIOLABS — Next-Generation Bio Simulation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Newsreader:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f2f0ec;
+    --bg-card: #f8f7f4;
+    --ink: #17181a;
+    --ink-soft: #4a4d52;
+    --ink-muted: #8a8d92;
+    --border: #c9c6bf;
+    --border-strong: #17181a;
+    --accent: #5a6878;
+    --dot: #c9c6bf;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'Geist Mono', 'SFMono-Regular', Consolas, monospace;
+    --font-serif: 'Newsreader', Georgia, serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
+
+  /* ---------- Dot map watermark ---------- */
+  .dotmap {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 620px;
+    pointer-events: none;
+    opacity: 0.55;
+    background-image: radial-gradient(var(--dot) 1.1px, transparent 1.1px);
+    background-size: 14px 14px;
+    -webkit-mask-image: radial-gradient(ellipse 900px 380px at 50% 20%, black 30%, transparent 75%);
+    mask-image: radial-gradient(ellipse 900px 380px at 50% 20%, black 30%, transparent 75%);
+  }
+
+  .page { position: relative; overflow: hidden; }
+
+  /* ---------- Title bar ---------- */
+  .titlebar {
+    position: relative;
+    z-index: 2;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tb-left { display: flex; gap: 6px; }
+  .tb-icon {
+    width: 22px; height: 22px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ink-soft);
+  }
+  .tb-icon svg { width: 11px; height: 11px; }
+  .tb-center {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .tb-right {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-muted);
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  /* ---------- Header ---------- */
+  header {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px 0;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; }
+  .logo-mark {
+    width: 26px; height: 26px;
+    border: 1px solid var(--border-strong);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent);
+  }
+  .logo-mark svg { width: 14px; height: 14px; }
+  .ask-ai {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px;
+    border: 1px solid var(--border-strong);
+    padding: 8px 14px;
+    background: var(--bg-card);
+  }
+  .ask-ai svg { width: 12px; height: 12px; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 90px 40px 40px;
+    text-align: center;
+  }
+  h1 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 58px;
+    letter-spacing: -0.01em;
+    line-height: 1.08;
+    margin-bottom: 22px;
+  }
+  .hero p {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  /* origin axis marker (bottom-left echo of reference) */
+  .axis {
+    position: absolute;
+    left: 40px;
+    top: 130px;
+    color: var(--ink-muted);
+    z-index: 2;
+  }
+
+  /* ---------- Tools ---------- */
+  .tools-section {
+    position: relative;
+    z-index: 2;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 40px 20px;
+  }
+  .section-label {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 18px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .section-label::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .tool-card {
+    background: var(--bg-card);
+    padding: 20px 22px;
+    position: relative;
+  }
+  .marker {
+    position: absolute; top: 8px; left: 8px;
+    width: 5px; height: 5px;
+    background: var(--border-strong);
+  }
+  .tool-name-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; margin-top: 4px; }
+  .tool-icon { width: 16px; height: 16px; color: var(--accent); }
+  .tool-icon svg { width: 100%; height: 100%; }
+  .tool-name { font-size: 13.5px; font-weight: 600; }
+  .route-pill { font-family: var(--font-mono); font-size: 9px; color: var(--ink-muted); border: 1px solid var(--border); padding: 1px 5px; }
+  .status-pill { font-family: var(--font-mono); font-size: 9px; margin-left: auto; border: 1px solid var(--border); padding: 1px 5px; }
+  .status-pill.live { border-color: var(--accent); color: var(--accent); }
+  .tool-tagline { font-family: var(--font-mono); font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 8px; }
+  .tool-body { font-size: 11.5px; color: var(--ink-soft); line-height: 1.55; }
+
+  /* ---------- Capabilities ---------- */
+  .cap-section { position: relative; z-index: 2; max-width: 1000px; margin: 0 auto; padding: 32px 40px 60px; }
+  .cap-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .cap-card { background: var(--bg-card); padding: 18px; }
+  .cap-icon { width: 14px; height: 14px; color: var(--accent); margin-bottom: 14px; }
+  .cap-icon svg { width: 100%; height: 100%; }
+  .cap-title { font-size: 12.5px; font-weight: 600; margin-bottom: 6px; }
+  .cap-desc { font-size: 11px; color: var(--ink-soft); line-height: 1.5; }
+
+  /* ---------- Diagnostic strip (reference: config/system-check panel) ---------- */
+  .diag-strip {
+    position: relative; z-index: 2;
+    max-width: 1000px;
+    margin: 0 auto;
+    border: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1.1fr 1.3fr 1.3fr auto;
+    margin-bottom: 40px;
+  }
+  .diag-col {
+    padding: 16px 20px;
+    border-right: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-soft);
+    line-height: 1.9;
+  }
+  .diag-col:last-child { border-right: none; }
+  .diag-col .file { display: flex; align-items: center; gap: 8px; color: var(--ink-muted); }
+  .diag-col .ok { color: var(--accent); }
+  .diag-badge {
+    width: 60px;
+    display: flex; align-items: center; justify-content: center;
+    border-left: 1px solid var(--border);
+  }
+  .diag-badge svg { width: 22px; height: 22px; color: var(--accent); }
+
+  footer {
+    position: relative; z-index: 2;
+    border-top: 1px solid var(--border);
+    padding: 18px 40px;
+    display: flex; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-muted);
+  }
+
+  @media (max-width: 860px) {
+    h1 { font-size: 38px; }
+    .tool-grid { grid-template-columns: 1fr; }
+    .cap-grid { grid-template-columns: repeat(2, 1fr); }
+    .diag-strip { grid-template-columns: 1fr; }
+    .diag-col { border-right: none; border-bottom: 1px solid var(--border); }
+    header, .hero, .tools-section, .cap-section, footer { padding-left: 20px; padding-right: 20px; }
+    .axis { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="dotmap"></div>
+
+  <div class="titlebar">
+    <div class="tb-left">
+      <div class="tb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18"/><path d="M3 9h18"/></svg></div>
+      <div class="tb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="18"/><rect x="14" y="3" width="7" height="18"/></svg></div>
+      <div class="tb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div>
+    </div>
+    <div class="tb-center">▲ PLATFORM BOOT SEQUENCE</div>
+    <div class="tb-right">[SYS:ONLINE] •••</div>
+  </div>
+
+  <header>
+    <div class="logo">
+      <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 2v6M15 2v6M9 8c0 3 1 4 3 4s3-1 3-4M9 16c0 3 1 4 3 4s3-1 3-4"/><path d="M6 20h12"/></svg></div>
+      BIOLABS
+    </div>
+    <div class="ask-ai">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l1.5 5L19 9l-5.5 2L12 16l-1.5-5L5 9l5.5-2L12 2z"/></svg>
+      Ask AI
+    </div>
+  </header>
+
+  <div class="axis">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1">
+      <path d="M4 4v32M4 36h32"/>
+      <path d="M4 4l-3 6M4 4l3 6" opacity="0"/>
+      <rect x="1.5" y="34.5" width="5" height="5"/>
+    </svg>
+  </div>
+
+  <section class="hero">
+    <h1>Next-Generation Bio Simulation</h1>
+    <p>A COMPUTATIONAL BIOLOGY PLATFORM — LAUNCH SPECIALIZED TOOLS FOR<br>STRUCTURE, PREDICTION, AND ANALYSIS.</p>
+  </section>
+
+  <section class="tools-section">
+    <div class="section-label">TOOLS</div>
+    <div class="tool-grid">
+
+      <a class="tool-card" href="/binary">
+        <span class="marker"></span>
+        <div class="tool-name-row">
+          <div class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l1.5 5L19 9l-5.5 2L12 16l-1.5-5L5 9l5.5-2L12 2z"/></svg></div>
+          <span class="tool-name">Binary</span>
+          <span class="route-pill">/binary</span>
+          <span class="status-pill live">LIVE</span>
+        </div>
+        <div class="tool-tagline">Bioengineering AI assistant</div>
+        <div class="tool-body">Dedicated AI chat for bioengineering questions — conversations persist locally in this browser.</div>
+      </a>
+
+      <a class="tool-card" href="/helix">
+        <span class="marker"></span>
+        <div class="tool-name-row">
+          <div class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="6" r="1.5"/><circle cx="19" cy="6" r="1.5"/><circle cx="5" cy="18" r="1.5"/><circle cx="19" cy="18" r="1.5"/><path d="M9.5 10.5L6 7M14.5 10.5L18 7M9.5 13.5L6 17M14.5 13.5L18 17"/></svg></div>
+          <span class="tool-name">Helix</span>
+          <span class="route-pill">/helix</span>
+          <span class="status-pill live">LIVE</span>
+        </div>
+        <div class="tool-tagline">Protein prediction visualization</div>
+        <div class="tool-body">Interactive 3D structure viewer with AlphaFold, RCSB PDB, and UniProt integration.</div>
+      </a>
+
+      <a class="tool-card" href="/phaeleon">
+        <span class="marker"></span>
+        <div class="tool-name-row">
+          <div class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div>
+          <span class="tool-name">Phaeleon</span>
+          <span class="route-pill">/phaeleon</span>
+          <span class="status-pill">BETA</span>
+        </div>
+        <div class="tool-tagline">Drug interaction analysis</div>
+        <div class="tool-body">FDA OpenFDA drug search with rule-based interaction assessment — no cloud AI required.</div>
+      </a>
+
+    </div>
+  </section>
+
+  <section class="cap-section">
+    <div class="section-label">CORE CAPABILITIES</div>
+    <div class="cap-grid">
+      <div class="cap-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 2v6M15 2v6M9 8c0 3 1 4 3 4s3-1 3-4M9 16c0 3 1 4 3 4s3-1 3-4"/><path d="M6 20h12"/></svg></div>
+        <div class="cap-title">Protein Visualization</div>
+        <div class="cap-desc">Advanced molecular structure viewing with AlphaFold integration.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+        <div class="cap-title">Bio Simulation</div>
+        <div class="cap-desc">Real-time molecular dynamics and interaction simulation.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg></div>
+        <div class="cap-title">Layer System</div>
+        <div class="cap-desc">Photoshop-like layer management for complex molecular systems.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18"/><path d="M7 12h2l1.5-4 2 8 1.5-4H17"/></svg></div>
+        <div class="cap-title">Scientific HUD</div>
+        <div class="cap-desc">Real-time metrics, energy calculations, and analysis tools.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="diag-strip">
+    <div class="diag-col">
+      [CONFIG.SYS]<br>
+      <span class="file">■ TOOLREGISTRY.DAT</span>
+    </div>
+    <div class="diag-col">
+      &gt; SYSTEM CHECK..........<span class="ok">OK</span><br>
+      &gt; TOOLS LOADED..........3/3<br>
+      &gt; STORAGE MODE......LOCAL
+    </div>
+    <div class="diag-col">
+      &gt; RENDER ENGINE.........<span class="ok">OK</span><br>
+      &gt; PLATFORM INIT.........<span class="ok">OK</span><br>
+      &gt; VERSION..............v2.3
+    </div>
+    <div class="diag-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="10"/><path d="M9 2v6M15 2v6M9 8c0 3 1 4 3 4s3-1 3-4"/></svg>
+    </div>
+  </div>
+
+  <footer>
+    <span>biolabs v2.3</span>
+    <span>Working with the supervision of G.Gear Vanguard Service.</span>
+  </footer>
+</div>
+</body>
+</html>

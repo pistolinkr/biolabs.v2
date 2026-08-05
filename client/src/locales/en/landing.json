@@ -1,23 +1,40 @@
 {
+  "askAi": "Ask AI",
   "hero": {
-    "title": "Next-Generation Bio Simulation",
-    "subtitle": "A computational biology platform — launch specialized tools for structure, prediction, and analysis.",
-    "enterHelix": "Open Helix"
+    "title": "Research your bio, medical source with Boa5",
+    "titleActive": "Say, hello"
   },
   "tools": {
     "title": "Tools",
     "helix": {
       "name": "Helix",
       "tagline": "Protein prediction visualization",
-      "description": "Interactive 3D structure viewer with AlphaFold, RCSB PDB, and UniProt integration.",
-      "action": "Launch Helix"
+      "description": "Interactive 3D structure viewer with AlphaFold, RCSB PDB, and UniProt integration."
     },
     "phaeleon": {
       "name": "Phaeleon",
       "tagline": "Drug interaction analysis",
-      "description": "FDA OpenFDA drug search with rule-based interaction assessment — ported from DDI checker, no cloud AI required.",
-      "action": "Launch Phaeleon",
-      "status": "Beta"
+      "description": "FDA OpenFDA drug search with rule-based interaction assessment — ported from DDI checker, no cloud AI required."
+    },
+    "strata": {
+      "name": "Strata",
+      "tagline": "Multi-structure layer system",
+      "description": "Stack multiple structures, opacity, blend, visibility timeline"
+    },
+    "dockyard": {
+      "name": "Dockyard",
+      "tagline": "Receptor–ligand pose workspace",
+      "description": "Define binding site, load poses, score table (local Vina stub / CSV import)"
+    },
+    "pulse": {
+      "name": "Pulse",
+      "tagline": "Live viewport telemetry",
+      "description": "FPS, atom count, selection stats, session log, CSV export"
+    },
+    "binary": {
+      "name": "BOA5",
+      "tagline": "Bioengineering AI assistant",
+      "description": "Dedicated AI chat for bioengineering questions — conversations persist locally in this browser."
     }
   },
   "capabilities": "Core Capabilities",
@@ -40,7 +57,27 @@
     }
   },
   "footer": {
-    "version": "biolabs v2.3",
+    "version": "biolabs v2.4",
     "tagline": "Working with the supervision of G.Gear Vanguard Service."
+  },
+  "chrome": {
+    "bootSequence": "▲ PLATFORM BOOT SEQUENCE",
+    "sysOnline": "[SYS:ONLINE] •••"
+  },
+  "diag": {
+    "configLabel": "[CONFIG.SYS]",
+    "registryFile": "TOOLREGISTRY.DAT",
+    "systemCheck": "> SYSTEM CHECK..........",
+    "ok": "OK",
+    "toolsLoaded": "> TOOLS LOADED..........{{count}}/{{total}}",
+    "storageMode": "> STORAGE MODE......LOCAL",
+    "renderEngine": "> RENDER ENGINE.........",
+    "platformInit": "> PLATFORM INIT.........",
+    "versionLine": "> VERSION..............{{version}}"
+  },
+  "askPlaceholder": "Try: BRCA1 · Aspirin · protein structure…",
+  "featuresTitle": "Feature",
+  "nav": {
+    "more": "More"
   }
 }

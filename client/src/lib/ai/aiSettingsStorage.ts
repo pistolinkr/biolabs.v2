@@ -23,7 +23,7 @@ export const DEFAULT_AI_CLIENT_SETTINGS: AiClientSettings = {
   includeFullSequences: true,
   compactContext: false,
   autoOpenChatOnExplain: false,
-  showResidueExplainPopup: true,
+  showResidueExplainPopup: false,
 };
 
 export function loadAiClientSettings(): AiClientSettings {
@@ -57,7 +57,14 @@ export function saveAiClientSettings(settings: AiClientSettings): void {
 }
 
 function isProvider(v: unknown): v is AiProviderId {
-  return v === "auto" || v === "gemini" || v === "openrouter" || v === "huggingface";
+  return (
+    v === "auto" ||
+    v === "openai" ||
+    v === "anthropic" ||
+    v === "gemini" ||
+    v === "openrouter" ||
+    v === "huggingface"
+  );
 }
 
 function isLang(v: unknown): v is AiResponseLanguage {

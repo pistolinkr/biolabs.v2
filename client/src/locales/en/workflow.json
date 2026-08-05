@@ -1,13 +1,37 @@
 {
   "stages": {
-    "input": { "label": "Input", "short": "In" },
-    "ai_pipeline": { "label": "AI pipeline", "short": "AI" },
-    "folding": { "label": "Folding", "short": "Fold" },
-    "analysis": { "label": "Analysis", "short": "Anly" },
-    "reasoning": { "label": "Reasoning", "short": "Rsn" },
-    "visualization": { "label": "Visualize", "short": "Viz" },
-    "simulation": { "label": "Simulation", "short": "Sim" },
-    "engineering": { "label": "Engineering", "short": "Eng" }
+    "input": {
+      "label": "Input",
+      "short": "In"
+    },
+    "ai_pipeline": {
+      "label": "AI pipeline",
+      "short": "AI"
+    },
+    "folding": {
+      "label": "Folding",
+      "short": "Fold"
+    },
+    "analysis": {
+      "label": "Analysis",
+      "short": "Anly"
+    },
+    "reasoning": {
+      "label": "Reasoning",
+      "short": "Rsn"
+    },
+    "visualization": {
+      "label": "Visualize",
+      "short": "Viz"
+    },
+    "simulation": {
+      "label": "Simulation",
+      "short": "Sim"
+    },
+    "engineering": {
+      "label": "Engineering",
+      "short": "Eng"
+    }
   },
   "banner": {
     "noProtein": "Load a structure to begin the workflow pipeline.",

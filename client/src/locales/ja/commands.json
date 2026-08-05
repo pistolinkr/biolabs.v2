@@ -10,38 +10,76 @@
     "assistant": "アシスタント"
   },
   "palette": {
-    "cmd": "CMD",
+    "cmd": "BOA5",
     "placeholder": {
-      "helix": "チェーン B を隔離 · 表面 · レイアウトフォーカス…",
+      "landing": "BOA5 · Helix · Phaeleon を開く…",
+      "helix": "BOA5に質問、またはコマンド検索…",
       "phaeleon": "warfarin aspirin を解析 · 薬剤を入れ替え · AI を開く…"
     },
     "noMatch": "一致するコマンドがありません",
     "navigate": "↑↓ ナビゲート · Enter 実行",
     "requiresWorkspace": "コマンドパレット: ビューアコマンドは Helix セッションが必要です。",
     "requiresPhaeleon": "コマンドパレット: この操作は Phaeleon ワークステーションが必要です。",
-    "askAi": "AI に質問",
-    "askAiHint": "入力内容をリサーチアシスタントに送信",
+    "askAi": "BOA5に質問",
+    "askAiHint": "入力内容をBOA5に送信",
     "askAiDisabledHint": "質問を入力して、設定で AI を構成してください",
-    "aiTitle": "AI の回答",
+    "aiTitle": "BOA5",
     "aiYouAsked": "あなたの質問",
     "aiThinking": "考え中…",
-    "aiBack": "コマンド",
-    "aiEscHint": "Esc · コマンドに戻る",
+    "aiBack": "BOA5",
+    "aiEscHint": "Esc · BOA5へ",
     "aiClose": "閉じる",
     "aiNotConfigured": "AI が構成されていません。サーバーの .env にプロバイダキーを追加して再起動してください。",
     "aiFailed": "AI の応答を取得できませんでした。"
   },
   "items": {
-    "nav.phaeleon": { "title": "Phaeleon を開く", "description": "薬物相互作用解析ワークステーションを開く" },
-    "phaeleon.analyze": { "title": "薬物相互作用を解析", "description": "薬剤 A + B のルールベース DDI 評価を実行" },
-    "phaeleon.clear.session": { "title": "Phaeleon セッションをクリア", "description": "薬剤、検索、解析をリセット" },
-    "phaeleon.swap.drugs": { "title": "薬剤 A/B を入れ替え", "description": "割り当てられた 2 つの薬剤を交換" },
-    "phaeleon.slot.drug1": { "title": "薬剤 A スロットにフォーカス", "description": "次の検索結果を薬剤 A に割り当て" },
-    "phaeleon.slot.drug2": { "title": "薬剤 B スロットにフォーカス", "description": "次の検索結果を薬剤 B に割り当て" },
-    "phaeleon.search.focus": { "title": "薬剤検索にフォーカス", "description": "FDA / ローカル検索フィールドに移動" },
-    "phaeleon.fuzzy.toggle": { "title": "FDA ファジー検索を切替", "description": "タイプミス耐性の OpenFDA クエリをオン/オフ" },
-    "phaeleon.settings.open": { "title": "Phaeleon 設定を開く", "description": "ワークスペース、AI、表示の設定" },
-    "phaeleon.ai.chat": { "title": "AI アシスタントを開く", "description": "現在の薬剤ペアとレポートについてチャット" },
-    "assistant.chat.open": { "title": "AI アシスタントを開く", "description": "リサーチアシスタントのチャットパネルを開く" }
+    "nav.phaeleon": {
+      "title": "Phaeleon を開く",
+      "description": "薬物相互作用解析ワークステーションを開く"
+    },
+    "phaeleon.analyze": {
+      "title": "薬物相互作用を解析",
+      "description": "薬剤 A + B のルールベース DDI 評価を実行"
+    },
+    "phaeleon.clear.session": {
+      "title": "Phaeleon セッションをクリア",
+      "description": "薬剤、検索、解析をリセット"
+    },
+    "phaeleon.swap.drugs": {
+      "title": "薬剤 A/B を入れ替え",
+      "description": "割り当てられた 2 つの薬剤を交換"
+    },
+    "phaeleon.slot.drug1": {
+      "title": "薬剤 A スロットにフォーカス",
+      "description": "次の検索結果を薬剤 A に割り当て"
+    },
+    "phaeleon.slot.drug2": {
+      "title": "薬剤 B スロットにフォーカス",
+      "description": "次の検索結果を薬剤 B に割り当て"
+    },
+    "phaeleon.search.focus": {
+      "title": "薬剤検索にフォーカス",
+      "description": "FDA / ローカル検索フィールドに移動"
+    },
+    "phaeleon.fuzzy.toggle": {
+      "title": "FDA ファジー検索を切替",
+      "description": "タイプミス耐性の OpenFDA クエリをオン/オフ"
+    },
+    "phaeleon.settings.open": {
+      "title": "Phaeleon 設定を開く",
+      "description": "ワークスペース、AI、表示の設定"
+    },
+    "phaeleon.ai.chat": {
+      "title": "AI アシスタントを開く",
+      "description": "現在の薬剤ペアとレポートについてチャット"
+    },
+    "assistant.chat.open": {
+      "title": "AI アシスタントを開く",
+      "description": "リサーチアシスタントのチャットパネルを開く"
+    },
+    "nav.binary": {
+      "title": "BOA5 を開く",
+      "description": "バイオエンジニアリング AI チャット"
+    }
   }
 }

@@ -2,11 +2,16 @@ import type { AiProviderId } from "@shared/ai/types";
 
 export const AI_KEYS_STORAGE_KEY = "biolabs.workspace.aiKeys.v1";
 
+/** Browser-direct provider keys (BYOK). */
 export interface AiClientApiKeys {
+  openai: string;
+  anthropic: string;
   gemini: string;
   openrouter: string;
   huggingface: string;
 }
+
+export type ByokProviderId = "openai" | "anthropic" | "gemini";
 
 export interface AiKeysSettings {
   /** When true, calls go directly from the browser with keys below. */
@@ -16,7 +21,7 @@ export interface AiKeysSettings {
 
 export const DEFAULT_AI_KEYS: AiKeysSettings = {
   useOwnApiKeys: false,
-  keys: { gemini: "", openrouter: "", huggingface: "" },
+  keys: { openai: "", anthropic: "", gemini: "", openrouter: "", huggingface: "" },
 };
 
 function cleanKey(raw: unknown): string {
@@ -30,6 +35,8 @@ export function loadAiKeysSettings(): AiKeysSettings {
     if (!raw) return { ...DEFAULT_AI_KEYS, keys: { ...DEFAULT_AI_KEYS.keys } };
     const o = JSON.parse(raw) as Partial<AiKeysSettings & AiClientApiKeys>;
     const keys: AiClientApiKeys = {
+      openai: cleanKey(o.keys?.openai ?? (o as { openai?: string }).openai),
+      anthropic: cleanKey(o.keys?.anthropic ?? (o as { anthropic?: string }).anthropic),
       gemini: cleanKey(o.keys?.gemini ?? o.gemini),
       openrouter: cleanKey(o.keys?.openrouter ?? o.openrouter),
       huggingface: cleanKey(o.keys?.huggingface ?? o.huggingface),
@@ -54,6 +61,8 @@ export function saveAiKeysSettings(settings: AiKeysSettings): void {
 
 export function providersWithKeys(keys: AiClientApiKeys): AiProviderId[] {
   const out: AiProviderId[] = [];
+  if (keys.openai) out.push("openai");
+  if (keys.anthropic) out.push("anthropic");
   if (keys.gemini) out.push("gemini");
   if (keys.openrouter) out.push("openrouter");
   if (keys.huggingface) out.push("huggingface");

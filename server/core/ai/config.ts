@@ -1,9 +1,11 @@
 import type { AiProviderId } from "@shared/ai/types";
 
 const DEFAULT_GEMINI_MODELS = ["gemini-2.0-flash", "gemini-1.5-flash"];
+/** Prefer the Free Models Router, then specific :free IDs (catalog rotates often). */
 const DEFAULT_OPENROUTER_MODELS = [
-  "deepseek/deepseek-chat-v3-0324:free",
-  "meta-llama/llama-3.3-70b-instruct:free",
+  "openrouter/free",
+  "openai/gpt-oss-20b:free",
+  "google/gemma-3-27b-it:free",
 ];
 const DEFAULT_HF_MODELS = ["HuggingFaceH4/zephyr-7b-beta", "mistralai/Mistral-7B-Instruct-v0.3"];
 

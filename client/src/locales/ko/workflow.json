@@ -1,13 +1,37 @@
 {
   "stages": {
-    "input": { "label": "입력", "short": "In" },
-    "ai_pipeline": { "label": "AI 파이프라인", "short": "AI" },
-    "folding": { "label": "폴딩", "short": "Fold" },
-    "analysis": { "label": "분석", "short": "Anly" },
-    "reasoning": { "label": "추론", "short": "Rsn" },
-    "visualization": { "label": "시각화", "short": "Viz" },
-    "simulation": { "label": "시뮬레이션", "short": "Sim" },
-    "engineering": { "label": "엔지니어링", "short": "Eng" }
+    "input": {
+      "label": "입력",
+      "short": "In"
+    },
+    "ai_pipeline": {
+      "label": "AI 파이프라인",
+      "short": "AI"
+    },
+    "folding": {
+      "label": "폴딩",
+      "short": "Fold"
+    },
+    "analysis": {
+      "label": "분석",
+      "short": "Anly"
+    },
+    "reasoning": {
+      "label": "추론",
+      "short": "Rsn"
+    },
+    "visualization": {
+      "label": "시각화",
+      "short": "Viz"
+    },
+    "simulation": {
+      "label": "시뮬레이션",
+      "short": "Sim"
+    },
+    "engineering": {
+      "label": "엔지니어링",
+      "short": "Eng"
+    }
   },
   "banner": {
     "noProtein": "워크플로 파이프라인을 시작하려면 구조를 로드하세요.",

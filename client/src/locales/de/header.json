@@ -1,6 +1,17 @@
 {
-  "command": "Befehl...",
-  "commandPalette": "Befehlspalette",
+  "command": "BOA5",
+  "commandPalette": "Befehle (⌘K)",
+  "ask": {
+    "title": "BOA5 fragen",
+    "collapsedPlaceholder": "BOA5 fragen…",
+    "expandedPlaceholder": "Struktur fragen oder steuern…",
+    "expandedPlaceholderWithMentions": "Zu gelabelten Residues fragen…",
+    "send": "Senden",
+    "mentionAdd": "{{label}} erwähnen",
+    "mentionRemove": "{{label}} entfernen",
+    "mentionCount": "{{count}} Labels",
+    "replyDismiss": "Antwort schließen"
+  },
   "saveWorkspace": "Workspace speichern (⌘S)",
   "exportMenu": "Exportieren",
   "settings": "Einstellungen",

@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { entityKindLabel, groupChainsByEntityKind, type BiomolecularEntityKind } from "@/lib/biomolecularEntities";
 import { useViewer, type ChainModel } from "@/contexts/ViewerContext";
 import PolymerProximityGraph from "@/components/workbench/PolymerProximityGraph";
+import WorkstationSelect from "@/components/WorkstationSelect";
 
 function Section({
   title,
@@ -291,16 +292,18 @@ export default function RightWorkstationPanel() {
             <span className="w-[40%] font-mono text-[10px] uppercase tracking-wide text-muted-foreground">
               {t("inspector.bioAssembly")}
             </span>
-            <select
+            <WorkstationSelect
               value={assemblyPick}
-              onChange={(e) => setAssemblyPick(e.target.value)}
+              onValueChange={setAssemblyPick}
               disabled={!structureModel}
-              className="border border-border bg-background px-1.5 py-1 font-mono text-[10px] text-foreground disabled:opacity-40"
-            >
-              <option value="asu">{t("inspector.asu")}</option>
-              <option value="bio1">{t("inspector.bio1")}</option>
-              <option value="bio2">{t("inspector.bio2")}</option>
-            </select>
+              className="w-full min-w-0"
+              align="start"
+              options={[
+                { value: "asu", label: t("inspector.asu") },
+                { value: "bio1", label: t("inspector.bio1") },
+                { value: "bio2", label: t("inspector.bio2") },
+              ]}
+            />
           </div>
           <Row k={t("inspector.rows.stoichiometry")} v={polymerMock.stoich} />
           <Row k={t("inspector.rows.symmetry")} v={polymerMock.symmetry} />

@@ -1,6 +1,17 @@
 {
-  "command": "Comando...",
-  "commandPalette": "Paleta de comandos",
+  "command": "BOA5",
+  "commandPalette": "Comandos (⌘K)",
+  "ask": {
+    "title": "Preguntar a BOA5",
+    "collapsedPlaceholder": "Preguntar a BOA5…",
+    "expandedPlaceholder": "Preguntar o controlar esta estructura…",
+    "expandedPlaceholderWithMentions": "Preguntar por los residuos etiquetados…",
+    "send": "Enviar",
+    "mentionAdd": "Mencionar {{label}}",
+    "mentionRemove": "Quitar {{label}}",
+    "mentionCount": "{{count}} etiquetas",
+    "replyDismiss": "Cerrar respuesta"
+  },
   "saveWorkspace": "Guardar espacio de trabajo (⌘S)",
   "exportMenu": "Exportar",
   "settings": "Configuración",

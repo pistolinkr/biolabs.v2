@@ -3,7 +3,6 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import fs from "node:fs";
 import path from "node:path";
-import { pathToFileURL } from "node:url";
 import { config as loadDotenv } from "dotenv";
 import { defineConfig, type Plugin, type ViteDevServer } from "vite";
 import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
@@ -19,12 +18,8 @@ const PROJECT_ROOT = import.meta.dirname;
 loadDotenv({ path: path.join(PROJECT_ROOT, ".env") });
 loadDotenv({ path: path.join(PROJECT_ROOT, ".env.local"), override: true });
 
-const AI_HANDLERS_URL = pathToFileURL(
-  path.join(PROJECT_ROOT, "server/core/ai/handlers.ts"),
-).href;
-const PHAELEON_ROUTER_URL = pathToFileURL(
-  path.join(PROJECT_ROOT, "server/core/phaeleon/routes.ts"),
-).href;
+const AI_HANDLERS_PATH = path.join(PROJECT_ROOT, "server/core/ai/handlers.ts");
+const PHAELEON_ROUTER_PATH = path.join(PROJECT_ROOT, "server/core/phaeleon/routes.ts");
 const LOG_DIR = path.join(PROJECT_ROOT, ".manus-logs");
 const MAX_LOG_SIZE_BYTES = 1 * 1024 * 1024; // 1MB per log file
 const TRIM_TARGET_BYTES = Math.floor(MAX_LOG_SIZE_BYTES * 0.6); // Trim to 60% to avoid constant re-trimming
@@ -173,7 +168,8 @@ function vitePluginAiAssistantDev(): Plugin {
         if (!url.startsWith("/api/ai")) return next();
 
         try {
-          const { handleAiChat, handleAiStatus } = await import(AI_HANDLERS_URL);
+          // ssrLoadModule resolves @shared/* aliases; bare import() cannot.
+          const { handleAiChat, handleAiStatus } = await server.ssrLoadModule(AI_HANDLERS_PATH);
 
           if (req.method === "GET" && url === "/api/ai/status") {
             const { status, json } = handleAiStatus();
@@ -228,7 +224,7 @@ function vitePluginPhaeleonDev(): Plugin {
         if (!subAppPromise) {
           subAppPromise = (async () => {
             const express = (await import("express")).default;
-            const { createPhaeleonRouter } = await import(PHAELEON_ROUTER_URL);
+            const { createPhaeleonRouter } = await server.ssrLoadModule(PHAELEON_ROUTER_PATH);
             const sub = express();
             sub.use(express.json({ limit: "512kb" }));
             sub.use(createPhaeleonRouter());

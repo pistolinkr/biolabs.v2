@@ -10,38 +10,76 @@
     "assistant": "Assistant"
   },
   "palette": {
-    "cmd": "CMD",
+    "cmd": "BOA5",
     "placeholder": {
-      "helix": "Isoler la chaîne B · surface · focus layout…",
+      "landing": "Ouvrir BOA5 · Helix · Phaeleon…",
+      "helix": "Demander à BOA5 ou chercher une commande…",
       "phaeleon": "Analyser warfarin aspirin · échanger médicaments · ouvrir IA…"
     },
     "noMatch": "Aucune commande correspondante",
     "navigate": "↑↓ naviguer · Entrée exécuter",
     "requiresWorkspace": "Palette de commandes : les commandes du viewer nécessitent une session Helix ouverte.",
     "requiresPhaeleon": "Palette de commandes : cette action nécessite la station Phaeleon.",
-    "askAi": "Demander à l'IA",
-    "askAiHint": "Envoyer le texte ci‑dessus à l'assistant de recherche",
+    "askAi": "Demander à BOA5",
+    "askAiHint": "Envoyer le texte à BOA5",
     "askAiDisabledHint": "Tapez une question et configurez l'IA dans les paramètres",
-    "aiTitle": "Réponse IA",
+    "aiTitle": "BOA5",
     "aiYouAsked": "Vous avez demandé",
     "aiThinking": "Réflexion…",
-    "aiBack": "Commandes",
-    "aiEscHint": "Échap · retour aux commandes",
+    "aiBack": "BOA5",
+    "aiEscHint": "Échap · retour à BOA5",
     "aiClose": "Fermer",
     "aiNotConfigured": "L'IA n'est pas configurée. Ajoutez des clés provider dans la .env du serveur et redémarrez.",
     "aiFailed": "Impossible d'obtenir une réponse IA."
   },
   "items": {
-    "nav.phaeleon": { "title": "Ouvrir Phaeleon", "description": "Station d'analyse des interactions médicamenteuses" },
-    "phaeleon.analyze": { "title": "Analyser interaction médicamenteuse", "description": "Exécuter l'évaluation DDI basée sur des règles pour Médicament A + B" },
-    "phaeleon.clear.session": { "title": "Effacer la session Phaeleon", "description": "Réinitialiser médicaments, recherche et analyse" },
-    "phaeleon.swap.drugs": { "title": "Échanger A/B", "description": "Inverser les deux médicaments assignés" },
-    "phaeleon.slot.drug1": { "title": "Cibler le slot Méd. A", "description": "Assigner le prochain résultat de recherche à Méd. A" },
-    "phaeleon.slot.drug2": { "title": "Cibler le slot Méd. B", "description": "Assigner le prochain résultat de recherche à Méd. B" },
-    "phaeleon.search.focus": { "title": "Focaliser la recherche", "description": "Aller au champ de recherche FDA / local" },
-    "phaeleon.fuzzy.toggle": { "title": "Basculer recherche floue FDA", "description": "Activer/désactiver les requêtes OpenFDA tolérantes aux fautes de frappe" },
-    "phaeleon.settings.open": { "title": "Ouvrir paramètres Phaeleon", "description": "Préférences de l'espace de travail, IA et affichage" },
-    "phaeleon.ai.chat": { "title": "Ouvrir assistant IA", "description": "Discuter du pair de médicaments et du rapport actuel" },
-    "assistant.chat.open": { "title": "Ouvrir assistant IA", "description": "Ouvrir le panneau de chat de l'assistant de recherche" }
+    "nav.phaeleon": {
+      "title": "Ouvrir Phaeleon",
+      "description": "Station d'analyse des interactions médicamenteuses"
+    },
+    "phaeleon.analyze": {
+      "title": "Analyser interaction médicamenteuse",
+      "description": "Exécuter l'évaluation DDI basée sur des règles pour Médicament A + B"
+    },
+    "phaeleon.clear.session": {
+      "title": "Effacer la session Phaeleon",
+      "description": "Réinitialiser médicaments, recherche et analyse"
+    },
+    "phaeleon.swap.drugs": {
+      "title": "Échanger A/B",
+      "description": "Inverser les deux médicaments assignés"
+    },
+    "phaeleon.slot.drug1": {
+      "title": "Cibler le slot Méd. A",
+      "description": "Assigner le prochain résultat de recherche à Méd. A"
+    },
+    "phaeleon.slot.drug2": {
+      "title": "Cibler le slot Méd. B",
+      "description": "Assigner le prochain résultat de recherche à Méd. B"
+    },
+    "phaeleon.search.focus": {
+      "title": "Focaliser la recherche",
+      "description": "Aller au champ de recherche FDA / local"
+    },
+    "phaeleon.fuzzy.toggle": {
+      "title": "Basculer recherche floue FDA",
+      "description": "Activer/désactiver les requêtes OpenFDA tolérantes aux fautes de frappe"
+    },
+    "phaeleon.settings.open": {
+      "title": "Ouvrir paramètres Phaeleon",
+      "description": "Préférences de l'espace de travail, IA et affichage"
+    },
+    "phaeleon.ai.chat": {
+      "title": "Ouvrir assistant IA",
+      "description": "Discuter du pair de médicaments et du rapport actuel"
+    },
+    "assistant.chat.open": {
+      "title": "Ouvrir assistant IA",
+      "description": "Ouvrir le panneau de chat de l'assistant de recherche"
+    },
+    "nav.binary": {
+      "title": "Ouvrir BOA5",
+      "description": "Chat IA bioingénierie"
+    }
   }
 }

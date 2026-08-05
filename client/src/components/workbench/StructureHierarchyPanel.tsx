@@ -1,7 +1,6 @@
 import { ChevronDown, ChevronRight, Eye, EyeOff } from "lucide-react";
 import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import ContextExplainButton from "@/components/assistant/ContextExplainButton";
 import { useViewer, type ChainModel } from "@/contexts/ViewerContext";
 import {
   entityKindLabel,
@@ -128,12 +127,6 @@ export default function StructureHierarchyPanel() {
                               >
                                 {c.visible ? <Eye className="size-3.5" /> : <EyeOff className="size-3.5" />}
                               </button>
-                              <ContextExplainButton
-                                intent="chain"
-                                prompt={`Explain chain ${c.id} (${entityKindLabel(c.entityKind)}, ${c.residueCount} residues) in the loaded structure.`}
-                                label="AI"
-                                className="shrink-0"
-                              />
                             </div>
                             {co ? (
                               <div className="mt-1 pl-5 text-muted-foreground">

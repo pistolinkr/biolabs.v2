@@ -15,8 +15,16 @@
     "measure": "Meas",
     "quality": "Med",
     "qualityHigh": "High",
-    "measureModes": { "distance": "Dist", "angle": "Wink", "dihedral": "Dihed" },
-    "qualityLevels": { "low": "Niedrig", "medium": "Mittel", "high": "Hoch" },
+    "measureModes": {
+      "distance": "Dist",
+      "angle": "Wink",
+      "dihedral": "Dihed"
+    },
+    "qualityLevels": {
+      "low": "Niedrig",
+      "medium": "Mittel",
+      "high": "Hoch"
+    },
     "palette": "⌘K · Palette",
     "contacts": "Ctx",
     "overlay": "Ovl",

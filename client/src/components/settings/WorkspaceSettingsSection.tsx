@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { SettingsRow } from "@/components/settings/AiSettingsSection";
 import { useWorkstationLayout } from "@/contexts/WorkstationLayoutContext";
@@ -7,12 +7,6 @@ import {
   type LayoutPresetId,
   type WorkstationDensity,
 } from "@/lib/workstationLayoutStorage";
-import {
-  SEQUENCE_DOCK_MAX_HEIGHT,
-  SEQUENCE_DOCK_MIN_HEIGHT,
-  getStoredSequenceDockHeight,
-  setStoredSequenceDockHeight,
-} from "@/hooks/useSequenceDockHeight";
 import { cn } from "@/lib/utils";
 
 /** Tiny schematic of each preset: left column, viewport, right column with optional split. */
@@ -36,17 +30,6 @@ function PresetGlyph({ preset }: { preset: LayoutPresetId }) {
           <div className={cn(cell, "w-5")} />
         </div>
       );
-    case "assistant":
-      return (
-        <div className="flex h-8 w-14 gap-px border border-border bg-background p-px">
-          <div className={cn(cell, "w-2")} />
-          <div className={cn(cellStrong, "flex-1")} />
-          <div className="flex w-4 flex-col gap-px">
-            <div className={cn(cell, "h-5 flex-none")} />
-            <div className={cn(cell, "flex-1")} />
-          </div>
-        </div>
-      );
     case "compact":
       return (
         <div className="flex h-8 w-14 gap-px border border-border bg-background p-px">
@@ -61,10 +44,7 @@ function PresetGlyph({ preset }: { preset: LayoutPresetId }) {
         <div className="flex h-8 w-14 gap-px border border-border bg-background p-px">
           <div className={cn(cell, "w-3")} />
           <div className={cn(cellStrong, "flex-1")} />
-          <div className="flex w-3 flex-col gap-px">
-            <div className={cn(cell, "flex-1")} />
-            <div className={cn(cell, "h-2 flex-none")} />
-          </div>
+          <div className={cn(cell, "w-3")} />
         </div>
       );
   }
@@ -73,7 +53,6 @@ function PresetGlyph({ preset }: { preset: LayoutPresetId }) {
 export default function WorkspaceSettingsSection() {
   const { t } = useTranslation("settings");
   const { activePreset, density, setActivePreset, resetToPreset, setDensity } = useWorkstationLayout();
-  const [dockHeight, setDockHeight] = useState<number>(() => getStoredSequenceDockHeight());
 
   const densityOptions: WorkstationDensity[] = ["comfortable", "compact"];
 
@@ -147,24 +126,6 @@ export default function WorkspaceSettingsSection() {
               </button>
             ))}
           </div>
-        </SettingsRow>
-        <SettingsRow
-          label={t("workspace.sequenceDockHeight")}
-          hint={t("workspace.sequenceDockHeightHint", { px: dockHeight })}
-        >
-          <input
-            type="range"
-            min={SEQUENCE_DOCK_MIN_HEIGHT}
-            max={SEQUENCE_DOCK_MAX_HEIGHT}
-            step={8}
-            value={dockHeight}
-            onChange={(e) => {
-              const next = parseInt(e.target.value, 10);
-              setDockHeight(next);
-              setStoredSequenceDockHeight(next);
-            }}
-            className="w-36 accent-accent"
-          />
         </SettingsRow>
       </div>
 
