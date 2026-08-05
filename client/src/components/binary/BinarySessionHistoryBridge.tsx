@@ -27,7 +27,8 @@ export default function BinarySessionHistoryBridge() {
   }, [replaceMessages]);
 
   useEffect(() => {
-    if (skipSaveRef.current || !hydratedRef.current) return;
+    // Greeting handoff owns the first paint — don't persist its setup transcript over stored history.
+    if (skipSaveRef.current || !hydratedRef.current || peekGreetingHandoff()) return;
     saveActiveBinaryThreadMessages(messages);
   }, [messages]);
 

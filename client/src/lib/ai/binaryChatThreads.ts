@@ -120,56 +120,43 @@ export function loadActiveBinaryThreadMessages(): AssistantUiMessage[] {
   return deserializeBinaryChatMessages(thread.messages);
 }
 
-export function saveActiveBinaryThreadMessages(messages: AssistantUiMessage[]): void {
+/** Persist messages onto a specific thread without changing the active selection. */
+export function saveBinaryThreadMessages(threadId: string, messages: AssistantUiMessage[]): void {
   const store = readStore();
   const serialized = serializeBinaryChatMessages(messages).slice(-MAX_MESSAGES);
+  const now = new Date().toISOString();
 
   if (serialized.length === 0) {
-    // Empty active thread — keep a blank draft if one exists; otherwise noop.
-    if (!store.activeId) return;
-    const idx = store.threads.findIndex((t) => t.id === store.activeId);
+    const idx = store.threads.findIndex((t) => t.id === threadId);
     if (idx < 0) return;
     store.threads[idx] = {
       ...store.threads[idx],
       title: "New chat",
-      updatedAt: new Date().toISOString(),
+      updatedAt: now,
       messages: [],
     };
     writeStore(store);
     return;
   }
 
-  const now = new Date().toISOString();
-  if (!store.activeId) {
-    const id = newId();
-    store.activeId = id;
+  const idx = store.threads.findIndex((t) => t.id === threadId);
+  if (idx < 0) {
     store.threads.unshift({
-      id,
+      id: threadId,
       title: titleFromMessages(serialized),
       updatedAt: now,
       messages: serialized,
     });
   } else {
-    const idx = store.threads.findIndex((t) => t.id === store.activeId);
-    if (idx < 0) {
-      store.threads.unshift({
-        id: store.activeId,
-        title: titleFromMessages(serialized),
-        updatedAt: now,
-        messages: serialized,
-      });
-    } else {
-      const prev = store.threads[idx];
-      store.threads[idx] = {
-        ...prev,
-        title: prev.title === "New chat" || !prev.title ? titleFromMessages(serialized) : prev.title,
-        updatedAt: now,
-        messages: serialized,
-      };
-      // Refresh title when still default or first user message landed.
-      if (prev.messages.length === 0 || prev.title === "New chat") {
-        store.threads[idx].title = titleFromMessages(serialized);
-      }
+    const prev = store.threads[idx];
+    store.threads[idx] = {
+      ...prev,
+      title: prev.title === "New chat" || !prev.title ? titleFromMessages(serialized) : prev.title,
+      updatedAt: now,
+      messages: serialized,
+    };
+    if (prev.messages.length === 0 || prev.title === "New chat") {
+      store.threads[idx].title = titleFromMessages(serialized);
     }
   }
 
@@ -179,21 +166,46 @@ export function saveActiveBinaryThreadMessages(messages: AssistantUiMessage[]): 
   writeStore(store);
 }
 
+export function saveActiveBinaryThreadMessages(messages: AssistantUiMessage[]): void {
+  const store = readStore();
+  const serialized = serializeBinaryChatMessages(messages).slice(-MAX_MESSAGES);
+
+  if (serialized.length === 0) {
+    // Empty active thread — keep a blank draft if one exists; otherwise noop.
+    if (!store.activeId) return;
+    saveBinaryThreadMessages(store.activeId, messages);
+    return;
+  }
+
+  if (!store.activeId) {
+    const id = newId();
+    store.activeId = id;
+    writeStore(store);
+    saveBinaryThreadMessages(id, messages);
+    return;
+  }
+
+  saveBinaryThreadMessages(store.activeId, messages);
+}
+
 /**
  * Start a fresh empty thread and make it active. Returns new thread id.
  * @param forceNew — always create a new thread (do not reuse an empty active draft).
  */
-export function createBinaryChatThread(options?: { forceNew?: boolean }): string {
+export function createBinaryChatThread(options?: { forceNew?: boolean; activate?: boolean }): string {
+  const activate = options?.activate !== false;
   const store = readStore();
   // Drop empty drafts so we don't pile up blank threads.
   store.threads = store.threads.filter((t) => t.messages.length > 0 || t.id === store.activeId);
   const active = store.threads.find((t) => t.id === store.activeId);
-  if (!options?.forceNew && active && active.messages.length === 0) {
+  if (activate && !options?.forceNew && active && active.messages.length === 0) {
     return active.id;
   }
 
   const id = newId();
-  store.activeId = id;
+  if (activate) {
+    store.activeId = id;
+  }
   store.threads.unshift({
     id,
     title: "New chat",
@@ -235,16 +247,10 @@ export function ensureBoa5WorkstationSharedThread(): string {
   const saved = readWorkstationSharedThreadId();
   if (saved) {
     const found = store.threads.find((t) => t.id === saved);
-    if (found) {
-      if (store.activeId !== saved) {
-        store.activeId = saved;
-        writeStore(store);
-      }
-      return saved;
-    }
+    if (found) return saved;
   }
 
-  const id = createBinaryChatThread({ forceNew: true });
+  const id = createBinaryChatThread({ forceNew: true, activate: false });
   writeWorkstationSharedThreadId(id);
   return id;
 }
@@ -298,13 +304,13 @@ export function appendBoa5SharedMessages(messages: AssistantUiMessage[]): void {
   );
   if (!incoming.length) return;
 
-  ensureBoa5WorkstationSharedThread();
+  const threadId = ensureBoa5WorkstationSharedThread();
   const existing = loadBoa5WorkstationSharedMessages();
   const seen = new Set(existing.map((m) => m.id));
   const toAdd = incoming.filter((m) => !seen.has(m.id));
   if (!toAdd.length) return;
 
-  saveActiveBinaryThreadMessages([...existing, ...toAdd]);
+  saveBinaryThreadMessages(threadId, [...existing, ...toAdd]);
 }
 
 /** Append one user + assistant turn to the dedicated Helix/Phaeleon → BOA5 chat. */
