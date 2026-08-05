@@ -1,36 +1,32 @@
-import React, { useRef, type ReactNode } from "react";
-import ViewportSequenceDock from "@/components/workbench/ViewportSequenceDock";
+import React, { type ReactNode } from "react";
 import ViewportBottomInfoStrip from "@/components/viewport/ViewportBottomInfoStrip";
 import ViewportLeftToolRail from "@/components/viewport/ViewportLeftToolRail";
 import ViewportTopToolbar from "@/components/viewport/ViewportTopToolbar";
-import SequenceDockResizeHandle from "@/components/viewport/SequenceDockResizeHandle";
-import { useSequenceDockHeight } from "@/hooks/useSequenceDockHeight";
 
 /**
  * RCSB-inspired viewport frame: top scientific toolbar, left tool rail, main canvas,
- * resizable dual sequence dock (protein + nucleic), then status rail.
+ * with the tool bottom bar overlaid so the canvas bottom edge meets the display bottom.
  */
 export default function ViewportChrome({ children }: { children: ReactNode }) {
-  const columnRef = useRef<HTMLDivElement>(null);
-  const { height, resizing, resizeHandleProps } = useSequenceDockHeight(columnRef);
-
   return (
     <div className="workbench-viewport-frame flex h-full min-h-0 min-w-0 flex-col overflow-hidden">
       <ViewportTopToolbar />
-      <div className="flex min-h-0 min-w-0 flex-1 flex-row overflow-hidden">
+      {/*
+        L-frame: rail + canvas fill to the bottom. Footer docks as an overlay on the
+        canvas so the canvas bottom border sits flush with the display edge.
+      */}
+      <div className="relative flex min-h-0 min-w-0 flex-1 flex-row overflow-hidden">
         <ViewportLeftToolRail />
-        <div ref={columnRef} className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
-          <div className="relative min-h-0 flex-1 overflow-hidden">{children}</div>
-          <SequenceDockResizeHandle resizing={resizing} resizeHandleProps={resizeHandleProps} />
-          <div
-            className="flex min-h-0 shrink-0 flex-col overflow-hidden"
-            style={{ height }}
-          >
-            <ViewportSequenceDock />
+        <div className="relative min-h-0 min-w-0 flex-1 overflow-hidden rounded-bl-[24px]">
+          {children}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 overflow-visible">
+            {/* overflow-visible: BOA5 reply floats above the docked pill */}
+            <div className="pointer-events-auto overflow-visible rounded-tl-[24px]">
+              <ViewportBottomInfoStrip placement="footer" />
+            </div>
           </div>
         </div>
       </div>
-      <ViewportBottomInfoStrip />
     </div>
   );
 }

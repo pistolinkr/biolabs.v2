@@ -6,7 +6,7 @@
   },
   "tabs": {
     "general": "일반",
-    "ai": "AI 어시스턴트",
+    "ai": "Boa5",
     "workspace": "워크스페이스",
     "about": "정보"
   },
@@ -14,6 +14,8 @@
     "appearance": "외관",
     "colorTheme": "색상 테마",
     "colorThemeHint": "시스템 설정 또는 수동 선택을 따릅니다.",
+    "navbarFixed": "내비 고정",
+    "navbarFixedHint": "상단 내비게이션을 항상 보이게 둡니다. BOA5 자동 숨김·랜딩 스크롤 숨김을 끕니다.",
     "scientificHud": "Scientific HUD",
     "scientificHudHint": "뷰포트에 좌표 정보 오버레이를 표시합니다.",
     "viewportNote": "뷰포트 렌더 옵션(AO, 그림자)은 Display 워크벤치 탭에서 제어합니다.",
@@ -106,7 +108,8 @@
     "available": "사용 가능: {{list}}",
     "none": "없음",
     "outputLimits": "최대 토큰 {{tokens}} · 컨텍스트 {{chars}}자",
-    "notConfigured": "어시스턴트를 사용하려면 위에 프로바이더 API 키를 하나 이상 추가하세요.",
+    "notConfigured": "플랫폼 AI를 선택하거나 위에 프로바이더 API 키를 추가하세요.",
+    "platformNotConfigured": "플랫폼 AI는 서버 .env의 GEMINI_API_KEY 또는 OPENROUTER_API_KEY가 필요합니다. 키를 넣은 뒤 pnpm dev를 재시작하고 상태를 새로고침하세요. Node 없이 정적 호스팅만 하면 /api/ai를 쓸 수 없습니다.",
     "refreshStatus": "상태 새로고침",
     "testConnection": "연결 테스트",
     "providerHealth": "프로바이더 상태",
@@ -149,9 +152,15 @@
     "phaeleonContextNote": "Phaeleon은 현재 약물 쌍과 규칙 기반 상호작용 리포트를 AI 컨텍스트에 자동 주입합니다. 프로바이더와 응답 언어는 위에서 설정하세요.",
     "providers": {
       "auto": "자동 (폴백 순서)",
-      "gemini": "Gemini",
+      "gemini": "Google AI",
       "openrouter": "OpenRouter",
-      "huggingface": "Hugging Face"
-    }
+      "huggingface": "Hugging Face",
+      "openai": "OpenAI",
+      "anthropic": "Anthropic"
+    },
+    "source": "AI 소스",
+    "sourceHint": "플랫폼 AI는 Biolabs 호스트 키를 사용합니다. 내 API 키는 이 브라우저에만 저장되며 프로바이더로 직접 호출됩니다.",
+    "sourcePlatform": "무료 플랫폼 AI",
+    "sourceByok": "내 API 키"
   }
 }

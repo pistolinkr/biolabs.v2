@@ -1,6 +1,17 @@
 {
-  "command": "コマンド...",
-  "commandPalette": "コマンドパレット",
+  "command": "BOA5",
+  "commandPalette": "コマンド (⌘K)",
+  "ask": {
+    "title": "BOA5に聞く",
+    "collapsedPlaceholder": "BOA5に聞く…",
+    "expandedPlaceholder": "この構造について質問・操作…",
+    "expandedPlaceholderWithMentions": "ラベルした残基について質問…",
+    "send": "送信",
+    "mentionAdd": "{{label}} を言及",
+    "mentionRemove": "{{label}} を削除",
+    "mentionCount": "ラベル {{count}}",
+    "replyDismiss": "返信を閉じる"
+  },
   "saveWorkspace": "ワークスペースを保存 (⌘S)",
   "exportMenu": "エクスポート",
   "settings": "設定",

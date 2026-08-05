@@ -10,24 +10,24 @@
     "assistant": "助手"
   },
   "palette": {
-    "cmd": "CMD",
+    "cmd": "BOA5",
     "placeholder": {
       "landing": "打开 BOA5 · Helix · Phaeleon…",
-      "helix": "隔离链 B · 表面 · 布局焦点…",
+      "helix": "向 BOA5 提问或搜索命令…",
       "phaeleon": "分析 warfarin aspirin · 交换药物 · 打开 AI…"
     },
     "noMatch": "无匹配命令",
     "navigate": "↑↓ 导航 · 回车 执行",
     "requiresWorkspace": "命令面板：查看器命令需要已打开的 Helix 会话。",
     "requiresPhaeleon": "命令面板：此操作需要 Phaeleon 工作站。",
-    "askAi": "询问 AI",
-    "askAiHint": "将上方文本发送给研究助手",
+    "askAi": "问 BOA5",
+    "askAiHint": "将上方文字发送给 BOA5",
     "askAiDisabledHint": "输入问题并在设置中配置 AI",
-    "aiTitle": "AI 回答",
+    "aiTitle": "BOA5",
     "aiYouAsked": "您询问了",
     "aiThinking": "思考中…",
-    "aiBack": "命令",
-    "aiEscHint": "Esc · 返回命令",
+    "aiBack": "BOA5",
+    "aiEscHint": "Esc · 返回 BOA5",
     "aiClose": "关闭",
     "aiNotConfigured": "AI 未配置。将提供者密钥添加到服务器 .env 并重启。",
     "aiFailed": "无法获取 AI 响应。"

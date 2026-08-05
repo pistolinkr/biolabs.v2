@@ -1,8 +1,8 @@
 {
   "askAi": "问问 AI",
   "hero": {
-    "title": "下一代生物模拟",
-    "subtitle": "计算生物学平台 — 启动结构、预测与分析专用工具。"
+    "title": "用 Boa5 研究你的生物与医学来源",
+    "titleActive": "Say, hello"
   },
   "tools": {
     "title": "工具",

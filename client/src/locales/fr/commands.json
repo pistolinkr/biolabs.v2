@@ -10,24 +10,24 @@
     "assistant": "Assistant"
   },
   "palette": {
-    "cmd": "CMD",
+    "cmd": "BOA5",
     "placeholder": {
       "landing": "Ouvrir BOA5 · Helix · Phaeleon…",
-      "helix": "Isoler la chaîne B · surface · focus layout…",
+      "helix": "Demander à BOA5 ou chercher une commande…",
       "phaeleon": "Analyser warfarin aspirin · échanger médicaments · ouvrir IA…"
     },
     "noMatch": "Aucune commande correspondante",
     "navigate": "↑↓ naviguer · Entrée exécuter",
     "requiresWorkspace": "Palette de commandes : les commandes du viewer nécessitent une session Helix ouverte.",
     "requiresPhaeleon": "Palette de commandes : cette action nécessite la station Phaeleon.",
-    "askAi": "Demander à l'IA",
-    "askAiHint": "Envoyer le texte ci‑dessus à l'assistant de recherche",
+    "askAi": "Demander à BOA5",
+    "askAiHint": "Envoyer le texte à BOA5",
     "askAiDisabledHint": "Tapez une question et configurez l'IA dans les paramètres",
-    "aiTitle": "Réponse IA",
+    "aiTitle": "BOA5",
     "aiYouAsked": "Vous avez demandé",
     "aiThinking": "Réflexion…",
-    "aiBack": "Commandes",
-    "aiEscHint": "Échap · retour aux commandes",
+    "aiBack": "BOA5",
+    "aiEscHint": "Échap · retour à BOA5",
     "aiClose": "Fermer",
     "aiNotConfigured": "L'IA n'est pas configurée. Ajoutez des clés provider dans la .env du serveur et redémarrez.",
     "aiFailed": "Impossible d'obtenir une réponse IA."

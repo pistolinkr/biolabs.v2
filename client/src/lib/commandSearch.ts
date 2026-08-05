@@ -34,7 +34,6 @@ const COMMAND_ALIASES: Record<string, string[]> = {
   "layout.classic": ["classic", "layout", "dock"],
   "layout.focus": ["focus layout", "viewport"],
   "layout.analysis": ["analysis layout", "inspector"],
-  "layout.assistant": ["assistant layout", "chat dock"],
   "layout.compact": ["compact layout", "small screen"],
   "layout.reset": ["reset layout", "dock reset"],
   "nav.home": ["home", "landing", "hub", "tools"],

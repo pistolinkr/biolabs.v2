@@ -9,7 +9,27 @@ import type { AiProviderId } from "@shared/ai/types";
 import type { UiLocalePreference } from "@shared/i18n/locales";
 import type { WorkstationId } from "@/lib/settings/workstationTypes";
 import { useLocale } from "@/contexts/LocaleContext";
+import {
+  completeAiOnboarding,
+  prefersPlatformAi,
+  AI_SETUP_CHANGED_EVENT,
+} from "@/lib/ai/aiOnboardingStorage";
+import WorkstationSelect from "@/components/WorkstationSelect";
 import { cn } from "@/lib/utils";
+
+const TEMPERATURE_OPTIONS = [0, 0.1, 0.2, 0.35, 0.5, 0.7, 0.9, 1] as const;
+
+function withCurrentOption(options: number[], current: number): number[] {
+  if (options.includes(current)) return options;
+  return [...options, current].sort((a, b) => a - b);
+}
+
+function tokenOptions(cap: number, current: number): number[] {
+  const base: number[] = [];
+  for (let n = 256; n <= cap; n += 256) base.push(n);
+  if (!base.includes(cap)) base.push(cap);
+  return withCurrentOption(base, Math.min(current, cap));
+}
 
 function SettingsRow({
   label,
@@ -94,10 +114,14 @@ export default function AiSettingsSection({
   const { t: tc } = useTranslation("common");
   const { uiLocale, setUiLocale, supportedLocales, localeLabels } = useLocale();
   const clientProviders = providersWithKeys(aiKeysSettings.keys);
+  const platformMode = prefersPlatformAi();
+  const serverProviders = status?.available_providers ?? [];
   const providerOptions: AiProviderId[] = usingClientKeys
     ? ["auto", ...clientProviders]
-    : ["auto"];
-  const maxTokensCap = usingClientKeys ? CLIENT_MAX_OUTPUT_TOKENS : 1024;
+    : ["auto", ...serverProviders];
+  const maxTokensCap = usingClientKeys
+    ? CLIENT_MAX_OUTPUT_TOKENS
+    : (status?.max_output_tokens ?? 1024);
 
   const providerLabel = (p: AiProviderId) => t(`ai.providers.${p}`);
 
@@ -105,8 +129,46 @@ export default function AiSettingsSection({
     onChange({ responseLanguage: lang });
   };
 
+  const setAiSource = (mode: "byok" | "platform") => {
+    onKeysChange({ useOwnApiKeys: mode === "byok" });
+    completeAiOnboarding(mode);
+    window.dispatchEvent(new CustomEvent(AI_SETUP_CHANGED_EVENT));
+    onRefreshStatus();
+  };
+
   return (
     <div className="space-y-4">
+      <div className="workbench-panel-inset p-3">
+        <div className="workbench-kicker mb-1">{t("ai.source")}</div>
+        <p className="mb-3 font-mono text-[9px] leading-relaxed text-muted-foreground">{t("ai.sourceHint")}</p>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => setAiSource("platform")}
+            className={cn(
+              "border px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.12em]",
+              platformMode
+                ? "border-accent bg-accent/15 text-foreground"
+                : "border-border bg-secondary text-muted-foreground hover:text-foreground",
+            )}
+          >
+            {t("ai.sourcePlatform")}
+          </button>
+          <button
+            type="button"
+            onClick={() => setAiSource("byok")}
+            className={cn(
+              "border px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.12em]",
+              !platformMode
+                ? "border-accent bg-accent/15 text-foreground"
+                : "border-border bg-secondary text-muted-foreground hover:text-foreground",
+            )}
+          >
+            {t("ai.sourceByok")}
+          </button>
+        </div>
+      </div>
+
       <div className="workbench-panel-inset p-3">
         <div className="workbench-kicker mb-1">{t("ai.apiKeys")}</div>
         <p className="mb-3 font-mono text-[9px] leading-relaxed text-muted-foreground">{t("ai.apiKeysHint")}</p>
@@ -114,9 +176,19 @@ export default function AiSettingsSection({
         <div className="space-y-2">
           {(
             [
-              { id: "gemini" as const, label: "Gemini", link: "https://aistudio.google.com/apikey" },
+              { id: "openai" as const, label: "OpenAI", link: "https://platform.openai.com/api-keys" },
+              {
+                id: "anthropic" as const,
+                label: "Anthropic",
+                link: "https://console.anthropic.com/settings/keys",
+              },
+              { id: "gemini" as const, label: "Google AI", link: "https://aistudio.google.com/apikey" },
               { id: "openrouter" as const, label: "OpenRouter", link: "https://openrouter.ai/keys" },
-              { id: "huggingface" as const, label: "Hugging Face", link: "https://huggingface.co/settings/tokens" },
+              {
+                id: "huggingface" as const,
+                label: "Hugging Face",
+                link: "https://huggingface.co/settings/tokens",
+              },
             ] as const
           ).map(({ id, label, link }) => (
             <div key={id} className="border-b border-border pb-2 last:border-b-0">
@@ -171,8 +243,54 @@ export default function AiSettingsSection({
             </div>
             <div className="text-muted-foreground">{t("ai.clientKeysNote")}</div>
           </div>
+        ) : status?.configured ? (
+          <div className="space-y-2 font-mono text-[10px] text-foreground">
+            <div>
+              {t("ai.active", {
+                provider: status.active_provider ?? t("ai.none"),
+                model: status.active_provider
+                  ? t("ai.activeModel", {
+                      model: status.models?.[status.active_provider] ?? "",
+                    })
+                  : "",
+              })}
+            </div>
+            <div className="text-muted-foreground">
+              {t("ai.available", {
+                list: (status.available_providers ?? []).join(", ") || t("ai.none"),
+              })}
+            </div>
+            <div className="text-muted-foreground">
+              {t("ai.outputLimits", {
+                tokens: status.max_output_tokens,
+                chars: status.max_context_chars.toLocaleString(),
+              })}
+            </div>
+            {status.provider_health && status.provider_health.length > 0 ? (
+              <div className="space-y-1 pt-1">
+                <div className="text-foreground">{t("ai.providerHealth")}</div>
+                <p className="text-muted-foreground">{t("ai.providerHealthHint")}</p>
+                <ul className="space-y-1 text-muted-foreground">
+                  {status.provider_health.map((h) => {
+                    const cooling = h.cooldown_until != null && h.cooldown_until > Date.now();
+                    return (
+                      <li key={h.id}>
+                        {providerLabel(h.id)} —{" "}
+                        {cooling ? t("ai.health.cooldown") : t("ai.health.ready")}
+                        {h.models.length
+                          ? ` · ${t("ai.health.models", { list: h.models.join(", ") })}`
+                          : ""}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ) : null}
+          </div>
         ) : (
-          <p className="font-mono text-[10px] leading-relaxed text-muted-foreground">{t("ai.notConfigured")}</p>
+          <p className="font-mono text-[10px] leading-relaxed text-muted-foreground">
+            {t("ai.platformNotConfigured")}
+          </p>
         )}
         <div className="mt-3 flex flex-wrap gap-2">
           <button type="button" onClick={onRefreshStatus} className="btn-compact">
@@ -193,78 +311,68 @@ export default function AiSettingsSection({
         <div className="workbench-kicker mb-2 px-1">{t("ai.clientPrefs")}</div>
 
         <SettingsRow label={t("ai.interfaceLanguage")} hint={t("ai.interfaceLanguageHint")}>
-          <select
+          <WorkstationSelect
             value={uiLocale}
-            onChange={(e) => void setUiLocale(e.target.value as UiLocalePreference)}
-            className="min-w-[180px] border border-border bg-input px-2 py-1 font-mono text-[10px] text-foreground focus:border-accent focus:outline-none"
-          >
-            <option value="auto">{tc("locale.auto")}</option>
-            {supportedLocales.map((code) => (
-              <option key={code} value={code}>
-                {localeLabels[code]}
-              </option>
-            ))}
-          </select>
+            onValueChange={(v) => void setUiLocale(v as UiLocalePreference)}
+            className="min-w-[180px]"
+            options={[
+              { value: "auto", label: tc("locale.auto") },
+              ...supportedLocales.map((code) => ({ value: code, label: localeLabels[code] })),
+            ]}
+          />
         </SettingsRow>
 
         <SettingsRow label={t("ai.preferredProvider")} hint={t("ai.preferredProviderHint")}>
-          <select
+          <WorkstationSelect
             value={settings.preferredProvider}
-            onChange={(e) => onChange({ preferredProvider: e.target.value as AiProviderId })}
-            className="min-w-[180px] border border-border bg-input px-2 py-1 font-mono text-[10px] text-foreground focus:border-accent focus:outline-none"
-          >
-            {providerOptions.map((p) => (
-              <option key={p} value={p}>
-                {providerLabel(p)}
-              </option>
-            ))}
-          </select>
+            onValueChange={(v) => onChange({ preferredProvider: v as AiProviderId })}
+            className="min-w-[180px]"
+            options={providerOptions.map((p) => ({ value: p, label: providerLabel(p) }))}
+          />
         </SettingsRow>
 
         <SettingsRow label={t("ai.responseLanguage")} hint={t("ai.responseLanguageHint")}>
-          <select
+          <WorkstationSelect
             value={settings.responseLanguage}
-            onChange={(e) =>
-              handleResponseLanguageChange(e.target.value as AiClientSettings["responseLanguage"])
+            onValueChange={(v) =>
+              handleResponseLanguageChange(v as AiClientSettings["responseLanguage"])
             }
-            className="min-w-[140px] border border-border bg-input px-2 py-1 font-mono text-[10px] text-foreground focus:border-accent focus:outline-none"
-          >
-            <option value="auto">{t("ai.responseLanguageAuto")}</option>
-            {supportedLocales.map((code) => (
-              <option key={code} value={code}>
-                {localeLabels[code]}
-              </option>
-            ))}
-          </select>
+            className="min-w-[140px]"
+            options={[
+              { value: "auto", label: t("ai.responseLanguageAuto") },
+              ...supportedLocales.map((code) => ({ value: code, label: localeLabels[code] })),
+            ]}
+          />
         </SettingsRow>
 
         <SettingsRow
           label={t("ai.temperature")}
           hint={t("ai.temperatureHint", { value: settings.temperature.toFixed(2) })}
         >
-          <input
-            type="range"
-            min={0}
-            max={1}
-            step={0.05}
-            value={settings.temperature}
-            onChange={(e) => onChange({ temperature: parseFloat(e.target.value) })}
-            className="w-36 accent-accent"
+          <WorkstationSelect
+            value={String(settings.temperature)}
+            onValueChange={(v) => onChange({ temperature: parseFloat(v) })}
+            options={withCurrentOption([...TEMPERATURE_OPTIONS], settings.temperature).map((v) => ({
+              value: String(v),
+              label: v.toFixed(2),
+            }))}
           />
         </SettingsRow>
 
         <SettingsRow
           label={t("ai.maxTokens")}
-          hint={t("ai.maxTokensHint", { value: settings.maxOutputTokens, cap: maxTokensCap })}
+          hint={t("ai.maxTokensHint", {
+            value: Math.min(settings.maxOutputTokens, maxTokensCap),
+            cap: maxTokensCap,
+          })}
         >
-          <input
-            type="range"
-            min={256}
-            max={maxTokensCap}
-            step={64}
-            value={Math.min(settings.maxOutputTokens, maxTokensCap)}
-            onChange={(e) => onChange({ maxOutputTokens: parseInt(e.target.value, 10) })}
-            className="w-36 accent-accent"
+          <WorkstationSelect
+            value={String(Math.min(settings.maxOutputTokens, maxTokensCap))}
+            onValueChange={(v) => onChange({ maxOutputTokens: parseInt(v, 10) })}
+            options={tokenOptions(maxTokensCap, settings.maxOutputTokens).map((v) => ({
+              value: String(v),
+              label: String(v),
+            }))}
           />
         </SettingsRow>
 
@@ -272,34 +380,11 @@ export default function AiSettingsSection({
           <Toggle checked={settings.compactContext} onChange={(v) => onChange({ compactContext: v })} />
         </SettingsRow>
 
-        {workstation === "helix" ? (
-          <>
-            <SettingsRow label={t("ai.includeSequences")} hint={t("ai.includeSequencesHint")}>
-              <Toggle
-                checked={settings.includeFullSequences}
-                onChange={(v) => onChange({ includeFullSequences: v })}
-              />
-            </SettingsRow>
-
-            <SettingsRow label={t("ai.autoOpenChat")} hint={t("ai.autoOpenChatHint")}>
-              <Toggle
-                checked={settings.autoOpenChatOnExplain}
-                onChange={(v) => onChange({ autoOpenChatOnExplain: v })}
-              />
-            </SettingsRow>
-
-            <SettingsRow label={t("ai.residuePanel")} hint={t("ai.residuePanelHint")}>
-              <Toggle
-                checked={settings.showResidueExplainPopup}
-                onChange={(v) => onChange({ showResidueExplainPopup: v })}
-              />
-            </SettingsRow>
-          </>
-        ) : (
+        {workstation === "phaeleon" ? (
           <p className="px-1 pt-1 font-mono text-[9px] leading-relaxed text-muted-foreground">
             {t("ai.phaeleonContextNote")}
           </p>
-        )}
+        ) : null}
       </div>
 
       <div className="flex flex-wrap gap-2 pt-1">

@@ -16,7 +16,20 @@ import {
 import { buildPromptMessages } from "./promptBuilder.ts";
 import { completeWithProvider } from "./providerRouter.ts";
 import { cooldownUntil } from "./providerHealth.ts";
-import { invalidRequest, sanitizeAiError, type AiUserErrorPayload } from "./userErrors.ts";
+import {
+  codeForError,
+  invalidRequest,
+  sanitizeAiError,
+  type AiUserErrorPayload,
+} from "./userErrors.ts";
+
+/** One-line ops log — never includes keys or prompt bodies. */
+function logAiChatOutcome(fields: Record<string, string | number | boolean | null | undefined>): void {
+  const parts = Object.entries(fields)
+    .filter(([, v]) => v !== undefined)
+    .map(([k, v]) => `${k}=${v}`);
+  console.info(`[biolabs-ai] chat ${parts.join(" ")}`);
+}
 
 function isValidContext(ctx: unknown): ctx is AiPlatformContext {
   if (!ctx || typeof ctx !== "object") return false;
@@ -84,6 +97,7 @@ export async function handleAiChat(
     req.generation,
   );
 
+  const started = Date.now();
   try {
     const result = await completeWithProvider(
       promptMessages,
@@ -100,9 +114,28 @@ export async function handleAiChat(
       fell_back: result.fellBack,
     };
 
+    logAiChatOutcome({
+      ok: true,
+      provider: result.provider,
+      model: result.model,
+      fell_back: result.fellBack,
+      attempt_count: result.attempts.length,
+      latency_ms: Date.now() - started,
+    });
+
     return { status: 200, json: response };
   } catch (e) {
-    return { status: 502, json: sanitizeAiError(e) };
+    const payload = sanitizeAiError(e);
+    logAiChatOutcome({
+      ok: false,
+      code: payload.code,
+      provider: e && typeof e === "object" && "provider" in e ? String((e as { provider: unknown }).provider) : null,
+      model: e && typeof e === "object" && "model" in e ? String((e as { model?: unknown }).model ?? "") || null : null,
+      attempt_count: null,
+      latency_ms: Date.now() - started,
+      classified: codeForError(e),
+    });
+    return { status: 502, json: payload };
   }
 }
 

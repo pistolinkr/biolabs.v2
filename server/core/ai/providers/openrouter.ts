@@ -9,6 +9,37 @@ import {
   type AiProviderResult,
 } from "./base.ts";
 
+/** Infer HTTP-ish status from OpenRouter error text when the wire status is missing/opaque. */
+function classifyOpenRouterMessage(message: string): number | undefined {
+  const lower = message.toLowerCase();
+  if (
+    lower.includes("rate limit") ||
+    lower.includes("quota") ||
+    lower.includes("too many requests") ||
+    lower.includes("insufficient credits")
+  ) {
+    return 429;
+  }
+  if (
+    lower.includes("not found") ||
+    lower.includes("no endpoints") ||
+    lower.includes("no available") ||
+    lower.includes("unavailable") ||
+    (lower.includes("model") && lower.includes("does not exist"))
+  ) {
+    return 404;
+  }
+  if (
+    lower.includes("unauthorized") ||
+    lower.includes("invalid api key") ||
+    lower.includes("user not found") ||
+    lower.includes("authentication")
+  ) {
+    return 401;
+  }
+  return undefined;
+}
+
 export function createOpenRouterProvider(config: AiServerConfig): AiProvider {
   return {
     id: "openrouter",
@@ -38,20 +69,42 @@ export function createOpenRouterProvider(config: AiServerConfig): AiProvider {
       if (!res.ok) {
         const errText = await res.text().catch(() => "");
         console.error("[biolabs-ai] openrouter upstream", res.status, errText.slice(0, 500));
-        throw new AiProviderError("openrouter upstream error", "openrouter", res.status, {
-          retryAfterMs: parseRetryAfterMs(res),
-          model,
-        });
+        let payloadMsg = "";
+        try {
+          const parsed = JSON.parse(errText) as { error?: { message?: string } };
+          payloadMsg = parsed.error?.message ?? "";
+        } catch {
+          payloadMsg = errText.slice(0, 200);
+        }
+        const inferred = classifyOpenRouterMessage(payloadMsg) ?? res.status;
+        throw new AiProviderError(
+          payloadMsg ? `openrouter upstream error: ${payloadMsg}` : "openrouter upstream error",
+          "openrouter",
+          inferred,
+          {
+            retryAfterMs: parseRetryAfterMs(res),
+            model,
+          },
+        );
       }
 
       const data = (await res.json()) as {
         choices?: Array<{ message?: { content?: string }; finish_reason?: string }>;
-        error?: { message?: string };
+        error?: { message?: string; code?: number | string };
       };
 
       if (data.error?.message) {
         console.error("[biolabs-ai] openrouter payload error", data.error.message);
-        throw new AiProviderError("openrouter payload error", "openrouter", undefined, { model });
+        const inferred =
+          typeof data.error.code === "number"
+            ? data.error.code
+            : classifyOpenRouterMessage(data.error.message);
+        throw new AiProviderError(
+          `openrouter payload error: ${data.error.message}`,
+          "openrouter",
+          inferred,
+          { model },
+        );
       }
 
       const choice = data.choices?.[0];

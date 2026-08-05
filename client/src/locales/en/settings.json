@@ -6,7 +6,7 @@
   },
   "tabs": {
     "general": "General",
-    "ai": "AI Assistant",
+    "ai": "Boa5",
     "workspace": "Workspace",
     "about": "About"
   },
@@ -14,6 +14,8 @@
     "appearance": "Appearance",
     "colorTheme": "Color theme",
     "colorThemeHint": "Follows system or manual selection.",
+    "navbarFixed": "Pin navbar",
+    "navbarFixedHint": "Keep the top navigation always visible. Disables auto-hide on BOA5 and scroll-hide on Landing.",
     "scientificHud": "Scientific HUD",
     "scientificHudHint": "Coordinate readout overlay on viewport.",
     "viewportNote": "Viewport render options (AO, shadows) are controlled from the Display workbench tab.",
@@ -106,7 +108,8 @@
     "available": "Available: {{list}}",
     "none": "none",
     "outputLimits": "Max tokens {{tokens}} · context {{chars}} chars",
-    "notConfigured": "Add at least one provider API key above to use the assistant.",
+    "notConfigured": "Choose platform AI (if available) or add a provider API key above.",
+    "platformNotConfigured": "Platform AI needs server keys in .env (GEMINI_API_KEY or OPENROUTER_API_KEY). Restart pnpm dev, then Refresh status. Static hosts without Node cannot serve /api/ai.",
     "refreshStatus": "Refresh status",
     "testConnection": "Test connection",
     "providerHealth": "Provider health",
@@ -149,9 +152,15 @@
     "phaeleonContextNote": "Phaeleon injects the current drug pair and rule-based interaction report into AI context automatically. Configure providers and response language above.",
     "providers": {
       "auto": "Auto (fallback order)",
-      "gemini": "Gemini",
+      "gemini": "Google AI",
       "openrouter": "OpenRouter",
-      "huggingface": "Hugging Face"
-    }
+      "huggingface": "Hugging Face",
+      "openai": "OpenAI",
+      "anthropic": "Anthropic"
+    },
+    "source": "AI source",
+    "sourceHint": "Platform AI uses Biolabs-hosted keys. Your API keys stay in this browser and call providers directly.",
+    "sourcePlatform": "Free platform AI",
+    "sourceByok": "Your API keys"
   }
 }

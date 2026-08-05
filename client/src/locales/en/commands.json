@@ -10,24 +10,24 @@
     "assistant": "Assistant"
   },
   "palette": {
-    "cmd": "CMD",
+    "cmd": "BOA5",
     "placeholder": {
-      "landing": "Open BOA5 · open Helix · open Phaeleon…",
-      "helix": "Isolate chain B · surface · layout focus…",
-      "phaeleon": "Analyze warfarin aspirin · swap drugs · open AI…"
+      "landing": "Open BOA5 · Helix · Phaeleon…",
+      "helix": "Ask BOA5 or search commands…",
+      "phaeleon": "Ask BOA5 · analyze drugs · search commands…"
     },
     "noMatch": "No matching commands",
     "navigate": "↑↓ navigate · enter run",
     "requiresWorkspace": "Command palette: viewer commands require an open Helix session.",
     "requiresPhaeleon": "Command palette: this action requires the Phaeleon workstation.",
-    "askAi": "Ask AI",
-    "askAiHint": "Send the text above to the research assistant",
+    "askAi": "Ask BOA5",
+    "askAiHint": "Send the text above to BOA5",
     "askAiDisabledHint": "Type a question and configure AI in settings",
-    "aiTitle": "AI answer",
+    "aiTitle": "BOA5",
     "aiYouAsked": "You asked",
     "aiThinking": "Thinking…",
-    "aiBack": "Commands",
-    "aiEscHint": "Esc · back to commands",
+    "aiBack": "BOA5",
+    "aiEscHint": "Esc · back to BOA5",
     "aiClose": "Close",
     "aiNotConfigured": "AI is not configured. Add provider keys to server .env and restart.",
     "aiFailed": "Could not get an AI response."

@@ -3,6 +3,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { Redirect, Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
+import Boa5RouteTransition from "./components/Boa5RouteTransition";
 import LocaleSuggestionBanner from "./components/LocaleSuggestionBanner";
 import { LocaleProvider, useLocale } from "./contexts/LocaleContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -60,6 +61,7 @@ function AppShell() {
       <TooltipProvider>
         <div className="h-full overflow-hidden">
           <Toaster />
+          <Boa5RouteTransition />
           <LocaleSuggestionBanner />
           <Router />
         </div>

@@ -3,12 +3,15 @@ import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { PanelRight } from "lucide-react";
 import ExplainPopover from "@/components/assistant/ExplainPopover";
+import BiolabsNav from "@/components/BiolabsNav";
 import CommandPalette from "@/components/CommandPalette";
-import PhaeleonLogo from "@/components/phaeleon/PhaeleonLogo";
+import PhaeleonAskAIButton from "@/components/phaeleon/PhaeleonAskAIButton";
 import PhaeleonAssistantBridge from "@/components/phaeleon/PhaeleonAssistantBridge";
 import PhaeleonAssistantEffects from "@/components/phaeleon/PhaeleonAssistantEffects";
 import PhaeleonSessionHistoryBridge from "@/components/phaeleon/PhaeleonSessionHistoryBridge";
-import PhaeleonAnalysisPanel from "@/components/phaeleon/PhaeleonAnalysisPanel";
+import PhaeleonAnalysisPanel, {
+  PHAELEON_ANALYSIS_BAR_ANCHOR,
+} from "@/components/phaeleon/PhaeleonAnalysisPanel";
 import PhaeleonBinaryCanvas from "@/components/phaeleon/PhaeleonBinaryCanvas";
 import PhaeleonConsultSplit from "@/components/phaeleon/PhaeleonConsultSplit";
 import PhaeleonInputPanel from "@/components/phaeleon/PhaeleonInputPanel";
@@ -16,7 +19,7 @@ import PhaeleonInspectorPanel from "@/components/phaeleon/PhaeleonInspectorPanel
 import PhaeleonMinimalInputRail from "@/components/phaeleon/PhaeleonMinimalInputRail";
 import PhaeleonRightColumnStack from "@/components/phaeleon/PhaeleonRightColumnStack";
 import SettingsPanel from "@/components/SettingsPanel";
-import ToolShellHeader from "@/components/ToolShellHeader";
+import ToolBottomBar from "@/components/ToolBottomBar";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { AssistantProvider } from "@/contexts/AssistantContext";
 import { PhaeleonProvider, usePhaeleon } from "@/contexts/PhaeleonContext";
@@ -155,13 +158,7 @@ function PhaeleonChrome() {
       <PhaeleonAssistantBridge />
       <PhaeleonSessionHistoryBridge />
       <PhaeleonAssistantEffects />
-      <ToolShellHeader
-        toolName={t("toolName")}
-        icon={<PhaeleonLogo size={16} />}
-        onSettingsOpen={() => setSettingsOpen(true)}
-        onCommandPaletteOpen={() => setCommandPaletteOpen(true)}
-        usePhaeleonAssistant
-      />
+      <BiolabsNav />
 
       {showPairStrip ? (
         <div
@@ -190,7 +187,7 @@ function PhaeleonChrome() {
             <button
               type="button"
               className={cn(
-                "fixed bottom-4 right-4 z-40 flex items-center gap-2 border border-border bg-card px-3 py-2",
+                "fixed bottom-16 right-4 z-40 flex items-center gap-2 border border-border bg-card px-3 py-2",
                 "font-mono text-[10px] uppercase tracking-wide text-foreground shadow-md",
                 "hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
               )}
@@ -210,6 +207,13 @@ function PhaeleonChrome() {
         </Sheet>
       ) : null}
 
+      <ToolBottomBar
+        workstation="phaeleon"
+        onSettingsOpen={() => setSettingsOpen(true)}
+        leading={<PhaeleonAskAIButton />}
+        holdOpen={settingsOpen || commandPaletteOpen}
+        centerInSelector={`[data-tool-bottom-bar-anchor="${PHAELEON_ANALYSIS_BAR_ANCHOR}"]`}
+      />
       <SettingsPanel workstation="phaeleon" isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
       <CommandPalette
         scope="phaeleon"

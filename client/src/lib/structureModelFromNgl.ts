@@ -3,7 +3,7 @@ import type { ChainModel, StructureHierarchyModel } from "@/contexts/ViewerConte
 import { inferEntityKindFromNglChain } from "@/lib/biomolecularEntities";
 
 /** Beyond this, skip per-residue 1-letter sequence build (major main-thread win on large PDBs). */
-const MAX_RESIDUES_FOR_SEQUENCE_BUILD = 2_500;
+export const MAX_RESIDUES_FOR_SEQUENCE_BUILD = 2_500;
 
 /** mmCIF / PDB common nucleotide 3-letter codes → 1-letter (IUPAC). */
 const NUCLEIC_3TO1: Record<string, string> = {
@@ -39,15 +39,26 @@ function nucleicOneLetterFromResidue(rp: {
   getResname1: () => string;
   isNucleic: () => boolean;
 }): string {
-  if (!rp.isNucleic()) return "";
+  const key = (rp.resname ?? "").trim().toUpperCase();
+  // Prefer chemical name map first — NGL isNucleic()/getResname1() miss some DNA codes (DA/DT…).
+  if (NUCLEIC_3TO1[key]) return NUCLEIC_3TO1[key];
+  if (/^[ACGTU]$/.test(key)) return key;
+
+  let flaggedNucleic = false;
+  try {
+    flaggedNucleic = rp.isNucleic();
+  } catch {
+    flaggedNucleic = false;
+  }
+  if (!flaggedNucleic) return "";
+
   try {
     const one = rp.getResname1()?.trim();
     if (one && /^[ACGTU]$/i.test(one)) return one.toUpperCase();
   } catch {
     /* NGL may throw for uncommon residues */
   }
-  const key = (rp.resname ?? "").trim().toUpperCase();
-  return NUCLEIC_3TO1[key] ?? "?";
+  return "?";
 }
 
 /**
@@ -90,7 +101,10 @@ export function buildHierarchyFromStructure(
       let protein = "";
       let nucleic = "";
       cp.eachResidue((rp) => {
-        if (rp.isStandardAminoacid()) protein += rp.getResname1();
+        if (rp.isStandardAminoacid()) {
+          protein += rp.getResname1();
+          return;
+        }
         const nt = nucleicOneLetterFromResidue(rp);
         if (nt) nucleic += nt;
       });

@@ -82,7 +82,7 @@ Each tool reuses the **workstation shell** (`workstation-shell` + dock preset). 
 │ [□] BIOLABS                              [Theme ▼] [⌘K hint] │  h=72, border-b
 ├──────────────────────────────────────────────────────────────┤
 │                                                              │
-│     Next-Generation Bio Simulation          (H1, tracking)   │
+│     Research your bio, medical source with Boa5  (H1)        │
 │     Platform subtitle — mono muted 14px                      │
 │                                                              │
 │     TOOLS  (kicker 9px uppercase tracking 0.14em)            │

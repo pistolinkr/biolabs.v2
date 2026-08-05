@@ -50,7 +50,6 @@ const HELIX_COMMANDS: CommandRegistryEntry[] = [
   { id: "layout-classic", cmdId: "layout.classic", category: "view" },
   { id: "layout-focus", cmdId: "layout.focus", category: "view" },
   { id: "layout-analysis", cmdId: "layout.analysis", category: "view" },
-  { id: "layout-assistant", cmdId: "layout.assistant", category: "view" },
   { id: "layout-compact", cmdId: "layout.compact", category: "view" },
   { id: "layout-reset", cmdId: "layout.reset", category: "view" },
   { id: "export-cif", cmdId: "export.cif", category: "io" },
@@ -78,10 +77,6 @@ const PHAELEON_COMMANDS: CommandRegistryEntry[] = [
   { id: "nav-helix", cmdId: "nav.helix", category: "nav" },
 ];
 
-const SHARED_COMMANDS: CommandRegistryEntry[] = [
-  { id: "assistant-chat", cmdId: "assistant.chat.open", category: "assistant" },
-];
-
 /** Hub palette — open tools only; no in-tool viewer / analysis actions. */
 const LANDING_COMMANDS: CommandRegistryEntry[] = [
   { id: "nav-binary", cmdId: "nav.binary", category: "nav" },
@@ -94,7 +89,7 @@ export function commandsForWorkstation(scope: CommandPaletteScope): CommandRegis
     return LANDING_COMMANDS;
   }
   if (scope === "phaeleon") {
-    return [...PHAELEON_COMMANDS, ...SHARED_COMMANDS];
+    return PHAELEON_COMMANDS;
   }
-  return [...HELIX_COMMANDS, ...SHARED_COMMANDS];
+  return HELIX_COMMANDS;
 }

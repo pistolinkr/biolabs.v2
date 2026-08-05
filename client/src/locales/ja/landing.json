@@ -1,8 +1,8 @@
 {
   "askAi": "AIに聞いてみる",
   "hero": {
-    "title": "次世代バイオシミュレーション",
-    "subtitle": "構造・予測・分析のための計算生物学プラットフォーム — 専用ツールを起動します。"
+    "title": "Boa5でバイオ・医療ソースを研究する",
+    "titleActive": "Say, hello"
   },
   "tools": {
     "title": "ツール",

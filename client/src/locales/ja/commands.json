@@ -10,24 +10,24 @@
     "assistant": "アシスタント"
   },
   "palette": {
-    "cmd": "CMD",
+    "cmd": "BOA5",
     "placeholder": {
       "landing": "BOA5 · Helix · Phaeleon を開く…",
-      "helix": "チェーン B を隔離 · 表面 · レイアウトフォーカス…",
+      "helix": "BOA5に質問、またはコマンド検索…",
       "phaeleon": "warfarin aspirin を解析 · 薬剤を入れ替え · AI を開く…"
     },
     "noMatch": "一致するコマンドがありません",
     "navigate": "↑↓ ナビゲート · Enter 実行",
     "requiresWorkspace": "コマンドパレット: ビューアコマンドは Helix セッションが必要です。",
     "requiresPhaeleon": "コマンドパレット: この操作は Phaeleon ワークステーションが必要です。",
-    "askAi": "AI に質問",
-    "askAiHint": "入力内容をリサーチアシスタントに送信",
+    "askAi": "BOA5に質問",
+    "askAiHint": "入力内容をBOA5に送信",
     "askAiDisabledHint": "質問を入力して、設定で AI を構成してください",
-    "aiTitle": "AI の回答",
+    "aiTitle": "BOA5",
     "aiYouAsked": "あなたの質問",
     "aiThinking": "考え中…",
-    "aiBack": "コマンド",
-    "aiEscHint": "Esc · コマンドに戻る",
+    "aiBack": "BOA5",
+    "aiEscHint": "Esc · BOA5へ",
     "aiClose": "閉じる",
     "aiNotConfigured": "AI が構成されていません。サーバーの .env にプロバイダキーを追加して再起動してください。",
     "aiFailed": "AI の応答を取得できませんでした。"

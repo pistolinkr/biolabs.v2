@@ -6,7 +6,7 @@
   },
   "tabs": {
     "general": "General",
-    "ai": "Asistente IA",
+    "ai": "Boa5",
     "workspace": "Área de trabajo",
     "about": "Acerca de"
   },
@@ -17,7 +17,9 @@
     "scientificHud": "HUD científico",
     "scientificHudHint": "Superposición de coordenadas en el viewport.",
     "viewportNote": "Las opciones de renderizado del viewport (AO, sombras) se controlan desde la pestaña Display del workbench.",
-    "phaeleonNote": "Phaeleon utiliza un diseño fijo de tres columnas (Entrada · Análisis · Inspector). Los anchos de panel y el comportamiento de análisis se configuran en la pestaña Workspace."
+    "phaeleonNote": "Phaeleon utiliza un diseño fijo de tres columnas (Entrada · Análisis · Inspector). Los anchos de panel y el comportamiento de análisis se configuran en la pestaña Workspace.",
+    "navbarFixed": "Fijar barra de navegación",
+    "navbarFixedHint": "Mantiene la navegación superior siempre visible. Desactiva el auto-ocultar en BOA5 y al hacer scroll en Landing."
   },
   "workspace": {
     "layout": "Diseño de la estación",
@@ -108,7 +110,7 @@
     "available": "Disponible: {{list}}",
     "none": "ninguno",
     "outputLimits": "Max tokens {{tokens}} · contexto {{chars}} caracteres",
-    "notConfigured": "Agregue al menos una clave API de proveedor arriba para usar el asistente.",
+    "notConfigured": "Choose platform AI (if available) or add a provider API key above.",
     "refreshStatus": "Actualizar estado",
     "testConnection": "Probar conexión",
     "providerHealth": "Salud del proveedor",
@@ -151,9 +153,16 @@
     "phaeleonContextNote": "Phaeleon inyecta automáticamente el par de medicamentos actual y el informe de interacción basado en reglas en el contexto de la IA. Configure proveedores e idioma de respuesta arriba.",
     "providers": {
       "auto": "Auto (orden de fallback)",
-      "gemini": "Gemini",
+      "gemini": "Google AI",
       "openrouter": "OpenRouter",
-      "huggingface": "Hugging Face"
-    }
+      "huggingface": "Hugging Face",
+      "openai": "OpenAI",
+      "anthropic": "Anthropic"
+    },
+    "source": "AI source",
+    "sourceHint": "Platform AI uses Biolabs-hosted keys. Your API keys stay in this browser and call providers directly.",
+    "sourcePlatform": "Free platform AI",
+    "sourceByok": "Your API keys",
+    "platformNotConfigured": "Platform AI needs server keys in .env (GEMINI_API_KEY or OPENROUTER_API_KEY). Restart pnpm dev, then Refresh status. Static hosts without Node cannot serve /api/ai."
   }
 }

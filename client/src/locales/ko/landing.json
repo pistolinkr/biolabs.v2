@@ -1,8 +1,8 @@
 {
   "askAi": "AI에게 물어보기",
   "hero": {
-    "title": "차세대 생물 시뮬레이션",
-    "subtitle": "구조 분석·예측·시각화를 위한 계산 생물학 플랫폼 — 전문 도구를 실행하세요."
+    "title": "Boa5로 바이오·의료 소스를 연구하세요",
+    "titleActive": "Say, hello"
   },
   "tools": {
     "title": "도구",

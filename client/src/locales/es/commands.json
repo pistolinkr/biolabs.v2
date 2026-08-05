@@ -10,24 +10,24 @@
     "assistant": "Asistente"
   },
   "palette": {
-    "cmd": "CMD",
+    "cmd": "BOA5",
     "placeholder": {
       "landing": "Abrir BOA5 · Helix · Phaeleon…",
-      "helix": "Aislar cadena B · superficie · enfoque de diseño…",
+      "helix": "Preguntar a BOA5 o buscar un comando…",
       "phaeleon": "Analizar warfarin aspirin · intercambiar medicamentos · abrir IA…"
     },
     "noMatch": "No hay comandos coincidentes",
     "navigate": "↑↓ navegar · Enter ejecutar",
     "requiresWorkspace": "Paleta de comandos: los comandos del visor requieren una sesión Helix abierta.",
     "requiresPhaeleon": "Paleta de comandos: esta acción requiere la estación Phaeleon.",
-    "askAi": "Preguntar a la IA",
-    "askAiHint": "Enviar el texto anterior al asistente de investigación",
+    "askAi": "Preguntar a BOA5",
+    "askAiHint": "Enviar el texto a BOA5",
     "askAiDisabledHint": "Escriba una pregunta y configure la IA en la configuración",
-    "aiTitle": "Respuesta IA",
+    "aiTitle": "BOA5",
     "aiYouAsked": "Usted preguntó",
     "aiThinking": "Pensando…",
-    "aiBack": "Comandos",
-    "aiEscHint": "Esc · volver a comandos",
+    "aiBack": "BOA5",
+    "aiEscHint": "Esc · volver a BOA5",
     "aiClose": "Cerrar",
     "aiNotConfigured": "La IA no está configurada. Agregue claves provider en .env del servidor y reinicie.",
     "aiFailed": "No se pudo obtener una respuesta de IA."

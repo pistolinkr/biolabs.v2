@@ -18,7 +18,7 @@
     "checking": "Comprobando proveedor de IA…",
     "provider": "Proveedor: {{provider}}{{model}}",
     "providerModel": " · {{model}}",
-    "notConfiguredEnv": "No hay clave API configurada — añada GEMINI_API_KEY (recomendado) a .env",
+    "notConfiguredEnv": "Platform AI unavailable — add GEMINI_API_KEY or OPENROUTER_API_KEY to server .env and restart, or paste your own key in Settings → AI.",
     "staticHostingNote": "El despliegue estático en Vercel no incluye backend de IA. Node/Docker + .env del servidor para /api/ai.",
     "context": "Contexto: {{protein}}{{residue}}",
     "noProtein": "sin proteína",
@@ -30,15 +30,55 @@
   },
   "toasts": {
     "notConfigured": "IA no configurada",
-    "notConfiguredHint": "Añada claves de proveedor al .env del servidor y reinicie.",
+    "notConfiguredHint": "Add GEMINI_API_KEY or OPENROUTER_API_KEY to server .env and restart, or paste your own key in Settings → AI.",
     "unavailable": "IA no disponible",
     "explainUnavailable": "Explicación no disponible",
     "connectionOk": "Conexión de IA OK",
-    "connectionFailed": "Conexión no disponible"
+    "connectionFailed": "Conexión no disponible",
+    "notConfiguredPlatformHint": "Free platform AI is not available on this host. Add server .env keys and restart pnpm dev, or switch to your own API key."
   },
   "binary": {
     "greeting": "How Can I Help You?",
     "placeholder": "Message...",
-    "send": "Send message"
+    "send": "Send message",
+    "setupPrompt": "First, please choose my type so we can communicate smoothly.",
+    "setupByok": "Use your API key",
+    "setupByokHint": "Elige OpenAI, Anthropic o Google AI y pega tu clave.",
+    "setupPlatform": "Use free platform AI",
+    "setupPlatformHint": "Biolabs-hosted AI — no key required when the host has keys.",
+    "setupDoneByok": "Hecho — tu clave de {{provider}} está guardada en este navegador. Pregúntame lo que quieras.",
+    "setupDonePlatform": "Got it — I'll use the free platform AI when it's available on this host.",
+    "setupBack": "Atrás",
+    "providers": {
+      "openai": "OpenAI",
+      "anthropic": "Anthropic",
+      "google": "Google AI"
+    },
+    "secureInputTitle": "Secure input guide",
+    "secureInputBody": "Pega tu clave API de {{provider}}. Se queda en este navegador y solo se envía a ese proveedor — nunca a los servidores de Biolabs.",
+    "secureInputNote": "Las claves se guardan solo en este dispositivo. Puedes borrarlas en Settings → AI.",
+    "secureKeyPlaceholder": "Pegar clave API",
+    "secureKeyTooShort": "Eso no parece una clave API completa.",
+    "secureKeySaved": "Clave API guardada",
+    "secureCancel": "Cancelar",
+    "secureSave": "Guardar clave",
+    "getApiKey": "Obtener clave API",
+    "sidebar": {
+      "title": "BOA5",
+      "subtitle": "Chats y configuración AI",
+      "openMenu": "Abrir menú",
+      "newChat": "Nuevo chat",
+      "newChatTitle": "Nuevo chat",
+      "recent": "Recientes",
+      "recentEmpty": "Aún no hay chats.",
+      "deleteChat": "Eliminar chat",
+      "aiSource": "Fuente AI",
+      "apiKeys": "Claves API",
+      "addKey": "Añadir",
+      "openSettings": "Ajustes AI"
+    },
+    "setupReady": "Listo — pregúntame lo que quieras.",
+    "sendDisabledPlatform": "Platform AI is not ready — add server .env keys (GEMINI_API_KEY or OPENROUTER_API_KEY), restart, or choose your API key in the menu.",
+    "sendDisabledByok": "Add a provider API key in the menu or Settings → AI to send messages."
   }
 }

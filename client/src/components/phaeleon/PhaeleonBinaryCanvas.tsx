@@ -6,6 +6,7 @@ import {
   AnalysisLoadingState,
   AnalysisReportBody,
 } from "@/components/phaeleon/PhaeleonAnalysisReportContent";
+import { PHAELEON_ANALYSIS_BAR_ANCHOR } from "@/components/phaeleon/PhaeleonAnalysisPanel";
 import { usePhaeleonAnalysisReport } from "@/hooks/usePhaeleonAnalysisReport";
 import { cn } from "@/lib/utils";
 
@@ -29,7 +30,10 @@ export default function PhaeleonBinaryCanvas() {
   const showResultShell = !showEmpty;
 
   return (
-    <main className="flex h-full min-h-0 min-w-0 flex-1 flex-col bg-background">
+    <main
+      data-tool-bottom-bar-anchor={PHAELEON_ANALYSIS_BAR_ANCHOR}
+      className="flex h-full min-h-0 min-w-0 flex-1 flex-col bg-background"
+    >
       {showEmpty ? (
         <div className="flex min-h-0 flex-1 items-center justify-center px-6">
           <p className="max-w-md text-center text-sm text-muted-foreground">{t("layout.binaryEmpty")}</p>

@@ -1,13 +1,13 @@
 import { useEffect, useRef } from "react";
 import { useAssistant } from "@/contexts/AssistantContext";
 import {
-  clearBinaryChatHistory,
-  loadBinaryChatHistory,
-  saveBinaryChatHistory,
-} from "@/lib/ai/binaryChatHistory";
+  loadActiveBinaryThreadMessages,
+  saveActiveBinaryThreadMessages,
+} from "@/lib/ai/binaryChatThreads";
+import { peekGreetingHandoff } from "@/lib/ai/greetingHandoff";
 import { getOrCreateAppSessionId } from "@/lib/session/cookieSession";
 
-/** Persist Binary chat thread to cookie-scoped localStorage (no DB). */
+/** Persist BOA5 chat threads to cookie-scoped localStorage (no DB). */
 export default function BinarySessionHistoryBridge() {
   const { messages, replaceMessages } = useAssistant();
   const skipSaveRef = useRef(true);
@@ -16,7 +16,10 @@ export default function BinarySessionHistoryBridge() {
   useEffect(() => {
     getOrCreateAppSessionId();
     skipSaveRef.current = true;
-    replaceMessages(loadBinaryChatHistory());
+    // Greeting handoff owns the first paint — don't clobber it with stale history.
+    if (!peekGreetingHandoff()) {
+      replaceMessages(loadActiveBinaryThreadMessages());
+    }
     hydratedRef.current = true;
     queueMicrotask(() => {
       skipSaveRef.current = false;
@@ -25,11 +28,7 @@ export default function BinarySessionHistoryBridge() {
 
   useEffect(() => {
     if (skipSaveRef.current || !hydratedRef.current) return;
-    if (messages.length === 0) {
-      clearBinaryChatHistory();
-      return;
-    }
-    saveBinaryChatHistory(messages);
+    saveActiveBinaryThreadMessages(messages);
   }, [messages]);
 
   return null;

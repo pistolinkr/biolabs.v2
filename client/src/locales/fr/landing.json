@@ -1,8 +1,8 @@
 {
   "askAi": "Demander à l'IA",
   "hero": {
-    "title": "Bio-simulation nouvelle génération",
-    "subtitle": "Une plateforme de biologie computationnelle — lancez des outils spécialisés pour la structure, la prédiction et l'analyse."
+    "title": "Research your bio, medical source with Boa5",
+    "titleActive": "Say, hello"
   },
   "tools": {
     "title": "Outils",

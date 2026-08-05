@@ -1,8 +1,8 @@
 {
   "askAi": "KI fragen",
   "hero": {
-    "title": "Bio-Simulation der nächsten Generation",
-    "subtitle": "Eine Computational-Biology-Plattform — starten Sie spezialisierte Tools für Struktur, Vorhersage und Analyse."
+    "title": "Research your bio, medical source with Boa5",
+    "titleActive": "Say, hello"
   },
   "tools": {
     "title": "Tools",

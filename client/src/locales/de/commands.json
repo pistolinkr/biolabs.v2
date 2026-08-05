@@ -10,24 +10,24 @@
     "assistant": "Assistent"
   },
   "palette": {
-    "cmd": "CMD",
+    "cmd": "BOA5",
     "placeholder": {
       "landing": "BOA5 · Helix · Phaeleon öffnen…",
-      "helix": "Kette B isolieren · Oberfläche · Layout‑Fokus…",
+      "helix": "BOA5 fragen oder Befehl suchen…",
       "phaeleon": "Warfarin Aspirin analysieren · Arzneimittel tauschen · KI öffnen…"
     },
     "noMatch": "Keine passenden Befehle",
     "navigate": "↑↓ navigieren · Enter ausführen",
     "requiresWorkspace": "Befehlspalette: Viewer‑Befehle erfordern eine geöffnete Helix‑Sitzung.",
     "requiresPhaeleon": "Befehlspalette: Diese Aktion erfordert die Phaeleon‑Arbeitsstation.",
-    "askAi": "KI fragen",
-    "askAiHint": "Den obigen Text an den Research‑Assistenten senden",
+    "askAi": "BOA5 fragen",
+    "askAiHint": "Text an BOA5 senden",
     "askAiDisabledHint": "Geben Sie eine Frage ein und konfigurieren Sie KI in den Einstellungen",
-    "aiTitle": "KI‑Antwort",
+    "aiTitle": "BOA5",
     "aiYouAsked": "Sie fragten",
     "aiThinking": "Denke…",
-    "aiBack": "Befehle",
-    "aiEscHint": "Esc · zurück zu Befehlen",
+    "aiBack": "BOA5",
+    "aiEscHint": "Esc · zurück zu BOA5",
     "aiClose": "Schließen",
     "aiNotConfigured": "KI ist nicht konfiguriert. Fügen Sie Provider‑Keys zur Server‑.env hinzu und starten Sie neu.",
     "aiFailed": "Keine KI‑Antwort erhalten."

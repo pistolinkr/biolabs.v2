@@ -170,10 +170,6 @@ export default function CommandPalette({
         else if (cmdId === "nav.phaeleon") setLocation(PHAELEON_PATH);
         return;
       }
-      if (cmdId === "assistant.chat.open" && scope !== "phaeleon") {
-        assistant?.setChatOpen(true);
-        return;
-      }
       if (cmdId.startsWith("phaeleon.") || (scope === "phaeleon" && cmdId.startsWith("assistant."))) {
         runPhaeleon(cmdId);
         return;
@@ -311,7 +307,7 @@ export default function CommandPalette({
       aria-hidden={!isOpen}
     >
       <div
-        className="relative w-full max-w-xl border border-border bg-card shadow-2xl"
+        className="relative mx-4 w-fit min-w-[min(100%,20rem)] max-w-xl border border-border bg-card shadow-2xl"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -428,7 +424,7 @@ export default function CommandPalette({
                     {assistant.isSending ? (
                       <Loader2 className="size-3 animate-spin" />
                     ) : (
-                      <Sparkles className="size-3" />
+                      <Sparkles className="size-3 text-accent" />
                     )}
                     {t("palette.askAi")}
                   </button>

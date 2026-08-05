@@ -1,6 +1,17 @@
 {
-  "command": "명령...",
-  "commandPalette": "명령 팔레트",
+  "command": "BOA5",
+  "commandPalette": "명령 (⌘K)",
+  "ask": {
+    "title": "BOA5에게 묻기",
+    "collapsedPlaceholder": "이 구조에 대해 묻거나 제어…",
+    "expandedPlaceholder": "이 구조에 대해 묻거나 제어…",
+    "expandedPlaceholderWithMentions": "라벨한 잔기에 대해 질문…",
+    "send": "전송",
+    "mentionAdd": "{{label}} 언급",
+    "mentionRemove": "{{label}} 제거",
+    "mentionCount": "라벨 {{count}}",
+    "replyDismiss": "답변 닫기"
+  },
   "saveWorkspace": "워크스페이스 저장 (⌘S)",
   "exportMenu": "보내기",
   "settings": "설정",

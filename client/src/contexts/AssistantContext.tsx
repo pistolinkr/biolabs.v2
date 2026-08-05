@@ -31,7 +31,13 @@ import {
 } from "@/lib/ai/aiKeysStorage";
 import { buildClientAiStatus, CLIENT_MAX_OUTPUT_TOKENS } from "@/lib/ai/clientProviders";
 import { buildAiPlatformContext } from "@/lib/ai/contextBuilder";
-import { boostAgentPlan, executeAgentPlan, parseAgentPlan, userFacingAgentReply } from "@/lib/ai/agentActions";
+import {
+  boostAgentPlan,
+  executeAgentPlan,
+  filterAskSafeAgentActions,
+  parseAgentPlan,
+  userFacingAgentReply,
+} from "@/lib/ai/agentActions";
 import {
   boostPhaeleonAgentPlan,
   executePhaeleonAgentPlan,
@@ -39,7 +45,12 @@ import {
   type PhaeleonAgentExecutorDeps,
 } from "@/lib/phaeleon/phaeleonAgentActions";
 import { acceptLanguageForSearch } from "@/lib/proteinSearchQuery";
-import { sendAiChat } from "@/lib/ai/assistantApi";
+import {
+  appendBoa5SharedTurn,
+  loadBoa5WorkstationSharedMessages,
+} from "@/lib/ai/binaryChatThreads";
+import { fetchAiStatus, sendAiChat } from "@/lib/ai/assistantApi";
+import { AI_SETUP_CHANGED_EVENT, prefersPlatformAi } from "@/lib/ai/aiOnboardingStorage";
 import { AiRequestError, formatAiUserNotice, noticeFromUnknownError } from "@/lib/ai/userErrors";
 import type {
   AgentStepResult,
@@ -100,7 +111,14 @@ interface AssistantContextValue {
   lastContext: AiPlatformContext | null;
   buildContext: () => AiPlatformContext;
   sendMessage: (text: string, intent?: AiExplainIntent) => Promise<void>;
-  runAgentQuery: (text: string) => Promise<{
+  runAgentQuery: (
+    text: string,
+    options?: {
+      mode?: "full" | "ask";
+      /** Append Q/A into the shared BOA5 thread (default true). */
+      share?: boolean;
+    },
+  ) => Promise<{
     ok: boolean;
     reply?: string;
     steps?: AgentStepResult[];
@@ -128,6 +146,13 @@ interface AssistantContextValue {
     loading: boolean;
     intent: AiExplainIntent;
   } | null;
+  /** Shared floating assistant HUD (bar ask + residue explain). */
+  showAssistantHud: (opts: {
+    title: string;
+    content?: string | null;
+    loading?: boolean;
+    intent?: AiExplainIntent;
+  }) => void;
   closeExplainPopover: () => void;
   aiSettings: AiClientSettings;
   updateAiSettings: (patch: Partial<AiClientSettings>) => void;
@@ -138,7 +163,8 @@ interface AssistantContextValue {
   /** True when server or user API keys can serve requests. */
   aiConfigured: boolean;
   usingClientKeys: boolean;
-  refreshAiStatus: () => Promise<void>;
+  /** Refresh status; returns the resolved status snapshot (or null on unexpected failure). */
+  refreshAiStatus: () => Promise<AiStatusResponse | null>;
   testAiConnection: () => Promise<boolean>;
   structureAnalysis: StructureAnalysisState;
   analyzeStructure: () => Promise<void>;
@@ -155,15 +181,17 @@ const FALLBACK_AI_STATUS: AiStatusResponse = {
   server_provider: "auto",
 };
 
-function resolveAiStatus(keys: AiKeysSettings): AiStatusResponse {
+function resolveClientAiStatus(keys: AiKeysSettings): AiStatusResponse {
   if (hasAnyClientKey(keys.keys)) {
     return buildClientAiStatus(keys.keys);
   }
   return FALLBACK_AI_STATUS;
 }
 
-function isAiConfigured(keys: AiKeysSettings): boolean {
-  return hasAnyClientKey(keys.keys);
+function isAiConfigured(keys: AiKeysSettings, status: AiStatusResponse | null): boolean {
+  // BYOK with browser keys, or platform /.env (status from /api/ai/status).
+  if (!prefersPlatformAi() && hasAnyClientKey(keys.keys)) return true;
+  return Boolean(status?.configured);
 }
 
 const AssistantContext = createContext<AssistantContextValue | null>(null);
@@ -280,18 +308,55 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  const refreshAiStatus = useCallback(async () => {
+  const refreshAiStatus = useCallback(async (): Promise<AiStatusResponse | null> => {
     setStatusLoading(true);
-    setStatus(resolveAiStatus(aiKeysSettings));
-    setStatusLoading(false);
-  }, [aiKeysSettings]);
+    try {
+      const latestKeys = loadAiKeysSettings();
+      setAiKeysSettings(latestKeys);
+
+      // Platform (default): always resolve from server /.env status.
+      // BYOK: browser keys when present; otherwise still probe server as fallback.
+      if (!prefersPlatformAi() && hasAnyClientKey(latestKeys.keys)) {
+        const clientStatus = buildClientAiStatus(latestKeys.keys);
+        setStatus(clientStatus);
+        return clientStatus;
+      }
+
+      try {
+        const server = await fetchAiStatus();
+        setStatus(server);
+        return server;
+      } catch {
+        const fallback = hasAnyClientKey(latestKeys.keys)
+          ? buildClientAiStatus(latestKeys.keys)
+          : FALLBACK_AI_STATUS;
+        setStatus(fallback);
+        return fallback;
+      }
+    } catch {
+      setStatus(FALLBACK_AI_STATUS);
+      return null;
+    } finally {
+      setStatusLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    setStatus(resolveAiStatus(aiKeysSettings));
+    if (hasAnyClientKey(aiKeysSettings.keys) && !prefersPlatformAi()) {
+      setStatus(resolveClientAiStatus(aiKeysSettings));
+    }
   }, [aiKeysSettings]);
 
   useEffect(() => {
     void refreshAiStatus();
+  }, [refreshAiStatus]);
+
+  useEffect(() => {
+    const onSetupChanged = () => {
+      void refreshAiStatus();
+    };
+    window.addEventListener(AI_SETUP_CHANGED_EVENT, onSetupChanged);
+    return () => window.removeEventListener(AI_SETUP_CHANGED_EVENT, onSetupChanged);
   }, [refreshAiStatus]);
 
   const updateAiKeysSettings = useCallback((patch: Partial<AiKeysSettings>) => {
@@ -302,7 +367,9 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
         keys: patch.keys ? { ...prev.keys, ...patch.keys } : prev.keys,
       };
       saveAiKeysSettings(next);
-      setStatus(resolveAiStatus(next));
+      if (hasAnyClientKey(next.keys) && !prefersPlatformAi()) {
+        setStatus(buildClientAiStatus(next.keys));
+      }
       return next;
     });
   }, []);
@@ -311,8 +378,9 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
     const next = { ...DEFAULT_AI_KEYS, keys: { ...DEFAULT_AI_KEYS.keys } };
     setAiKeysSettings(next);
     saveAiKeysSettings(next);
-    setStatus(resolveAiStatus(next));
-  }, []);
+    setStatus(FALLBACK_AI_STATUS);
+    void refreshAiStatus();
+  }, [refreshAiStatus]);
 
   const updateAiSettings = useCallback((patch: Partial<AiClientSettings>) => {
     setAiSettings((prev) => {
@@ -328,12 +396,12 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
     saveAiClientSettings(next);
   }, []);
 
-  const usingClientKeys = hasAnyClientKey(aiKeysSettings.keys);
-  const aiConfigured = isAiConfigured(aiKeysSettings);
+  const usingClientKeys = hasAnyClientKey(aiKeysSettings.keys) && !prefersPlatformAi();
+  const aiConfigured = isAiConfigured(aiKeysSettings, status);
 
   const runChat = useCallback(
     async (userText: string, intent: AiExplainIntent, history: AssistantUiMessage[]) => {
-      if (!isAiConfigured(aiKeysSettings)) {
+      if (!isAiConfigured(aiKeysSettings, status)) {
         toast.error(i18n.t("toasts.notConfigured", { ns: "assistant" }), {
           description: formatAiUserNotice("AI_NOT_CONFIGURED", i18n.t("toasts.notConfiguredHint", { ns: "assistant" })),
         });
@@ -368,6 +436,7 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
           responseLanguage: aiSettings.responseLanguage,
         },
         clientKeys: aiKeysSettings.keys,
+        useOwnApiKeys: !prefersPlatformAi(),
       });
       lastRoutingRef.current = {
         fellBack: Boolean(response.fell_back),
@@ -376,7 +445,7 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
       };
       return response.message;
     },
-    [buildContext, aiKeysSettings, aiSettings],
+    [buildContext, aiKeysSettings, aiSettings, status],
   );
 
   const explain = useCallback(
@@ -398,7 +467,7 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
       if (globalPopover) {
         setExplainPopover({
           open: true,
-          title: intent.charAt(0).toUpperCase() + intent.slice(1),
+          title: intent === "residue" || intent === "agent" ? "BOA5" : intent.charAt(0).toUpperCase() + intent.slice(1),
           content: null,
           loading: true,
           intent,
@@ -446,7 +515,7 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
   );
 
   const testAiConnection = useCallback(async () => {
-    if (!isAiConfigured(aiKeysSettings)) {
+    if (!isAiConfigured(aiKeysSettings, status)) {
       toast.error(i18n.t("toasts.notConfigured", { ns: "assistant" }), {
         description: formatAiUserNotice("AI_NOT_CONFIGURED", i18n.t("toasts.notConfiguredHint", { ns: "assistant" })),
       });
@@ -465,6 +534,7 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
           responseLanguage: "en",
         },
         clientKeys: aiKeysSettings.keys,
+        useOwnApiKeys: !prefersPlatformAi(),
       });
       toast.success(i18n.t("toasts.connectionOk", { ns: "assistant" }));
       return true;
@@ -475,7 +545,7 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
       toast.error(i18n.t("toasts.connectionFailed", { ns: "assistant" }), { description: notice });
       return false;
     }
-  }, [aiKeysSettings, buildContext, aiSettings.preferredProvider]);
+  }, [aiKeysSettings, buildContext, aiSettings.preferredProvider, status]);
 
   const closeStructureAnalysis = useCallback(() => {
     setStructureAnalysis((prev) => ({ ...prev, panelOpen: false }));
@@ -489,7 +559,7 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
       });
       return;
     }
-    if (!isAiConfigured(aiKeysSettings)) {
+    if (!isAiConfigured(aiKeysSettings, status)) {
       toast.error(i18n.t("toasts.notConfigured", { ns: "assistant" }), {
         description: formatAiUserNotice("AI_NOT_CONFIGURED", i18n.t("toasts.notConfiguredHint", { ns: "assistant" })),
       });
@@ -670,32 +740,57 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
   );
 
   const runAgentQuery = useCallback(
-    async (text: string) => {
+    async (
+      text: string,
+      options?: { mode?: "full" | "ask"; share?: boolean },
+    ) => {
       const trimmed = text.trim();
       if (!trimmed) return { ok: false, error: "empty" };
-      if (!isAiConfigured(aiKeysSettings)) {
+      if (!isAiConfigured(aiKeysSettings, status)) {
         return { ok: false, error: formatAiUserNotice("AI_NOT_CONFIGURED") };
       }
+
+      const askMode = options?.mode === "ask";
+      const share = options?.share !== false;
+      /** Dedicated workstation→BOA5 chat (not an already-existing Binary thread). */
+      const sharedHistory = loadBoa5WorkstationSharedMessages().slice(-40);
+
+      const finish = (result: {
+        ok: boolean;
+        reply?: string;
+        steps?: AgentStepResult[];
+        error?: string;
+      }) => {
+        if (share && result.ok && result.reply?.trim()) {
+          appendBoa5SharedTurn(trimmed, result.reply.trim());
+        }
+        return result;
+      };
 
       try {
         const ctx = buildContext();
         const onPhaeleon = ctx.workstation_id === "phaeleon" || ctx.domain?.startsWith("phaeleon");
-        const raw = await runChat(trimmed, "agent", []);
+        const raw = await runChat(trimmed, "agent", sharedHistory);
         if (!raw) return { ok: false, error: "no_response" };
 
         const plan = onPhaeleon
           ? boostPhaeleonAgentPlan(trimmed, parsePhaeleonAgentPlan(raw))
-          : boostAgentPlan(trimmed, parseAgentPlan(raw));
+          : (() => {
+              const helixPlan = boostAgentPlan(trimmed, parseAgentPlan(raw));
+              return askMode
+                ? { ...helixPlan, actions: filterAskSafeAgentActions(helixPlan.actions) }
+                : helixPlan;
+            })();
         const displayReply = userFacingAgentReply(raw, plan);
         if (!plan.actions.length) {
-          return { ok: true, reply: displayReply, steps: [] };
+          return finish({ ok: true, reply: displayReply, steps: [] });
         }
 
         if (onPhaeleon) {
           const deps = phaeleonAgentDepsRef.current;
-          if (!deps) return { ok: true, reply: displayReply, steps: [] };
+          if (!deps) return finish({ ok: true, reply: displayReply, steps: [] });
           const { steps } = await executePhaeleonAgentPlan(plan, deps);
-          return { ok: true, reply: displayReply, steps };
+          return finish({ ok: true, reply: displayReply, steps });
         }
 
         const uiLocale = i18n.language?.split("-")[0] ?? "en";
@@ -704,7 +799,7 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
           const prompt =
             params.prompt ??
             `Explain the biological function and structural role of residue ${params.chain}:${params.resno} in the loaded structure.`;
-          return runChat(prompt, "residue", []);
+          return runChat(prompt, "residue", sharedHistory);
         };
 
         const { steps, appendReply } = await executeAgentPlan(plan, {
@@ -726,7 +821,7 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
         });
 
         const reply = appendReply ? `${displayReply}\n\n${appendReply}` : displayReply;
-        return { ok: true, reply, steps };
+        return finish({ ok: true, reply, steps });
       } catch (e) {
         const notice = e instanceof AiRequestError
           ? formatAiUserNotice(e.code, e.message)
@@ -795,6 +890,23 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
     setStructureAnalysis((prev) => ({ ...prev, active: null }));
   }, [viewer.proteinSelection]);
 
+  const showAssistantHud = useCallback(
+    (opts: {
+      title: string;
+      content?: string | null;
+      loading?: boolean;
+      intent?: AiExplainIntent;
+    }) => {
+      setExplainPopover({
+        open: true,
+        title: opts.title,
+        content: opts.content ?? null,
+        loading: opts.loading ?? false,
+        intent: opts.intent ?? "general",
+      });
+    },
+    [],
+  );
   const closeExplainPopover = useCallback(() => setExplainPopover(null), []);
   const clearMessages = useCallback(() => setMessages([]), []);
   const replaceMessages = useCallback((next: AssistantUiMessage[]) => {
@@ -819,6 +931,7 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
       registerContextExtension,
       registerPhaeleonAgentDeps,
       explainPopover,
+      showAssistantHud,
       closeExplainPopover,
       aiSettings,
       updateAiSettings,
@@ -850,6 +963,7 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
       registerContextExtension,
       registerPhaeleonAgentDeps,
       explainPopover,
+      showAssistantHud,
       closeExplainPopover,
       aiSettings,
       updateAiSettings,

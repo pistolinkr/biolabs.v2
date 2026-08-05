@@ -18,7 +18,7 @@
     "checking": "AI プロバイダーを確認中…",
     "provider": "プロバイダー: {{provider}}{{model}}",
     "providerModel": " · {{model}}",
-    "notConfiguredEnv": "API キーが未設定 — .env に GEMINI_API_KEY（推奨）を追加",
+    "notConfiguredEnv": "Platform AI unavailable — add GEMINI_API_KEY or OPENROUTER_API_KEY to server .env and restart, or paste your own key in Settings → AI.",
     "staticHostingNote": "Vercel 静的デプロイには AI バックエンドがありません。Node/Docker + サーバー .env で /api/ai を使用してください。",
     "context": "コンテキスト: {{protein}}{{residue}}",
     "noProtein": "タンパク質なし",
@@ -30,15 +30,55 @@
   },
   "toasts": {
     "notConfigured": "AI が未設定です",
-    "notConfiguredHint": "サーバーの .env にプロバイダーキーを追加して再起動してください。",
+    "notConfiguredHint": "Add GEMINI_API_KEY or OPENROUTER_API_KEY to server .env and restart, or paste your own key in Settings → AI.",
     "unavailable": "AI が利用できません",
     "explainUnavailable": "説明が利用できません",
     "connectionOk": "AI 接続 OK",
-    "connectionFailed": "接続が利用できません"
+    "connectionFailed": "接続が利用できません",
+    "notConfiguredPlatformHint": "Free platform AI is not available on this host. Add server .env keys and restart pnpm dev, or switch to your own API key."
   },
   "binary": {
     "greeting": "How Can I Help You?",
     "placeholder": "Message...",
-    "send": "Send message"
+    "send": "Send message",
+    "setupPrompt": "First, please choose my type so we can communicate smoothly.",
+    "setupByok": "Use your API key",
+    "setupByokHint": "OpenAI / Anthropic / Google AI を選び、キーを貼り付けます。",
+    "setupPlatform": "Use free platform AI",
+    "setupPlatformHint": "Biolabs-hosted AI — no key required when the host has keys.",
+    "setupDoneByok": "了解です — {{provider}} キーをこのブラウザに保存しました。何でも聞いてください。",
+    "setupDonePlatform": "Got it — I'll use the free platform AI when it's available on this host.",
+    "setupBack": "戻る",
+    "providers": {
+      "openai": "OpenAI",
+      "anthropic": "Anthropic",
+      "google": "Google AI"
+    },
+    "secureInputTitle": "Secure input guide",
+    "secureInputBody": "{{provider}} APIキーを貼り付けてください。キーはこのブラウザにのみ保存され、そのプロバイダへだけ送られます。Biolabsサーバーには送られません。",
+    "secureInputNote": "キーはこの端末にのみ保存されます。Settings → AI からいつでも削除できます。",
+    "secureKeyPlaceholder": "APIキーを貼り付け",
+    "secureKeyTooShort": "APIキーとして短すぎます。",
+    "secureKeySaved": "APIキーを保存しました",
+    "secureCancel": "キャンセル",
+    "secureSave": "キーを保存",
+    "getApiKey": "APIキーを取得",
+    "sidebar": {
+      "title": "BOA5",
+      "subtitle": "チャット & AI設定",
+      "openMenu": "メニューを開く",
+      "newChat": "新しいチャット",
+      "newChatTitle": "新しいチャット",
+      "recent": "履歴",
+      "recentEmpty": "チャットはまだありません。",
+      "deleteChat": "チャットを削除",
+      "aiSource": "AIソース",
+      "apiKeys": "APIキー",
+      "addKey": "追加",
+      "openSettings": "AI設定"
+    },
+    "setupReady": "準備できました — 何でも聞いてください。",
+    "sendDisabledPlatform": "Platform AI is not ready — add server .env keys (GEMINI_API_KEY or OPENROUTER_API_KEY), restart, or choose your API key in the menu.",
+    "sendDisabledByok": "Add a provider API key in the menu or Settings → AI to send messages."
   }
 }

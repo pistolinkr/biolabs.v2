@@ -1,7 +1,6 @@
-import { Camera, Download, Fullscreen, Sparkles } from "lucide-react";
+import { Camera, Download, Fullscreen } from "lucide-react";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useAssistant } from "@/contexts/AssistantContext";
 import { useViewer } from "@/contexts/ViewerContext";
 import { cn } from "@/lib/utils";
 
@@ -31,14 +30,13 @@ export function RailBtn({
   );
 }
 
-/** Viewport I/O and AI analysis toggle. */
+/** Viewport I/O controls. */
 export default function ViewportLeftToolRail() {
   const { t } = useTranslation("viewport");
   const { runViewerCommand } = useViewer();
-  const { aiSettings, updateAiSettings } = useAssistant();
 
   return (
-    <div className="flex w-11 shrink-0 flex-col gap-1 border-r border-border bg-background px-1.5 py-1.5">
+    <div className="flex w-11 shrink-0 flex-col gap-1 rounded-br-[24px] border-r border-border bg-background px-1.5 py-1.5">
       <RailBtn title={t("rail.screenshot")} onClick={() => runViewerCommand("screenshot")}>
         <Camera className="size-3.5" strokeWidth={1.25} />
       </RailBtn>
@@ -47,15 +45,6 @@ export default function ViewportLeftToolRail() {
       </RailBtn>
       <RailBtn title={t("rail.fullscreen")} onClick={() => runViewerCommand("view.fullscreen.toggle")}>
         <Fullscreen className="size-3.5" strokeWidth={1.25} />
-      </RailBtn>
-      <RailBtn
-        title={aiSettings.showResidueExplainPopup ? t("rail.aiAnalysisOn") : t("rail.aiAnalysisOff")}
-        active={aiSettings.showResidueExplainPopup}
-        onClick={() =>
-          updateAiSettings({ showResidueExplainPopup: !aiSettings.showResidueExplainPopup })
-        }
-      >
-        <Sparkles className="size-3.5" strokeWidth={1.25} />
       </RailBtn>
     </div>
   );

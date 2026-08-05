@@ -1,6 +1,12 @@
 /** Shared AI assistant contracts (client + server). */
 
-export type AiProviderId = "gemini" | "openrouter" | "huggingface" | "auto";
+export type AiProviderId =
+  | "openai"
+  | "anthropic"
+  | "gemini"
+  | "openrouter"
+  | "huggingface"
+  | "auto";
 
 export type AiExplainIntent =
   | "general"

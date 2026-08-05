@@ -72,10 +72,14 @@ export default function SettingsPanel({
       onClick={onClose}
     >
       <div
+        data-settings-panel
         className="flex h-[min(640px,85vh)] w-[min(920px,calc(100vw-2rem))] flex-col overflow-hidden border border-border bg-card text-card-foreground shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex shrink-0 items-center justify-between border-b border-border bg-card px-4 py-3">
+        <div
+          data-settings-panel-header
+          className="flex shrink-0 items-center justify-between border-b border-border bg-card px-4 py-3"
+        >
           <div>
             <h2 className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-foreground">
               {t("title")}
@@ -148,7 +152,10 @@ export default function SettingsPanel({
           </div>
         </div>
 
-        <div className="flex shrink-0 justify-end gap-2 border-t border-border bg-card px-4 py-3">
+        <div
+          data-settings-panel-footer
+          className="flex shrink-0 justify-end gap-2 border-t border-border bg-card px-4 py-3"
+        >
           <button type="button" onClick={onClose} className="btn-compact">
             {tc("actions.close")}
           </button>

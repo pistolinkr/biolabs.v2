@@ -6,7 +6,7 @@
   },
   "tabs": {
     "general": "常规",
-    "ai": "AI 助手",
+    "ai": "Boa5",
     "workspace": "工作区",
     "about": "关于"
   },
@@ -17,7 +17,9 @@
     "scientificHud": "科学 HUD",
     "scientificHudHint": "在视口上显示坐标叠加。",
     "viewportNote": "视口渲染选项（AO、阴影）在 Display 工作台选项卡中控制。",
-    "phaeleonNote": "Phaeleon 使用固定的三列布局（输入 · 分析 · 检查器）。面板宽度和分析行为可在 Workspace 选项卡中配置。"
+    "phaeleonNote": "Phaeleon 使用固定的三列布局（输入 · 分析 · 检查器）。面板宽度和分析行为可在 Workspace 选项卡中配置。",
+    "navbarFixed": "固定导航栏",
+    "navbarFixedHint": "始终显示顶部导航。关闭 BOA5 自动隐藏与 Landing 滚动隐藏。"
   },
   "workspace": {
     "layout": "工作站布局",
@@ -108,7 +110,7 @@
     "available": "可用: {{list}}",
     "none": "无",
     "outputLimits": "最大令牌 {{tokens}} · 上下文 {{chars}} 字符",
-    "notConfigured": "请向上添加至少一个提供者 API 密钥以使用助手。",
+    "notConfigured": "Choose platform AI (if available) or add a provider API key above.",
     "refreshStatus": "刷新状态",
     "testConnection": "测试连接",
     "providerHealth": "提供者健康状况",
@@ -151,9 +153,16 @@
     "phaeleonContextNote": "Phaeleon 会自动将当前药物对和基于规则的相互作用报告注入 AI 上下文。请在上方配置提供者和响应语言。",
     "providers": {
       "auto": "自动（回退顺序）",
-      "gemini": "Gemini",
+      "gemini": "Google AI",
       "openrouter": "OpenRouter",
-      "huggingface": "Hugging Face"
-    }
+      "huggingface": "Hugging Face",
+      "openai": "OpenAI",
+      "anthropic": "Anthropic"
+    },
+    "source": "AI source",
+    "sourceHint": "Platform AI uses Biolabs-hosted keys. Your API keys stay in this browser and call providers directly.",
+    "sourcePlatform": "Free platform AI",
+    "sourceByok": "Your API keys",
+    "platformNotConfigured": "Platform AI needs server keys in .env (GEMINI_API_KEY or OPENROUTER_API_KEY). Restart pnpm dev, then Refresh status. Static hosts without Node cannot serve /api/ai."
   }
 }

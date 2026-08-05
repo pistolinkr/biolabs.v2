@@ -113,7 +113,7 @@ Each tool reuses the **workstation shell** (`workstation-shell` + dock layout). 
 - Left: ~280px
 - Right: ~320px
 - Center: flex remaining
-- Header: `ToolShellHeader` (~h-12)
+- Top: shared `BiolabsNav` (~h-14); tool chrome: `ToolBottomBar` (~h-12)
 
 ---
 
@@ -123,7 +123,7 @@ File: [`client/src/pages/Landing.tsx`](client/src/pages/Landing.tsx)
 
 ### Structure
 
-1. **Navbar** — `Biolabs` (left) · cipher wordmark `BOA5` (center) · Helix / Phaeleon / `···` (right; menu: BOA5 / ⌘K)
+1. **Navbar** — shared [`BiolabsNav`](client/src/components/BiolabsNav.tsx) on landing + all tools: `Biolabs` (left) · `BOA5` (center) · Helix / Phaeleon / `···` (right). Tool Command / Settings live in [`ToolBottomBar`](client/src/components/ToolBottomBar.tsx).
 2. **Hero** — title + subtitle + ask input; section uses `grid` + `place-content-center` with `min-h-[calc(100dvh-3.5rem)]` (center relative to the hero band, not magic margins)
 3. **Tools** — Helix / Phaeleon list rows (large type + descriptions)
 4. **Feature** — four articles (capabilities copy)
@@ -143,12 +143,12 @@ No site footer on landing (version / tagline strip removed).
 | Cipher brand | Mono `BOA5` — same `text-xs` / `tracking-[0.12em]` as nav links; `aria-label="BIOLABS"` |
 | Hero H1 | Newsreader italic allowed |
 
-Do **not** spread these exceptions into Helix / Phaeleon / BOA5 chrome.
+Do **not** spread these exceptions into Helix / Phaeleon chrome. **BOA5 (`/binary`)** shares the landing ask pill, hero type scale, and `18/28/42` padding so the handoff reads as one surface.
 
 ### Ask AI → BOA5
 
-- Placeholder examples e.g. `Try: BRCA1 · Aspirin · …`
-- Submit stores one-shot prompt via [`binaryPendingPrompt`](client/src/lib/ai/binaryPendingPrompt.ts) and navigates to `/binary`
+- Pill composer + hero type match landing ([`BinaryHome`](client/src/components/binary/BinaryHome.tsx))
+- Greeting nuance → app-shell transition + local setup chat; other prompts via [`binaryPendingPrompt`](client/src/lib/ai/binaryPendingPrompt.ts)
 
 ---
 
