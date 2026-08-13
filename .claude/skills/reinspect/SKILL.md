@@ -14,10 +14,10 @@ description: VERIFIED 이슈를 최종 확인하고 CLOSED로 종결한다. 재�
 
 ## 2. 신규 탐지
 재점검 중 원래 이슈와 **무관한** 문제를 발견하면 그 이슈에 끼워넣지 마라. 새 이슈로 등록한다:
-`company/issues/ISSUE-<날짜>-<NN>.yaml`, `state: DETECTED`, `source: "reinspection:<원본 이슈 id>"`.
+`$BIOLABS3_SHARED/issues/ISSUE-<날짜>-<NN>.yaml`, `state: DETECTED`, `source: "reinspection:<원본 이슈 id>"`.
 
 ## 3. 일일 요약
-`company/reports/<오늘>-summary.md`에 상태별 집계를 남긴다. `FAILED`/`BLOCKED`로 오래 머문 이슈는 "사장 결재 필요" 섹션에.
+`$BIOLABS3_SHARED/reports/<오늘>-summary.md`에 상태별 집계를 남긴다. `FAILED`/`BLOCKED`로 오래 머문 이슈는 "사장 결재 필요" 섹션에.
 `security-reviewer`가 BLOCK한 이슈는 반드시 이 섹션 최상단에 올린다.
 
 ## 상태 표기

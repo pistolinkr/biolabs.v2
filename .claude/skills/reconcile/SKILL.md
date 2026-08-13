@@ -8,7 +8,7 @@ description: 멈추거나 타임아웃된 이슈를 찾아 recovery-engineer에�
 이 스킬은 **LLM 판단 없이 먼저 결정론적으로** 이상 상태를 찾는다. 아래를 grep/bash로 확인한다:
 
 ```
-company/issues/*.yaml 중:
+$BIOLABS3_SHARED/issues/*.yaml 중:
   - state가 IN_PROGRESS인데 updated_at이 engineering-org.yaml의 timeouts_minutes[IN_PROGRESS]를 초과
   - state가 INVESTIGATING인데 updated_at이 타임아웃 초과
   - state가 READY_FOR_EVALUATION인데 evaluation 섹션이 전부 null인 채로 EVALUATING 타임아웃만큼 지남

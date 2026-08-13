@@ -20,7 +20,7 @@ Engineering Lead (main session — agent 파일 없음)
 
 Role 정의는 `.claude/agents/roles/`, Worker는 `.claude/agents/workers/`,
 workflow는 `.claude/skills/*/SKILL.md`, 설정값(depth·routing·timeout·retry·model)은
-`company/config/engineering-org.yaml`이 **단일 출처**다. 이 파일에 중복 기술하지 않는다.
+`$BIOLABS3_SHARED/config/engineering-org.yaml`이 **단일 출처**다. 이 파일에 중복 기술하지 않는다.
 
 **모든 이슈가 모든 Role을 부르지 않는다.** `role_routing`이 이슈의 category·affected_files·depth_signal·severity를
 보고 필요한 Role만 호출한다. P3/P4는 investigation 자체를 생략한다.
@@ -30,7 +30,26 @@ workflow는 `.claude/skills/*/SKILL.md`, 설정값(depth·routing·timeout·retr
 `engineering-org.yaml`의 `organization.not_created` 참조.
 
 트리거는 Claude Code 바깥(macOS launchd)에 있다 — Claude Code 자체엔 스케줄 기능이 없다(2026-08-13 공식 문서 확인).
-`company/bin/run-agent.sh`가 09:00 `/engineering-audit`, 11:00 `/reconcile`→`/investigate`→`/remediate`→`/evaluate`→`/reinspect`를 헤드리스로 돈다.
+`$BIOLABS3_SHARED/bin/run-agent.sh`가 09:00 `/engineering-audit`, 11:00 `/reconcile`→`/investigate`→`/remediate`→`/evaluate`→`/reinspect`를 헤드리스로 돈다.
+
+
+## 경로 계약 (중요)
+
+에이전트는 **격리 git 워크트리** 안에서 실행된다(`~/orca/workspaces/biolabs/cron-*`).
+그 워크트리는 실행이 끝나면 삭제된다. **거기 쓴 파일은 전부 사라진다.**
+
+공용 폴더는 워크트리 밖에 있고, 상대경로로는 절대 안 잡힌다:
+
+| 환경변수 | 값 |
+|---|---|
+| `$BIOLABS3_SHARED` | 공용 사무실 (설정·이슈·보고서·로그) |
+| `$BIOLABS3_REPO` | 원본 리포 (영속) |
+| `$BIOLABS3_WORKTREE` | 현재 워크트리 (휘발성) |
+
+`run-agent.sh`가 이 값들을 export하고 프롬프트 헤더로도 전달한다.
+**`company/...` 같은 상대경로를 쓰지 마라.** 경로를 찾아 헤매는 순간 그 실행은 이미 잘못됐다.
+(근거: ISSUE-20260813-03 — 2회 연속 이 문제로 1단계에서 막혔고, 최악의 경우 산출물이
+워크트리와 함께 삭제되고도 exit=0으로 "성공" 처리될 수 있었다.)
 
 ## 브랜치 규칙 (엄수)
 ```
@@ -63,7 +82,7 @@ Product Engineer가 로컬에서 통과 확인 → Evaluation Engineer가 독립
 ## 리포 특성
 Vite + React + TS 프론트(`client/`), Express 서버(`server/`), 공용 타입(`shared/`).
 `shared/` 변경 시 양쪽 다 확인. i18n은 `client/src/locales/<lang>/*.json` —
-키 추가 시 모든 언어 파일에 반영(누락은 반복 발생 패턴으로 이미 확인됨, `company/issues/ISSUE-20260813-01.yaml` 참조).
+키 추가 시 모든 언어 파일에 반영(누락은 반복 발생 패턴으로 이미 확인됨, `$BIOLABS3_SHARED/issues/ISSUE-20260813-01.yaml` 참조).
 
 ## 이력 / 폐기된 설계
 - `ops/agents/`(pm/reviewer/qa/sre + Orca coordinator 체제) — 2026-08-13 설계, 실행된 적 없음(git 이력·리포 어디서도 참조 0건 확인). 폐기 사유와 캡ability 이관처는 `ops/agents/DEPRECATED.md` 참조.

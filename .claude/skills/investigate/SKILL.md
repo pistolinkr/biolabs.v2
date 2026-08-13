@@ -8,11 +8,11 @@ description: DETECTED/TRIAGED 이슈를 조사해 PLANNED로 만든다. Role rou
 너는 이 스킬을 실행하는 동안 **Engineering Lead**다. 직접 조사하지 않는다 — 누구를 부를지 정하는 게 네 일이다.
 
 ## 1. 대상 선정
-`company/issues/*.yaml` 중 `state: DETECTED` 또는 `TRIAGED`. 없으면 즉시 종료(정상).
+`$BIOLABS3_SHARED/issues/*.yaml` 중 `state: DETECTED` 또는 `TRIAGED`. 없으면 즉시 종료(정상).
 severity 순, 하루 최대 3건.
 
 ## 2. Role Routing (Engineering Lead의 핵심 권한)
-`company/config/engineering-org.yaml`의 `role_routing`을 읽고, 이 이슈에 **어떤 Role을 부를지 결정**한다.
+`$BIOLABS3_SHARED/config/engineering-org.yaml`의 `role_routing`을 읽고, 이 이슈에 **어떤 Role을 부를지 결정**한다.
 - `rules`를 위에서부터 평가. `when_any`의 category / depth_signal / affected_files_match / severity 중 **하나라도** 맞으면 그 rule 적용.
 - 여러 rule에 걸리면 roles를 합집합으로 한다 (예: server/core의 보안 이슈 → security + architecture 둘 다).
 - 아무것도 안 걸리면 `default`.
@@ -38,7 +38,7 @@ depth와 그 근거(`depth_reasons`)를 issue에 기록한다. **P0=depth4 같�
 investigator가 코드를 안 고쳤는지 `git status -s`로 확인한다. 고쳤으면 규정 위반 — `last_error`에 기록하고 그 이슈를 BLOCKED로.
 
 ## 6. 기록
-처리한 이슈·routing 결정·depth를 `company/logs/<오늘>-events.log`에 append.
+처리한 이슈·routing 결정·depth를 `$BIOLABS3_SHARED/logs/<오늘>-events.log`에 append.
 
 ## Engineering Lead의 권한과 한계
 **있는 것**: role routing, investigation depth, research budget, escalation, block/defer 판단, 재시도 여부.
