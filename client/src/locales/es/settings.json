@@ -60,10 +60,6 @@
       "binaryHint": "Fast judgment. AI on demand.",
       "consult": "Consult",
       "consultHint": "Read the report and ask AI side by side.",
-      "command": "Command",
-      "commandHint": "Wide screen. All panels parallel.",
-      "compact": "Compacto",
-      "compactHint": "Laptop or small screen.",
       "classic": "Clásico",
       "classicHint": "3-panel view: input, report, and inspector side by side. AI docked under inspector."
     },
