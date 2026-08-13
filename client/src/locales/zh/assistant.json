@@ -1,6 +1,7 @@
 {
   "analysisLabel": "助手分析",
   "dragPanel": "拖动以移动面板",
+  "resizePanel": "拖动以调整面板大小",
   "expandPanel": "展开面板",
   "collapsePanel": "折叠面板",
   "noAnalysisYet": "尚无分析",
@@ -10,6 +11,24 @@
   "current": "当前 · {{resname}} {{chain}}:{{resno}}",
   "running": "正在运行 {{label}}…",
   "couldNotAnalyze": "无法分析此残基。",
+  "structureAnalysis": {
+    "kicker": "结构分析",
+    "analyzing": "正在分析结构…",
+    "empty": "尚无结构分析",
+    "historyHint": "在下方运行结构分析。此蛋白质的历史分析记录将显示在此处。",
+    "current": "当前分析",
+    "run": "分析结构",
+    "runLabel": "结构分析",
+    "rerun": "重新分析结构",
+    "failed": "无法分析此结构。"
+  },
+  "residueAnalysis": {
+    "kicker": "残基分析"
+  },
+  "explainPopover": {
+    "openChat": "打开对话",
+    "analyzing": "正在结合平台上下文分析…"
+  },
   "askAi": "询问 AI",
   "explain": "解释",
   "assistant": {
@@ -19,23 +38,69 @@
     "provider": "提供商：{{provider}}{{model}}",
     "providerModel": " · {{model}}",
     "notConfiguredEnv": "Platform AI unavailable — add GEMINI_API_KEY or OPENROUTER_API_KEY to server .env and restart, or paste your own key in Settings → AI.",
-    "staticHostingNote": "Vercel 静态部署无 AI 后端。请使用 Node/Docker + 服务器 .env 运行 /api/ai。",
     "context": "上下文：{{protein}}{{residue}}",
     "noProtein": "无蛋白质",
     "emptyState": "询问已加载的结构、所选残基、聚合物接触或一般生物学问题。每个回答都会自动使用完整的平台上下文。",
     "you": "您",
     "aiName": "BOA5",
     "thinking": "思考中…",
-    "placeholder": "询问此结构…"
+    "placeholder": "询问此结构…",
+    "executingActions": "正在执行平台操作…",
+    "staticHostingNote": "Vercel 静态部署无 AI 后端。请使用 Node/Docker + 服务器 .env 运行 /api/ai。"
+  },
+  "agent": {
+    "executing": "正在执行平台操作…",
+    "steps": {
+      "searchSelect": "搜索：{{query}}",
+      "setRepresentation": "表示方式：{{representation}}",
+      "setColor": "颜色：{{color}}",
+      "isolateChain": "隔离链 {{chain}}",
+      "isolateClear": "取消链隔离",
+      "spinOn": "开启旋转",
+      "spinOff": "关闭旋转",
+      "fitView": "适配视图",
+      "resetView": "重置视图",
+      "focusResidue": "聚焦 {{chain}}:{{resno}}",
+      "analyzeStructure": "分析结构",
+      "explainResidue": "解释 {{chain}}:{{resno}}",
+      "command": "命令：{{cmdId}}",
+      "searchDrug": "搜索药物：{{query}}",
+      "assignDrug": "分配 {{slot}}：{{name}}",
+      "searchAssignDrug": "搜索并分配 {{slot}}：{{query}}",
+      "clearDrug": "清空 {{slot}}",
+      "swapDrugs": "交换 Drug A/B",
+      "setActiveSlot": "活动槽位：{{slot}}",
+      "runAnalysis": "运行相互作用分析",
+      "clearSession": "重置会话",
+      "focusInspector": "检查器：{{slot}}",
+      "scrollReport": "滚动报告：{{section}}",
+      "unknown": "未知操作"
+    },
+    "errors": {
+      "emptyQuery": "搜索关键词为空。",
+      "noSearchResults": "未找到与“{{query}}”匹配的结果。",
+      "noDrugHit": "搜索结果中没有匹配的药物。",
+      "pairRequired": "分析前请分配 Drug A 和 Drug B。",
+      "reportSectionMissing": "报告部分尚未显示。",
+      "loadTimeout": "加载 {{id}} 超时。",
+      "noStructure": "未加载任何结构。",
+      "explainFailed": "无法解释此残基。",
+      "commandNotAllowed": "不允许的命令：{{cmdId}}。",
+      "unknownAction": "未知操作类型。"
+    }
+  },
+  "fallback": {
+    "servedBy": "已切换到 {{provider}} · {{model}}",
+    "tooltip": "首选模型被阻止，因此助手已自动回退到其他提供商/模型。"
   },
   "toasts": {
     "notConfigured": "AI 未配置",
     "notConfiguredHint": "Add GEMINI_API_KEY or OPENROUTER_API_KEY to server .env and restart, or paste your own key in Settings → AI.",
+    "notConfiguredPlatformHint": "Free platform AI is not available on this host. Add server .env keys and restart pnpm dev, or switch to your own API key.",
     "unavailable": "AI 不可用",
     "explainUnavailable": "解释功能不可用",
     "connectionOk": "AI 连接正常",
-    "connectionFailed": "连接不可用",
-    "notConfiguredPlatformHint": "Free platform AI is not available on this host. Add server .env keys and restart pnpm dev, or switch to your own API key."
+    "connectionFailed": "连接不可用"
   },
   "binary": {
     "greeting": "How Can I Help You?",
