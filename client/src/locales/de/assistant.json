@@ -1,6 +1,7 @@
 {
   "analysisLabel": "Assistentenanalyse",
   "dragPanel": "Ziehen, um Panel zu verschieben",
+  "resizePanel": "Ziehen, um Panelgröße zu ändern",
   "expandPanel": "Panel erweitern",
   "collapsePanel": "Panel einklappen",
   "noAnalysisYet": "Noch keine Analyse",
@@ -10,6 +11,24 @@
   "current": "Aktuell · {{resname}} {{chain}}:{{resno}}",
   "running": "{{label}} wird ausgeführt…",
   "couldNotAnalyze": "Diese Residue konnte nicht analysiert werden.",
+  "structureAnalysis": {
+    "kicker": "Strukturanalyse",
+    "analyzing": "Struktur wird analysiert…",
+    "empty": "Noch keine Strukturanalyse",
+    "historyHint": "Strukturanalyse unten ausführen. Frühere Durchläufe für dieses Protein erscheinen hier.",
+    "current": "Aktuelle Analyse",
+    "run": "Struktur analysieren",
+    "runLabel": "Strukturanalyse",
+    "rerun": "Struktur erneut analysieren",
+    "failed": "Diese Struktur konnte nicht analysiert werden."
+  },
+  "residueAnalysis": {
+    "kicker": "Residuenanalyse"
+  },
+  "explainPopover": {
+    "openChat": "Chat öffnen",
+    "analyzing": "Analysiere mit Plattformkontext…"
+  },
   "askAi": "KI fragen",
   "explain": "Erklären",
   "assistant": {
@@ -19,23 +38,69 @@
     "provider": "Anbieter: {{provider}}{{model}}",
     "providerModel": " · {{model}}",
     "notConfiguredEnv": "Platform AI unavailable — add GEMINI_API_KEY or OPENROUTER_API_KEY to server .env and restart, or paste your own key in Settings → AI.",
-    "staticHostingNote": "Vercel Static Deploy hat kein AI-Backend. Node/Docker + server .env für /api/ai.",
     "context": "Kontext: {{protein}}{{residue}}",
     "noProtein": "kein Protein",
     "emptyState": "Fragen Sie zur geladenen Struktur, ausgewählten Residue, Polymerkontakten oder allgemeiner Biologie. Jede Antwort nutzt automatisch den vollständigen Plattformkontext.",
     "you": "Sie",
     "aiName": "BOA5",
     "thinking": "Denke nach…",
-    "placeholder": "Fragen zu dieser Struktur stellen…"
+    "placeholder": "Fragen zu dieser Struktur stellen…",
+    "executingActions": "Plattformaktionen werden ausgeführt…",
+    "staticHostingNote": "Vercel Static Deploy hat kein AI-Backend. Node/Docker + server .env für /api/ai."
+  },
+  "agent": {
+    "executing": "Plattformaktionen werden ausgeführt…",
+    "steps": {
+      "searchSelect": "Suche: {{query}}",
+      "setRepresentation": "Darstellung: {{representation}}",
+      "setColor": "Farbe: {{color}}",
+      "isolateChain": "Kette {{chain}} isolieren",
+      "isolateClear": "Kettenisolierung aufheben",
+      "spinOn": "Rotation aktivieren",
+      "spinOff": "Rotation deaktivieren",
+      "fitView": "Ansicht einpassen",
+      "resetView": "Ansicht zurücksetzen",
+      "focusResidue": "Fokus {{chain}}:{{resno}}",
+      "analyzeStructure": "Struktur analysieren",
+      "explainResidue": "{{chain}}:{{resno}} erklären",
+      "command": "Befehl: {{cmdId}}",
+      "searchDrug": "Wirkstoffe suchen: {{query}}",
+      "assignDrug": "{{slot}} zuweisen: {{name}}",
+      "searchAssignDrug": "Suchen & zuweisen {{slot}}: {{query}}",
+      "clearDrug": "{{slot}} leeren",
+      "swapDrugs": "Drug A/B tauschen",
+      "setActiveSlot": "Aktiver Slot: {{slot}}",
+      "runAnalysis": "Interaktionsanalyse ausführen",
+      "clearSession": "Sitzung zurücksetzen",
+      "focusInspector": "Inspector: {{slot}}",
+      "scrollReport": "Bericht scrollen: {{section}}",
+      "unknown": "Unbekannte Aktion"
+    },
+    "errors": {
+      "emptyQuery": "Suchbegriff ist leer.",
+      "noSearchResults": "Keine Ergebnisse für \"{{query}}\".",
+      "noDrugHit": "Kein passender Wirkstoff in den Suchergebnissen.",
+      "pairRequired": "Weisen Sie vor der Analyse Drug A und Drug B zu.",
+      "reportSectionMissing": "Berichtsabschnitt noch nicht sichtbar.",
+      "loadTimeout": "Zeitüberschreitung beim Laden von {{id}}.",
+      "noStructure": "Keine Struktur geladen.",
+      "explainFailed": "Dieses Residuum konnte nicht erklärt werden.",
+      "commandNotAllowed": "Befehl nicht erlaubt: {{cmdId}}.",
+      "unknownAction": "Unbekannter Aktionstyp."
+    }
+  },
+  "fallback": {
+    "servedBy": "Zu {{provider}} · {{model}} gewechselt",
+    "tooltip": "Das bevorzugte Modell war blockiert, daher ist der Assistent automatisch auf einen anderen Anbieter/ein anderes Modell ausgewichen."
   },
   "toasts": {
     "notConfigured": "KI nicht konfiguriert",
     "notConfiguredHint": "Add GEMINI_API_KEY or OPENROUTER_API_KEY to server .env and restart, or paste your own key in Settings → AI.",
+    "notConfiguredPlatformHint": "Free platform AI is not available on this host. Add server .env keys and restart pnpm dev, or switch to your own API key.",
     "unavailable": "KI nicht verfügbar",
     "explainUnavailable": "Erklärung nicht verfügbar",
     "connectionOk": "KI-Verbindung OK",
-    "connectionFailed": "Verbindung nicht verfügbar",
-    "notConfiguredPlatformHint": "Free platform AI is not available on this host. Add server .env keys and restart pnpm dev, or switch to your own API key."
+    "connectionFailed": "Verbindung nicht verfügbar"
   },
   "binary": {
     "greeting": "How Can I Help You?",
