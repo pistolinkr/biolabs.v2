@@ -8,5 +8,12 @@
   "AI_UNKNOWN": "AI 요청에 실패했습니다.",
   "requestFailed": "AI 요청에 실패했습니다.",
   "couldNotAnalyze": "이 잔기를 분석할 수 없습니다.",
-  "couldNotExplain": "이 선택을 설명할 수 없습니다."
+  "couldNotExplain": "이 선택을 설명할 수 없습니다.",
+  "AI_NOT_CONFIGURED": "AI가 설정되지 않았습니다. .env에 OPENROUTER_API_KEY를 추가하거나 설정 → AI에서 키를 입력하세요.",
+  "AI_DAILY_QUOTA_EXCEEDED": "{{region}} 지역의 일일 AI 한도({{used}}/{{limit}})에 도달했습니다. {{resetsAt}}(UTC)에 재설정됩니다.",
+  "AI_MODEL_UNAVAILABLE": "선택한 모델을 사용할 수 없습니다.",
+  "AI_NETWORK_ERROR": "AI 프로바이더에 연결할 수 없습니다. 네트워크를 확인한 뒤 다시 시도하세요.",
+  "AI_ALL_PROVIDERS_FAILED": "구성된 모든 프로바이더가 실패했습니다.",
+  "AI_REQUEST_INVALID": "잘못된 AI 요청입니다.",
+  "AI_EMPTY_RESPONSE": "프로바이더가 빈 응답을 반환했습니다."
 }
