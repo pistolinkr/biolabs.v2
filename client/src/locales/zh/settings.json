@@ -86,6 +86,8 @@
     "sessionHasAnalysis": "分析已就绪",
     "sessionNoAnalysis": "尚无分析",
     "clearSession": "清除会话",
+    "sessionId": "会话 ID：{{id}}…",
+    "pairHistory": "本次会话的最近配对",
     "resetDefaults": "重置 Phaeleon 默认值"
   },
   "about": {

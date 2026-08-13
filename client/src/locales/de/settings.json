@@ -86,6 +86,8 @@
     "sessionHasAnalysis": "Analyse bereit",
     "sessionNoAnalysis": "noch keine Analyse",
     "clearSession": "Sitzung löschen",
+    "sessionId": "Sitzungs-ID: {{id}}…",
+    "pairHistory": "Letzte Paare in dieser Sitzung",
     "resetDefaults": "Phaeleon‑Standardeinstellungen zurücksetzen"
   },
   "about": {

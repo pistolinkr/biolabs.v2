@@ -212,7 +212,9 @@
   },
   "sequence": {
     "proteinTitle": "アミノ酸配列 (1-letter)",
-    "nucleicTitle": "DNA / RNA (1文字)"
+    "nucleicTitle": "DNA / RNA (1文字)",
+    "dockLabel": "配列パネル",
+    "hint": "残基をクリックするとビューポートにフォーカスします · ビューポートでの選択はここにスクロール・ハイライトされます"
   },
   "entityKinds": {
     "protein": "タンパク質",
