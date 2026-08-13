@@ -212,7 +212,9 @@
   },
   "sequence": {
     "proteinTitle": "氨基酸序列 (1-letter)",
-    "nucleicTitle": "DNA / RNA (1-letter)"
+    "nucleicTitle": "DNA / RNA (1-letter)",
+    "dockLabel": "序列面板",
+    "hint": "点击残基以聚焦视口 · 视口中的选择会在此滚动并高亮显示"
   },
   "entityKinds": {
     "protein": "蛋白质",

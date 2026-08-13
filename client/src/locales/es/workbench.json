@@ -212,7 +212,9 @@
   },
   "sequence": {
     "proteinTitle": "Secuencia de aminoácidos (1-letter)",
-    "nucleicTitle": "ADN / ARN (1-letter)"
+    "nucleicTitle": "ADN / ARN (1-letter)",
+    "dockLabel": "Paneles de secuencia",
+    "hint": "Haz clic en un residuo para enfocar el visor · las selecciones del visor se desplazan y resaltan aquí"
   },
   "entityKinds": {
     "protein": "Proteína",

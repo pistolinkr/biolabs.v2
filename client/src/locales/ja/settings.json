@@ -86,6 +86,8 @@
     "sessionHasAnalysis": "解析準備完了",
     "sessionNoAnalysis": "まだ解析なし",
     "clearSession": "セッションをクリア",
+    "sessionId": "セッションID: {{id}}…",
+    "pairHistory": "このセッションの最近のペア",
     "resetDefaults": "Phaeleon の既定値をリセット"
   },
   "about": {

@@ -212,7 +212,9 @@
   },
   "sequence": {
     "proteinTitle": "Aminosäuresequenz (1-letter)",
-    "nucleicTitle": "DNA / RNA (1-letter)"
+    "nucleicTitle": "DNA / RNA (1-letter)",
+    "dockLabel": "Sequenzpanels",
+    "hint": "Klicken Sie auf einen Rest, um den Viewport zu fokussieren · Viewport-Auswahlen scrollen und markieren hier"
   },
   "entityKinds": {
     "protein": "Protein",

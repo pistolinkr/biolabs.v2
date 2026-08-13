@@ -212,7 +212,9 @@
   },
   "sequence": {
     "proteinTitle": "Séquence d'acides aminés (1-letter)",
-    "nucleicTitle": "ADN / ARN (1-letter)"
+    "nucleicTitle": "ADN / ARN (1-letter)",
+    "dockLabel": "Panneaux de séquence",
+    "hint": "Cliquez sur un résidu pour centrer la vue · les sélections de la vue défilent et se surlignent ici"
   },
   "entityKinds": {
     "protein": "Protéine",
