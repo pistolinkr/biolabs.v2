@@ -52,12 +52,42 @@ workflow는 `.claude/skills/*/SKILL.md`, 설정값(depth·routing·timeout·retr
 워크트리와 함께 삭제되고도 exit=0으로 "성공" 처리될 수 있었다.)
 
 ## 브랜치 규칙 (엄수)
+
 ```
-claude/workers/v3/<YYYYMMDD>-<role>-<slug>
+claude/workers/v3.<MINOR>.<PATCH>
+예) claude/workers/v3.1.1, claude/workers/v3.1.2, claude/workers/v3.1.3
 ```
+
+**브랜치 이름에 슬러그·날짜·설명을 넣지 마라.** 버전 번호만 쓴다.
+이유: 브랜치 목록 UI에서 이름이 잘려서 결국 구분이 안 된다. 무엇을 바꿨는지는
+**커밋 메시지와 PR 본문이 설명한다** — 그게 그것들의 존재 이유다.
+
+브랜치 이름은 직접 짓지 말고 반드시 이 명령으로 받아라:
+
+```bash
+BRANCH="$(zsh "$BIOLABS3_SHARED/bin/next-branch.sh")"
+git checkout -b "$BRANCH"
+```
+
+- PATCH는 원격의 같은 MINOR 대 최대값 +1로 자동 계산된다. 손으로 세지 마라.
+- MINOR(`3.1` → `3.2`)는 사람만 올린다: `$BIOLABS3_SHARED/config/branch-version.txt`.
+- push 시 이름이 이미 있으면(동시 실행 충돌) 스크립트를 다시 돌려 새 번호를 받아라. 강제로 덮어쓰지 마라.
 - `release/vN.N` 규칙 폐기. `main` 직접 커밋·푸시 금지, 예외 없음.
 - 산출물은 PR까지. merge는 사람이 한다.
-- PR 제목: `[v3][fix] <한 줄 요약>`. 본문에 왜/무엇을 검증/리스크/롤백.
+
+### 커밋과 PR은 반드시 영어로 (예외 없음)
+
+커밋 메시지, PR 제목, PR 본문 — **전부 영어.** 한국어를 섞지 마라.
+
+```
+commit: <type>: <what changed, imperative mood>
+PR title: [v3.1.2] <what changed>
+```
+
+PR 본문에 반드시 포함: why / what was verified / risk / how to revert.
+
+**한국어를 쓰는 곳은 따로 있다** — 이슈 YAML, 보고서(`reports/`), 로그는 한국어로 쓴다.
+그건 사장이 읽는 내부 문서고, 커밋·PR은 저장소 이력이라 영어로 남긴다.
 
 ## 버전
 `package.json`의 `version`은 사람 또는 명시적 위임 시에만 올린다. 워커는 건드리지 않는다.

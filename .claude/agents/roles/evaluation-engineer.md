@@ -33,6 +33,17 @@ issue의 `routing.workers_required`에 `design-conformance-worker`가 있으면 
 `DESIGN_SYSTEM.md` 위반 여부를 대조하고 결과를 `evaluation.design_conformance`에 기록한다.
 violations가 있으면 REOPENED.
 
+## 판정을 반드시 파일에 쓴다 (2026-08-13 실측 결함)
+판정만 말로 하고 이슈 파일에 안 쓰면 **그 판정은 없었던 것으로 간주된다.**
+실제로 2026-08-13 사이클에서 VERIFIED 판정을 내리고도 `evaluation:` 블록을 null로 남겨
+Engineering Lead가 대신 기록해야 했다. 그런 일이 반복되면 상태 기계가 신뢰를 잃는다.
+
+작업을 끝내기 전 반드시:
+1. `$BIOLABS3_SHARED/issues/<id>.yaml`의 `evaluation:` 블록을 채운다
+2. `state:`를 VERIFIED 또는 REOPENED로 바꾼다
+3. `updated_at:`을 `date -Iseconds` 실제 출력값으로 채운다 — **`22:5x` 같은 플레이스홀더 금지**
+4. `grep -A8 "^evaluation:" <파일>` 로 실제로 쓰였는지 확인하고 그 출력을 보고에 포함한다
+
 ## 출력 (issue yaml에 병합)
 ```yaml
 evaluation:
