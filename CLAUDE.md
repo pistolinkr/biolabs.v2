@@ -86,6 +86,22 @@ PR title: [v3.1.2] <what changed>
 
 PR 본문에 반드시 포함: why / what was verified / risk / how to revert.
 
+### 커밋 트레일러 (필수)
+
+에이전트가 만드는 **모든 커밋**의 마지막 줄에 반드시 넣는다:
+
+```
+Co-authored-by: Claude <noreply@anthropic.com>
+```
+
+- 본문과 트레일러 사이에 빈 줄 하나. 트레일러 뒤엔 아무것도 쓰지 않는다.
+- 이 주소는 GitHub 계정에 연결돼 있지 않다. **의도된 것이다** — 소유하지 않은 계정으로 커밋하지 않는다.
+  Contributors 사이드바에는 안 잡히지만 `git log`와 각 커밋 페이지에는 영구히 남는다.
+- 다른 사람·다른 봇의 이메일을 author나 트레일러에 쓰지 마라. 사칭이다.
+- `git commit --author=...`로 author를 바꾸지 마라. author는 실행 주체의 git 설정 그대로 둔다.
+
+배경과 조직 구성은 `CONTRIBUTORS.md` 참조.
+
 **한국어를 쓰는 곳은 따로 있다** — 이슈 YAML, 보고서(`reports/`), 로그는 한국어로 쓴다.
 그건 사장이 읽는 내부 문서고, 커밋·PR은 저장소 이력이라 영어로 남긴다.
 

@@ -22,7 +22,7 @@ model: sonnet
 더 찾는다고 항상 더 좋아지는 게 아니다. depth budget을 다 쓰기 전에 끝내도 된다.
 
 ## 절차
-1. `company/issues/<id>.yaml` 읽기. depth·severity·evidence 확인.
+1. `$BIOLABS3_SHARED/issues/<id>.yaml` 읽기. depth·severity·evidence 확인.
 2. depth 0/1: 리포 안에서만 (`Grep`/`Read`/`git log`/`git blame`). 외부 검색 금지.
 3. depth 2: 위 + 타겟 웹 검색 1~2회 (공식 문서 우선, 블로그 후순위).
 4. depth 3/4: 위 + 보안·아키텍처 영향까지, 대안 해법 2~3개 비교.
@@ -32,8 +32,8 @@ model: sonnet
    Immediate Cause: 코드 상의 직접 원인
    Root Cause: 왜 그 직접 원인이 존재하게 됐는가 (프로세스/설계 수준)
    ```
-6. 같은 유형 문제가 반복됐는지 `company/issues/`의 과거 이력에서 확인. 반복이면 resolution_plan에 "재발 방지"를 반드시 포함.
-7. `company/issues/<id>.yaml`의 `investigation`과 `resolution_plan` 블록을 채우고 `state: PLANNED`로 갱신. 실패하면 `state: BLOCKED`, `last_error`에 사유.
+6. 같은 유형 문제가 반복됐는지 `$BIOLABS3_SHARED/issues/`의 과거 이력에서 확인. 반복이면 resolution_plan에 "재발 방지"를 반드시 포함.
+7. `$BIOLABS3_SHARED/issues/<id>.yaml`의 `investigation`과 `resolution_plan` 블록을 채우고 `state: PLANNED`로 갱신. 실패하면 `state: BLOCKED`, `last_error`에 사유.
 
 ## 출력 (issue yaml에 병합)
 ```yaml

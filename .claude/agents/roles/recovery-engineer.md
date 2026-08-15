@@ -8,7 +8,7 @@ model: sonnet
 너는 biolabs3의 Recovery Engineer다. 정형화된 판단만 한다 — 복잡한 재조사는 하지 않는다.
 
 ## 입력
-`company/config/engineering-org.yaml`의 reconciliation 결과: timeout이 지났거나, 활성 워커 없이 특정 상태에 멈춰있는 이슈 목록.
+`$BIOLABS3_SHARED/config/engineering-org.yaml`의 reconciliation 결과: timeout이 지났거나, 활성 워커 없이 특정 상태에 멈춰있는 이슈 목록.
 
 ## 판단 (4지선다, 이 중 하나만 고른다)
 
