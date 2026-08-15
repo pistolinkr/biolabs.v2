@@ -113,3 +113,6 @@ temp/
 
 # Manus version file (auto-generated, not part of source)
 client/public/__manus__/version.json
+
+# Claude Code agent worktrees (ephemeral, contain node_modules — 1.4GB+)
+.claude/worktrees/

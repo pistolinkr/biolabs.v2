@@ -1,0 +1,8 @@
+# 조직 개편 직전 상태 스냅샷 (2026-08-13)
+-rw------- 1 nice-affectionate-wright nice-affectionate-wright  619 Aug 13 19:41 dependency-check-worker.md
+-rw------- 1 nice-affectionate-wright nice-affectionate-wright  708 Aug 13 19:41 doc-lookup-worker.md
+-rw------- 1 nice-affectionate-wright nice-affectionate-wright 1777 Aug 13 19:47 evaluation-engineer.md
+-rw------- 1 nice-affectionate-wright nice-affectionate-wright 1983 Aug 13 19:47 product-engineer.md
+-rw------- 1 nice-affectionate-wright nice-affectionate-wright 1621 Aug 13 19:41 recovery-engineer.md
+-rw------- 1 nice-affectionate-wright nice-affectionate-wright  552 Aug 13 19:41 repo-scan-worker.md
+-rw------- 1 nice-affectionate-wright nice-affectionate-wright 2961 Aug 13 19:47 technical-investigator.md
